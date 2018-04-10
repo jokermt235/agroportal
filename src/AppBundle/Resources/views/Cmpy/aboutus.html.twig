@@ -1,0 +1,77 @@
+{% extends "base.html.twig" %}
+{% block title %}AppBundle:User:registration{% endblock %}
+{% block body %}
+{% include 'header.html.twig' %}
+{% include 'nav.html.twig' %}
+{% include 'actionbar.html.twig' %}
+<div class="uk-container uk-margin">
+    <ul class="uk-breadcrumb">
+        <li><a href="/"><span>{% trans %}Главная{% endtrans %}</span></a></li>
+        <li><a href="{{path('_about_us')}}"><span>{% trans %}О нас{% endtrans %}</span></a></li>
+    </ul>
+</div>
+<div class="uk-panel uk-margin">
+    <img src="/images/verh/Fotolia_90921785_Subscription_Monthly_M.jpg">
+    <div class="uk-margin uk-container">
+        <div class="uk-heading-primary">{% trans %}О нас{% endtrans %}</div>
+        <p>{% trans %}Международный агропортал работает с 9 июля 2016 года. Для развития портала наша международная команда организаторов работала очень усердно и продуктивно. Теперь мы вышли на новый уровень. {% endtrans %}</p>
+        <p>{% trans %}Поздравляем Вас с открытием Agroov! Желаем всем успехов и процветания! Совместно с Вами мы создадим международную систему эффективной торговли и взаимовыгодного сотрудничества!{% endtrans %}</p>
+    </div>
+    <div class="uk-container">
+        <div class="uk-text-lead">{% trans %}Добро пожаловать в Agroov!{% endtrans %}</div>
+        <p>{% trans %}– Международная торговая площадка;{% endtrans %}</p>
+        <p>{% trans %}– Сообщества по многим направлениям и тематикам;{% endtrans %}</p>
+        <p>{% trans %}– Международная команда организаторов;{% endtrans %}</p>
+        <p>{% trans %}– Мероприятия для развития агробизнеса.{% endtrans %}</p>
+    </div>
+    <hr>
+    <div class="uk-container uk-margin-medium">
+        <div class="uk-grid uk-grid-large uk-child-width-expand@m">
+            <div>
+                <div class="uk-text-lead">{% trans %}Agroov – партнеры по всему миру:{% endtrans %}</div>
+                <p>{% trans %}– Белоруссия;{% endtrans %}</p>
+                <p>{% trans %}– Индия;{% endtrans %}</p>
+                <p>{% trans %}– Казахстан;{% endtrans %}</p>
+                <p>{% trans %}– Китай;{% endtrans %}</p>
+                <p>{% trans %}– Кыргызстан;{% endtrans %}</p>
+                <p>{% trans %}– ОАЭ;{% endtrans %}</p>
+                <p>{% trans %}– Россия;{% endtrans %}</p>
+                <p>{% trans %}– Турция;{% endtrans %}</p>
+                <p>{% trans %}– Узбекистан.{% endtrans %}</p>
+            </div>
+            <div>
+                <div class="uk-text-lead">{%trans%}Agroov – все категории агробизнеса:{% endtrans %}</div>
+                <p>{% trans %}– растениеводство;{% endtrans %}</p>
+                <p>{% trans %}– животноводство;{% endtrans %}</p>
+                <p>{% trans %}– птицеводство;{% endtrans %}</p>
+                <p>{% trans %}– пчеловодство;{% endtrans %}</p>
+                <p>{% trans %}– рыбоводство;{% endtrans %}</p>
+                <p>{% trans %}– техника и оборудования;{% endtrans %}</p>
+                <p>{% trans %}– грузоперевозка;{% endtrans %}</p>
+                <p>{% trans %}– недвижимость;{% endtrans %}</p>
+                <p>{% trans %}– строительство и ремонт.{% endtrans %}</p>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="uk-container uk-margin-large-bottom">
+        <div class="uk-grid uk-child-width-expand@m" uk-grid>
+            <div>
+                <div class="uk-text-lead">{% trans %}Контакты{% endtrans %}</div>
+                <p>{% trans %}– Адрес: 720020, Кыргызская Республика, г. Бишкек, ул. Т. Саманчина, 6;{% endtrans %}</p>
+                <p>{% trans %}– Тел.: +996 702 40 55 27;{% endtrans %}</p>
+                <p>{% trans %}– E-mail: info@agroov.com;{% endtrans %}</p>
+            </div>
+            <div>
+                <div class="uk-text-lead">{% trans %}Наша команда{% endtrans %}</div>
+                <p class="uk-text-bold">{% trans %}Руководитель проекта: {% endtrans %}</p><span>{% trans %}Адилет Искаков{% endtrans %}</span>
+                <p class="uk-text-bold">{% trans %}Маркетинг менеджер:  {% endtrans %}</p><span>{% trans %}Нурлан Жолдошев{% endtrans %}</span>
+                <p class="uk-text-bold">{% trans %}Модераторы: {% endtrans %}</p><span>{% trans %}Лидия Хван, Анна Матюкова{% endtrans %}</span>
+                <p class="uk-text-bold">{% trans %}Тех поддержка: {% endtrans %}</p><span>{% trans %}Simsim Group{% endtrans %}</span>
+                <p class="uk-text-bold">{% trans %}Эксперты: {% endtrans %}</p><span>{% trans %}Алмаз Доромбаев, Алмаз Мусабаев{% endtrans %}</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'footer.html.twig' %}
+{% endblock%}

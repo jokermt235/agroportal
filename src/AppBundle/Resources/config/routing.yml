@@ -1,0 +1,55 @@
+_dashboard:
+    path: /agroov
+    defaults: { _controller: AppBundle:Agroov:index}
+
+_upload_arecord_image:
+    path: /upload
+    defaults: { _controller: AppBundle:Arecord:upload}
+
+_about_us:
+    path: /aboutus
+    defaults: { _controller: AppBundle:Cmpy:aboutus}
+
+_save_arecord:
+    path: /save
+    defaults: { _controller: AppBundle:Arecord:save}
+
+_user_registration:
+    path: /user/registration
+    defaults: { _controller: AppBundle:User:registration}
+
+_upload_user_image:
+    path: /registration/upload
+    defaults: { _controller: AppBundle:User:upload}
+
+logincheck:
+    path:  /logincheck
+    defaults: { _controller: AppBundle:Security:logincheck }
+
+login:
+    path:  /login
+    defaults: { _controller: AppBundle:Security:login }
+
+logout:
+    path:  /logout
+    defaults: { _controller: AppBundle:User:logout }
+
+login_failure:
+    path : /forgot_password
+    defaults: { _controller: AppBundle:Security:forgotpassword }
+
+_profile_index:
+    path: /profile
+    defaults: {_controller: AppBundle:User:profile }
+
+advertise:
+    path: /advertise
+    defaults: {_controller: AppBundle:Advert:add }
+
+_upload_advert_image:
+    path: /advert/upload
+    defaults: { _controller: AppBundle:Advert:upload }
+
+_advert_view:
+    path: /advert/view/{id}
+    defaults: { _controller: AppBundle:Advert:view }

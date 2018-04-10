@@ -1,0 +1,43 @@
+<div class="uk-flex uk-flex-center uk-flex-middle uk-text-center uk-margin-medium-top">
+    <div class="uk-margin-large-right">
+        <a  href="/">
+            <img src="{{asset('images/agroov_logo1.png')}}" alt="" > 
+        </a>
+    </div>
+    <div class="uk-margin-large-left">
+        <div class="uk-grid-collapse" uk-grid>
+            <div>
+                <div class="uk-padding-left">
+                    <div uk-form-custom="target : true">
+                        <input class="uk-input uk-width-medium " type="text" placeholder="Я ищу.....">
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div uk-form-custom="target: > * > span:first-child">
+                    <select>
+                        <option value="">{%trans%}Категории{%endtrans%}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button class="uk-button uk-button-default" type="button" tabindex="-1">
+                    <span></span>
+                    <span uk-icon="icon: chevron-down"></span>
+                </button>
+            </div>
+            <div>
+                <button class="uk-button uk-button-default">
+                    <span uk-icon="icon: search"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="uk-margin-large-left">
+        <a href="{{path('advertise')}}" class="uk-button uk-button-primary uk-icon">
+            <span class="uk-icon" uk-icon="plus"></span>
+            {%trans%}Подать объявление{%endtrans%}
+        </a>
+    </div>
+</div>
+

@@ -1,0 +1,40 @@
+{% extends "base.html.twig" %}
+{% block title %}AppBundle:User:registration{% endblock %}
+{% block body %}
+{% include 'header.html.twig' %}
+<div class="uk-container uk-width-xlarge uk-margin">
+    <div class="uk-modal-header">
+        <h2 class="uk-modal-title">{% trans %}Вход {% endtrans %}</h2>
+    </div>
+    <div class="uk-modal-body">
+        <form method="POST" action="{{path('login')}}">
+            <div class="uk-margin">
+                <div class="uk-inline">
+                    <span class="uk-form-icon" uk-icon="icon: user"></span>
+                    <input name="_username" class="uk-input uk-width-large" type="text" placeholder="Введите имя пользователя">
+                </div>
+            </div>
+            <div class="uk-margin">
+                <div class="uk-inline">
+                    <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                    <input name="password" class="uk-input uk-width-large" type="password" placeholder="Пароль">
+                </div>
+            </div>
+            <div class="uk-marign">
+                <div class="uk-inline">
+                    <button class="uk-button uk-button-primary" type="submit">
+                    {% trans %}Войти {% endtrans %}
+                    </button>
+                </div>    
+            </div>
+        </form>
+    </div>
+    <div class="uk-modal-footer uk-text-center">
+        <a href="{{path('_user_registration')}}" class="uk-button uk-button-text uk-margin-medium-right">
+            {% trans %}Регистрация {% endtrans %}
+        </a>|
+        <a href="#" class="uk-button uk-button-text uk-margin-medium-left">{% trans %} Забыли пароль? {% endtrans %}</a>
+    </div>
+</div>
+{% include 'footer.html.twig' %}
+{% endblock %}

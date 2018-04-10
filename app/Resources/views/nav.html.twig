@@ -1,0 +1,73 @@
+<nav class="uk-navbar-container" uk-navbar style="height:36px">
+    <div class="uk-navbar-left uk-margin-small-top uk-margin-medium-left">
+        <ul class="uk-subnav uk-subnav-divider uk-margin-small-top">
+            <li class="uk-active">
+            <a class="uk-text-lowercase" href={{path('_about_us')}}>
+                {% trans %} О нас {% endtrans %}
+                </a></li>
+            <li class="uk-active"><a class="uk-text-lowercase" href="chat.html">{% trans %} сообщества {% endtrans %}</a></li>
+            <li class="uk-active"><a class="uk-text-lowercase" href="publication.html">{% trans %} публикации {% endtrans %}</a></li>
+            <li class="uk-active"><a class="uk-text-lowercase" href="chat.html">{% trans %} благотоворительность {% endtrans %}</a></li>
+        </ul>
+    </div>
+    <div class="uk-navbar-right uk-margin-top uk-margin-small-right">
+        <ul class="uk-subnav uk-subnav-divider">
+            <li class="uk-active">
+                <div uk-form-custom="target: > * > span:first-child">
+                    <select>
+                        <option value="1">ENG</option>
+                        <option value="2">КЫР</option>
+                        <option value="3">РУС</option>
+                        <option value="4">КАЗ</option>
+                        <option value="5">TR</option>
+                    </select>
+                    <button class="uk-button uk-button-small uk-text-lowercase uk-width-1-1 uk-button-text" type="button" tabindex="-1">
+                        <span class="uk-icon uk-margin-small-right" uk-icon="world"></span>
+                        <span>{% trans %}Язык {% endtrans %}</span>
+                        <span uk-icon="icon: chevron-down"></span>
+                    </button>
+                </div>
+            </li>
+            {% if is_granted('ROLE_USER') %}
+            <li class="uk-active uk-margin-large-right" >
+                <a class="uk-text-lowercase" href="javascript::void()">
+                    <span uk-icon="user"></span>
+                    {{ app.user.username }}
+                    <span uk-icon="chevron-down"></span>
+                </a>
+                <div uk-dropdown>
+                    <ul class="uk-nav uk-dropdown-nav">
+                        <li class="uk-active">
+                            <a href="{{path('_profile_index')}}">
+                                <span uk-icon="cog"></span>
+                                {%trans%}Профиль{%endtrans%}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span uk-icon="mail"></span>
+                                {%trans%}Сообщения{%endtrans%}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span uk-icon="list"></span>
+                                {%trans%}Мои объявления{%endtrans%}
+                            </a>
+                        </li>
+                        <li class="uk-nav-divider"></li>
+                        <li>
+                            <a href="{{path('logout')}}">
+                                <span uk-icon="sign-out"></span>
+                                {%trans%}Выйти{%endtrans%}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            {%else %}
+            <li class="uk-active"><span uk-icon="sign-in"></span><a class="uk-button uk-button-text uk-text-lowercase uk-margin-small-left" href="{{path('login')}}">{% trans %} Вход /{% endtrans %}<a class="uk-button uk-button-text uk-text-lowercase uk-margin-small-left" href="{{path('_user_registration')}}">{% trans %} регистрация{% endtrans %}</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>

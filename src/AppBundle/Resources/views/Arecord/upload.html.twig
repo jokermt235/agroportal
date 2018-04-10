@@ -1,0 +1,52 @@
+{% extends "base.html.twig" %}
+{% block body %}
+<form ng-controller="uploadController" action="{{path('_save_arecord')}}" method="POST">
+    <label for="image"> Image file : </label>
+    <input type="file" file-input ng-model="image" id="image">
+    <a href="javascript::void()" style="margin:10px;text-decoration:none;padding:20px;background:green;color:white" ng-click="uploadImage()">Загрузить</a>
+    <div>
+        <img src="{{'{{uploaded_image}}'}}">
+    </div>
+    <input type="hidden" value="{{session_id}}" name="session_id" ng-model="session_id_model" >
+    <input type="text" name="name" ng-model="name">
+    <button ng-click="saveRecord()">Сохранить</button>
+</form>
+<script>
+    var app = angular.module('learn_symfo', []);
+    var uploadUrl = "{{path('_upload_arecord_image')}}";
+    var session_id = "{{session_id}}";
+    app.controller('uploadController', function($scope, $http) {
+        $scope.saveRecord = function(){
+            /*var fd = new FormData();
+            console.log($scope.image);
+            fd.append('image', $scope.image);
+            $http.post(uploadUrl,fd,{
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+            }).then(function(d){
+                console.log(d);
+            });*/
+        }
+    });
+
+    angular.module("learn_symfo").directive("fileInput", function($http){
+        return {
+            link: function(scope, element,attr){
+                scope.uploadImage = function(){
+                    fd = new FormData();
+                    console.log(element[0].files[0]);
+                    fd.append('image', element[0].files[0]);
+                    fd.append('session_id',scope.session_id);
+                    $http.post(uploadUrl,fd,{
+                        transformRequest: angular.identity,
+                        headers: {'Content-Type': undefined,'UserSession' : session_id}
+                    }).then(function(d){
+                        console.log(d);
+                        scope.uploaded_image = "/uploads/images/" + session_id + "/small_" +  d.data;
+                    });
+                }
+            }
+        };
+    });
+</script>
+{% endblock%}

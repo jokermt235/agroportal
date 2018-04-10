@@ -1,0 +1,206 @@
+{% extends "base.html.twig" %}
+{% block title %}AppBundle:User:registration{% endblock %}
+{% block body %}
+{% include 'header.html.twig' %}
+{% include 'nav.html.twig' %}
+{% include 'actionbar.html.twig' %}
+<div class="uk-panel">
+    <div class="uk-container uk-background-muted uk-margin">
+        <div class="uk-grid-small" uk-grid>
+            <div class="uk-width-expand@s">
+                <div class="uk-panel uk-panel-default uk-panel-small uk-padding-remove">
+                    <div class="uk-grid-small uk-margin-large-left" uk-grid>
+                        <div class="uk-margin-right">
+                            <div class="uk-text-lead">{{myadvert_count}}</div>
+                            <div class="uk-text-meta">{% trans %}Всего объявлений{% endtrans %}</div>
+                        </div>
+                        <div class="uk-margin-right">
+                            <div>
+                                <div class="uk-text-lead">2</div>
+                                <div class="uk-text-meta">{% trans %}Всего сообществ{% endtrans %}</div>
+                            </div>
+                        </div>
+                        <div class="uk-margin-right">
+                            <div>
+                                <div class="uk-text-lead">125</div>
+                                <div class="uk-text-meta">{% trans %}Просмотры{% endtrans %}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-width-auto">
+                <a href="ad_forum.html" class="uk-button uk-button-width-medium  uk-height-1-2 uk-button-secondary uk-button-large">{% trans %} Добавить новое сообщество {% endtrans %}</a>
+            </div>
+            <div class="uk-width-auto">
+                <a href="{{path('advertise')}}" class="uk-button uk-button-width-medium  uk-height-1-2 uk-button-primary uk-button-large">{% trans %} Добавить новое обьявление {% endtrans %}</a>
+            </div>
+        </div>	
+    </div>
+    <div class="uk-container uk-background-muted uk-margin-large-top">
+        <ul class="uk-child-width-expand uk-tab-bottom uk-text-center" uk-tab>
+            <li class="uk-active"><a href="#"></a>{% trans %} Мои объявления {% endtrans %}</li>
+            <li class="uk-active"><a href="#"></a>{% trans %} Мои сообщества {% endtrans %}</li>
+            <li class="uk-active"><a href="#"></a>{% trans %} Настройки {% endtrans %}</li>
+        </ul>
+        <ul class="uk-switcher uk-margin">
+            <li>
+                <div class="uk-panel">
+                    <div class="uk-overflow-auto">
+                        <table class="uk-table uk-table-hover uk-table-middle uk-text-center uk-table-divider">
+                            <thead>
+                                <tr>
+                                    <th class="uk-table-shrink uk-text-center">{% trans %} Дата {% endtrans %}</th>
+                                    <th class="uk-table-shrink uk-text-center">{% trans %} Фото {% endtrans %}</th>
+                                    <th class="uk-table-expand">{% trans %} Описание {% endtrans %}</th>
+                                    <th class="uk-width-small uk-text-center">{% trans %} Просмотры {% endtrans %}</th>
+                                    <th class="uk-width-small uk-text-center">{% trans %} Сообщения {% endtrans %}</th>
+                                    <th class="uk-width-small uk-text-center">{% trans %} Статус {% endtrans %}</th>
+                                    <th class="uk-width-small"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for myadvert in myadverts %}
+                                <tr>
+                                    <td>{{myadvert.created}}</td>
+                                    <td><img class="uk-preserve-width uk-border-rounded" src="/uploads/images/advert/{{myadvert.id}}/{{myadvert.avatar}}"  width="80" height="80" alt=""></td>
+                                    <td class="uk-text-truncate uk-table-link">
+                                        <a class="uk-link-reset" href="{{path('_advert_view',{'id':myadvert.id})}}">
+                                            {{myadvert.title}}
+                                        </a>
+                                    </td>
+                                    <td><span><img src="images/eye.png"></span>{{myadvert.views}}</td>
+                                    <td><span uk-icon="icon:mail; ratio: 1.5;"></span></td>
+                                    <td><a href="#" class="uk-button uk-button-small" style="color: red;">{% trans %} Удалено {% endtrans %}</a></td>
+                                    <td><a href="#" class="uk-button uk-button-small uk-button-primary">{% trans %} Поднять {% endtrans %}</a></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="uk-panel">
+                    <div class="uk-overflow-auto">
+                        <table class="uk-table uk-table-hover uk-table-middle uk-text-center uk-table-divider">
+                            <thead>
+                                <tr>
+                                    <th class="uk-table-shrink uk-text-center">{% trans %} Фото {% endtrans %}</th>
+                                    <th class="uk-table-expand">{% trans %} Описание {% endtrans %}</th>
+                                    <th class="uk-width-small uk-text-center">{% trans %} Участники {% endtrans %}</th>
+                                    <th class="uk-width-small uk-text-center"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><img class="uk-preserve-width uk-border-rounded" src="http://4.bp.blogspot.com/-yHqgwCT6Iws/VeU15kFXNVI/AAAAAAAAAow/F_khg1FkuoU/s320/%25D1%2584%25D0%25B0%25D1%2581%25D0%25BE%25D0%25BB%25D1%258C%252C%2B%25D0%25B1%25D0%25B5%25D0%25BB%25D0%25B0%25D1%258F%252C%2B%25D0%25BA%25D1%2580%25D0%25B0%25D1%2581%25D0%25BD%25D0%25B0%25D1%258F%252C%2B%25D0%25B7%25D0%25B5%25D0%25BB%25D0%25B5%25D0%25BD%25D0%25B0%25D1%258F.jpg" width="80" height="80" alt=""></td>
+                                    <td class="uk-text-truncate uk-table-link">
+                                    <a class="uk-link-reset" href="ad.html"> {% trans %} Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.{% endtrans %}</a></td>
+                                    <td><span><img src="images/multiple-users-silhouette.png"></span>123</td>
+                                    <td><a href="#" class="uk-button uk-button-small uk-button-danger">{% trans %} Выйти {% endtrans %}</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </li>
+            <li class="uk-margin uk-margin-large-bottom uk-margin-left-large">
+                <div class="uk-width-1-2@s uk-width-2-5@m">
+                    <ul class="uk-nav-default uk-nav-parent-icon" uk-nav="multiple: true">
+                        <li class="uk-parent">
+                            <a class="uk-text-uppercase">{% trans %} Изменить фото {% endtrans %}</a>
+                            <ul class="uk-nav-sub uk-margin-large">
+                                <li>
+                                  <img class="uk-border-circle uk-margin-small-right" src="https://vsepobarteru.ru/wp-content/uploads/2015/10/ava_team.png" width="150" height="80">
+                                    <div class="uk-margin" uk-margin>
+                                        <div uk-form-custom="target: true">
+                                            <input type="file">
+                                            <input class="uk-input uk-form-width-medium" type="text" placeholder="Select file" disabled>
+                                        </div>
+                                        <button class="uk-button uk-button-default">{% trans %} Принять {% endtrans %}</button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="uk-parent">
+                            <a class="uk-text-uppercase">{% trans %} Изменить личные данные {% endtrans %}</a>
+                            <ul class="uk-nav-sub uk-margin-large">
+                              <li>
+                                <form class="uk-form-horizontal uk-margin-large">
+
+                                  <div class="uk-margin">
+                                    <label class="uk-form-label" for="form-horizontal-text">{% trans %} Мобильный телефон{% endtrans %} </label>
+                                    <div class="uk-form-controls">
+                                      <input class="uk-input uk-width-large" id="form-horizontal-text" type="text" placeholder="">
+                                    </div>
+                                  </div>
+
+                                  <div class="uk-margin">
+                                    <label class="uk-form-label" for="form-horizontal-text">{% trans %} Email {% endtrans %}</label>
+                                    <div class="uk-form-controls">
+                                      <input class="uk-input uk-width-large" id="form-horizontal-text" type="text" placeholder="">
+                                    </div>
+                                  </div>
+
+                                  <div class="uk-margin">
+                                    <label class="uk-form-label" for="form-horizontal-text">{% trans %} Имя пользователя {% endtrans %}</label>
+                                    <div class="uk-form-controls">
+                                      <input class="uk-input uk-width-large" id="form-horizontal-text" type="text" placeholder="">
+                                    </div>
+                                  </div>
+                                  <div class="uk-margin">
+                                    <div class="uk-form-controls">
+                                      <button class="uk-button uk-button-primary">{% trans %} Принять{% endtrans %} </button>
+                                    </div>
+                                  </div>
+                                </form>
+                              </li>
+                            </ul>
+                        </li>
+                        <li class="uk-parent">
+                            <a class="uk-text-uppercase">{% trans %} Изменить пароль{% endtrans %} </a>
+                            <ul class="uk-nav-sub uk-margin-large uk-margin-large">
+                              <li>
+                                <form class="uk-form-horizontal">
+
+                                  <div class="uk-margin">
+                                    <label class="uk-form-label" for="form-horizontal-text"> {% trans %} Пароль {% endtrans %}</label>
+                                    <div class="uk-form-controls">
+                                      <input class="uk-input uk-width-large" id="form-horizontal-text" type="text" placeholder="">
+                                    </div>
+                                  </div>
+
+                                  <div class="uk-margin">
+                                    <label class="uk-form-label" for="form-horizontal-text"> {% trans %} Подтвердите пароль {% endtrans %}</label>
+                                    <div class="uk-form-controls">
+                                      <input class="uk-input uk-width-large" id="form-horizontal-text" type="text" placeholder="">
+                                    </div>
+                                  </div>
+                                  <div class="uk-margin">
+                                    <div class="uk-form-controls">
+                                      <button class="uk-button uk-button-seconadary">
+                                        {% trans %} Принять {% endtrans %}
+                                      </button>
+                                    </div>
+                                  </div>
+                                </form>
+                              </li>
+                            </ul>
+                        </li>
+                        <li class="uk-parent">
+                            <a class="uk-text-uppercase">{% trans %} Удалить аккаунт{% endtrans %}</a>
+                            <ul class="uk-nav-sub uk-margin-large">
+                              <li>
+                                <button class="uk-button uk-button-danger uk-position-relative uk-position-center">{% trans %} Удалить аккаунт с Agroov.com {% endtrans %}</button>
+                              </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+{% include 'footer.html.twig' %}
+{% endblock%}

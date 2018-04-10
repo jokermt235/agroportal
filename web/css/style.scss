@@ -1,0 +1,42 @@
+
+// 1. Your custom variables and variable overwrites.
+@brand-primary: #c8a755;
+@import "lesshat";
+
+// 2. Import default variables and available mixins.
+@import "uikit/src/scss/variables-theme.scss";
+@import "uikit/src/scss/mixins-theme.scss";
+
+// 3. Your custom mixin overwrites.
+.special {
+  text-transform: uppercase;
+  position: relative;
+  padding: 15px;
+  -webkit-transition: background 0.3s ease-in 0.2s;
+  &:after,
+  &:before {
+    position: absolute;
+    content: '';
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 100%;
+    background: @brand-primary;
+    -webkit-transition: all 0.3s ease-out;
+  }
+  &:before {
+    opacity: 0;
+    bottom: 50%;
+  }
+  &:hover {
+    background: rgba(0,0,0,0.2);
+    -webkit-transition: background 0.3s ease-in 0.2s;
+    &:before {
+      bottom: 100%;
+      opacity: 1;
+    }
+  }
+}
+
+// 4. Import UIkit.
+@import "uikit/src/scss/uikit-theme.scss";

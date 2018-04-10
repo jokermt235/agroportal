@@ -1,0 +1,101 @@
+{% extends "base.html.twig" %}
+{% block title %}AppBundle:User:registration{% endblock %}
+{% block body %}
+{% include 'header.html.twig' %}
+{% include 'nav.html.twig' %}
+{% include 'actionbar.html.twig' %}
+<div class="uk-container uk-margin">
+    <ul class="uk-breadcrumb">
+        <li><a href="/">{% trans %}Главная{% endtrans %}</a></li>
+    </ul>
+    <div class="uk-panel uk-position-relative uk-margin-medium">
+        <div class="uk-position-left">
+            <span uk-icon="arrow-left"></span>
+            <span class="uk-text-meta uk-margin-small-left"><a href="#">{% trans %} Предыдущее объявление{% endtrans %}</a></span>
+        </div>
+        <div class="uk-position-right">
+            <span class="uk-text-meta uk-margin-small-right"><a href="#">{% trans %} Следующее объявление{% endtrans %}</a></span>
+            <span uk-icon="arrow-right"></span>
+        </div>
+    </div>
+    <div class="uk-card uk-card-default uk-card-body" uk-margin>
+        <div class="uk-grid">
+            <div class="uk-width-2-3@m">
+                <div class="uk-grid uk-child-width-expand@s" uk-grid>
+                    <div>
+                        <h3 class="uk-text-bold">{{advert.title}}</h3>
+                        <p class="uk-text-meta">Опубликовано: {{advert.created}} Просмотры: {{advert.views}}</p>
+                    </div>
+                    <div class="uk-width-auto">
+                        <h3 class="uk-text-bold">{{advert.price}} сом</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-width-expand uk-text-center" style="color:blue;">
+                <span uk-icon="upload"></span>
+                <a href="#" class="uk-button uk-button-text uk-text-bold" style="color:blue;">{% trans %}Поднять объявление{% endtrans %}</a>
+            </div>
+        </div>
+    </div>
+    <div class="uk-grid uk-grid-small uk-margin" uk-grid>
+        <div class="uk-width-2-3@m">
+            <div class="uk-position-relative" uk-slideshow="animation: fade">
+                <ul class="uk-slideshow-items">
+                    {% for image in images %}
+                    <li>
+                        <img src="/uploads/images/advert/{{advert.id}}/{{image}}" alt="" uk-cover>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <div class="uk-position-bottom-center uk-position-small">
+                    <ul class="uk-thumbnav">
+                        {% for key, image in images %}
+                        <li uk-slideshow-item={{key}}>
+                            <a hre="#"><img src="/uploads/images/advert/{{advert.id}}/{{image}}" width=100></a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <!--<ul class="uk-thumbnav">
+                        <li uk-slideshow-item="0"><a href="#"><img src="https://getuikit.com/docs/images/photo.jpg" width="100" alt=""></a></li>
+                        <li uk-slideshow-item="1"><a href="#"><img src="https://getuikit.com/docs/images/dark.jpg" width="100" alt=""></a></li>
+                        <li uk-slideshow-item="2"><a href="#"><img src="https://getuikit.com/docs/images/light.jpg" width="100" alt=""></a></li>
+                    </ul>-->
+                </div>
+            </div>
+            <hr>
+            <div class="uk-panel uk-margin">
+                <h3>{% trans %}Описание{% endtrans %}</h3>
+                <p>{{advert.description}}</p>
+            </div>
+        </div>
+        <div class="uk-width-expand">
+            <hr>
+            <div class="uk-panel uk-padding-small">
+                <a href="#" class="uk-button uk-button-large uk-width-1-1 uk-button-default uk-margin-small-bottom" style="font-size:17px">{{advert.phone}}</a>
+                <a href="#" class="uk-button uk-button-secondary uk-button-large uk-width-1-1">{% trans %}Написать сообщение{% endtrans %}</a>
+                <p class="uk-text-meta">{% trans %}Продавец :{% endtrans %}<a href="#" class="uk-text-meta">{% trans %}Наталья{% endtrans %}</a></p>
+                <p class="uk-text-meta">{% trans %}Местонахождение :{% endtrans %}<a href="#" class="uk-text-meta">{% trans %}Бишкек{% endtrans %}</a></p>
+            </div>
+            <hr>
+            <div class="uk-panel uk-padding-small">
+                <div class="uk-position-relative uk-position-small uk-position-right-center uk-visible-toggle uk-light" uk-slideshow="ratio: 3.5:6; animation: push;autoplay: true; autoplay-interval:3000;">
+                    <ul class="uk-slideshow-items">
+                        <li>
+                            <img src="images/" alt="" uk-cover>
+                        </li>
+                        <li>
+                            <img src="https://getuikit.com/docs/images/dark.jpg" alt="" uk-cover>
+                        </li>
+                        <li>
+                            <img src="https://getuikit.com/docs/images/light.jpg" alt="" uk-cover>
+                        </li>
+                    </ul>
+                    <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
+                    <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'footer.html.twig' %}
+{% endblock%}
