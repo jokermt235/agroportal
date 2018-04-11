@@ -29,7 +29,7 @@ class UserController extends Controller
                 ->getRepository(User::class)
                 ->findOneByUsername($request->get('username'));
             if($user){
-                return $this->render('@App/User/registration.html.twig');
+                return $this->render('@App/User/registration.html.twig',array('session_id' => $session->getId()));
             }
             
             $user = 
@@ -37,7 +37,7 @@ class UserController extends Controller
                 ->getRepository(User::class)
                 ->findOneByEmail($request->get('email'));
             if($user){
-                return $this->render('@App/User/registration.html.twig');
+                return $this->render('@App/User/registration.html.twig',array('session_id' => $session->getId()));
             }
 
             $em = $this->getDoctrine()->getManager();
