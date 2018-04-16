@@ -21,6 +21,10 @@ class UserController extends Controller
 
     public function registrationAction(Request $request, UserPasswordEncoderInterface $passwordEncoder,FileUploader $fileUploader)
     {
+        if(!empty($this->getUser())){
+            return $this->redirect($this->generateUrl('homepage'));
+        }
+
         $session = $this->get('session');
         $session->start();
         if($request->isMethod('POST')){
@@ -54,9 +58,12 @@ class UserController extends Controller
             
             $em->persist($user);
             $em->flush();
-            $this->targetDirectory = $fileUploader->getTargetDirectory();
-            $this->moveUploadedFiles($request->get('session_id'),$user->getId());
+
+                $this->targetDirectory = $fileUploader->getTargetDirectory();
+                $this->moveUploadedFiles($request->get('session_id'),$user->getId());
             $session->getFlashBag()->add("success", "This is a success message");
+
+            return $this->redirect($this->generateUrl('login'));
         }
         
         return $this->render('@App/User/registration.html.twig', array('session_id' => $session->getId()));

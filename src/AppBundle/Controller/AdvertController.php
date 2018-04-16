@@ -32,12 +32,14 @@ class AdvertController extends Controller
             $advert->setCityId($request->get('city_id'));
             $advert->setCountryId($request->get('country_id'));
             $advert->setPhone($request->get('phone'));
-            $advert->setDescription($request->get('descrition'));
+            $advert->setDescription($request->get('description'));
             
-            $this->targetDirectory = $fileUploader->getTargetDirectory();
-            $files = $this->moveUploadedFiles($request->get('session_id'),$this->getUser()->getId());
+            if(!empty($fileUploader)){
+                $this->targetDirectory = $fileUploader->getTargetDirectory();
+                $files = $this->moveUploadedFiles($request->get('session_id'),$this->getUser()->getId());
 
-            $advert->setImages(base64_encode(serialize($files)));
+                $advert->setImages(base64_encode(serialize($files)));
+            }
             
             $em->persist($advert);
             $em->flush();

@@ -17,7 +17,9 @@ class SecurityController extends Controller{
     */
     
     public function loginAction(Request $request,  AuthenticationUtils $authUtils){
-
+        if(!empty($this->getUser())){
+            return $this->redirect($this->generateUrl('homepage'));
+        }
         // get the login error if there is one
         $error = $authUtils->getLastAuthenticationError();
         

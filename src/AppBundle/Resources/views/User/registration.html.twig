@@ -5,24 +5,7 @@
 {% include 'nav.html.twig' %}
 {% include 'actionbar.html.twig' %}
 <div class="uk-panel">
-    {% for message in app.flashes('success') %}
-        <!--<div class="uk-alert-success" uk-alert>
-            <a class="uk-alert-close" uk-close></a>
-            <p>{{ message }}</p>
-        </div>--!>
-        <div id="success" uk-modal>
-            <div class="uk-modal-dialog uk-modal-body">
-                <h2 class="uk-modal-title">{% trans %}Успех{% endtrans%}</h2>
-                <p>{{ message }}</p>
-                <p class="uk-text-right">
-                    <button class="uk-button uk-button-default uk-modal-close" type="button">{% trans %}Закрыть{% endtrans%}</button>
-                </p>
-            </div>
-        </div>
-        <script>
-            UIkit.modal('#success').show();
-        </script>
-    {% endfor %}
+    
     <div class="uk-navbar-container">
 	    <ul class="uk-subnav uk-subnav-pill uk-text-center uk-flex-center" uk-switcher="animation: uk-animation-slide-left-medium, uk-animation-slide-right-medium">
 		    <li><a class="uk-buton uk-button-default uk-margin-top uk-width-medium">{% trans %}Заполнить форму для физического лица{% endtrans %}</a></li>

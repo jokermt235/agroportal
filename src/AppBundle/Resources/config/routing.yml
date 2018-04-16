@@ -53,3 +53,7 @@ _upload_advert_image:
 _advert_view:
     path: /advert/view/{id}
     defaults: { _controller: AppBundle:Advert:view }
+
+_get_category_for_user:
+    path: /user_view_category
+    defaults: {_controller: AppBundle:Category:index}

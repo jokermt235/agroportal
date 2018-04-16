@@ -13,18 +13,16 @@
                     </div>
                 </div>
             </div>
-            <div>
-                <div uk-form-custom="target: > * > span:first-child">
-                    <select>
+            <div ng-controller="categoryChooseController">
+                <div uk-form-custom="target: > * > span:first-child" class="uk-form-custom">
+                    <select ng-options="item as item.name for item in items track by item.id" ng-model="selected" ng-model="category">
                         <option value="">{%trans%}Категории{%endtrans%}</option>
                     </select>
+                    <button class="uk-button uk-button-default" type="button" tabindex="-1">
+                        <span></span>
+                        <span uk-icon="icon: chevron-down"></span>
+                    </button>
                 </div>
-            </div>
-            <div>
-                <button class="uk-button uk-button-default" type="button" tabindex="-1">
-                    <span></span>
-                    <span uk-icon="icon: chevron-down"></span>
-                </button>
             </div>
             <div>
                 <button class="uk-button uk-button-default">
@@ -40,4 +38,14 @@
         </a>
     </div>
 </div>
+<script>
+    var action_app = angular.module('agroov', []);
+    var _get_category_for_user = "{{path('_get_category_for_user')}}";
+    action_app.controller('categoryChooseController',function($scope,$http){
+        $http.get(_get_category_for_user).then(function(result){
+            $scope.items = result.data;
+            console.log(result.data);
+        });
+    });
+</script>
 
