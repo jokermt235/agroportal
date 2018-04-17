@@ -57,3 +57,6 @@ _advert_view:
 _get_category_for_user:
     path: /user_view_category
     defaults: {_controller: AppBundle:Category:index}
+_delete_user_image:
+    path: /user/delete_image
+    defaults: {_controller: AppBundle:User:deleteImage}

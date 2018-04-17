@@ -50,7 +50,10 @@ class UserController extends Controller
             if($request->get('password') === $request->get('password_retype')){
                 $password = $passwordEncoder->encodePassword($user, $user->getPassword());
                 $user->setPassword($password);
+            }else{
+                return $this->render('@App/User/registration.html.twig', array('session_id' => $session->getId()));
             }
+
             $user->setPassword($password);
             $user->setFio($request->get('fio'));
             $user->setEmail($request->get('email'));
@@ -59,9 +62,13 @@ class UserController extends Controller
             $em->persist($user);
             $em->flush();
 
+            if(!empty($fileUploader)){
                 $this->targetDirectory = $fileUploader->getTargetDirectory();
-                $this->moveUploadedFiles($request->get('session_id'),$user->getId());
-            $session->getFlashBag()->add("success", "This is a success message");
+                $files = $this->moveUploadedFiles($request->get('session_id'),$user->getId());
+                $user->setImages(base64_encode(serialize($files))); 
+                $session->getFlashBag()->add("success", "This is a success message");
+            }
+
 
             return $this->redirect($this->generateUrl('login'));
         }
@@ -138,5 +145,17 @@ class UserController extends Controller
                 ->findAdvertByUserId($this->getUser()->getId())
             )
         );
+    }
+
+    public function deleteImageAction(Request $request){
+        unlink($this->get('kernel')->getProjectDir().'/web/'.$request->headers->get('UserImage'));
+        unlink(
+            str_replace(
+                'small_',
+                '',
+                $this->get('kernel')->getProjectDir().'/web/'.$request->headers->get('UserImage')
+            )
+        );
+        return new Response("Image has been deleted");
     }
 }

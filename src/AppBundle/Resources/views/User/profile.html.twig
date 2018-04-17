@@ -37,7 +37,7 @@
             </div>
         </div>	
     </div>
-    <div class="uk-container uk-background-muted uk-margin-large-top">
+    <div class="uk-container  uk-margin-large-top">
         <ul class="uk-child-width-expand uk-tab-bottom uk-text-center" uk-tab>
             <li class="uk-active"><a href="#"></a>{% trans %} Мои объявления {% endtrans %}</li>
             <li class="uk-active"><a href="#"></a>{% trans %} Мои сообщества {% endtrans %}</li>
@@ -47,32 +47,56 @@
             <li>
                 <div class="uk-panel">
                     <div class="uk-overflow-auto">
-                        <table class="uk-table uk-table-hover uk-table-middle uk-text-center uk-table-divider">
+                        <table class="uk-table uk-table-hover uk-table-middle  uk-table-divider">
                             <thead>
                                 <tr>
                                     <th class="uk-table-shrink uk-text-center">{% trans %} Дата {% endtrans %}</th>
                                     <th class="uk-table-shrink uk-text-center">{% trans %} Фото {% endtrans %}</th>
-                                    <th class="uk-table-expand">{% trans %} Описание {% endtrans %}</th>
-                                    <th class="uk-width-small uk-text-center">{% trans %} Просмотры {% endtrans %}</th>
-                                    <th class="uk-width-small uk-text-center">{% trans %} Сообщения {% endtrans %}</th>
-                                    <th class="uk-width-small uk-text-center">{% trans %} Статус {% endtrans %}</th>
-                                    <th class="uk-width-small"></th>
+                                    <th class="uk-table-expand">{% trans %}Объявление{% endtrans %}</th>
+                                    <th class="uk-table-shrink uk-text-center">{% trans %} Просмотры {% endtrans %}</th>
+                                    <th class="uk-table-shrink uk-text-center">{% trans %} Сообщения {% endtrans %}</th>
+                                    <th class="uk-table-shrink uk-text-center">{% trans %} Статус {% endtrans %}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for myadvert in myadverts %}
                                 <tr>
-                                    <td>{{myadvert.created}}</td>
-                                    <td><img class="uk-preserve-width uk-border-rounded" src="/uploads/images/advert/{{myadvert.id}}/{{myadvert.avatar}}"  width="80" height="80" alt=""></td>
-                                    <td class="uk-text-truncate uk-table-link">
-                                        <a class="uk-link-reset" href="{{path('_advert_view',{'id':myadvert.id})}}">
-                                            {{myadvert.title}}
-                                        </a>
+                                    <td width="100" >{{myadvert.created}}</td>
+                                    <td>
+                                        <img class="uk-preserve-width uk-border-rounded uk-margin-small-top" 
+                                        src="/uploads/images/advert/{{myadvert.id}}/{{myadvert.avatar}}"  width="90" height="90" alt="">
+                                    </td>
+                                    <td class="uk-table-link">
+                                        <ul class="uk-nav uk-nav-default  uk-margin-medium-left">
+                                            <li>
+                                                <a style="color:#0275d8" 
+                                                href="{{path('_advert_view',{'id':myadvert.id})}}">
+                                                    <b>{{myadvert.title}}</b>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" style="color:#0275d8">
+                                                    <span uk-icon="icon: trash;ratio: 0.9"></span>
+                                                    <span>{%trans%}Удалить{%endtrans%}</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" style="color:#0275d8">
+                                                    <span uk-icon="icon: file-edit;ratio: 0.91"></span>
+                                                    <span>{%trans%}Редактировать{%endtrans%}</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" style="color:#0275d8">
+                                                    <span uk-icon="icon:arrow-up;ratio: 0.91"></span>
+                                                    <span>{%trans%}Поднять{%endtrans%}</span>
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </td>
                                     <td><span><img src="images/eye.png"></span>{{myadvert.views}}</td>
-                                    <td><span uk-icon="icon:mail; ratio: 1.5;"></span></td>
+                                    <td><a style="color:orange" href="#"><span uk-icon="icon:mail; ratio: 1.5;"></span></a></td>
                                     <td><a href="#" class="uk-button uk-button-small" style="color: red;">{% trans %} Удалено {% endtrans %}</a></td>
-                                    <td><a href="#" class="uk-button uk-button-small uk-button-primary">{% trans %} Поднять {% endtrans %}</a></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

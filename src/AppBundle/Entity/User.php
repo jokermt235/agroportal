@@ -70,9 +70,17 @@ class User implements UserInterface
     }
 
     /**
-    * @ORM\Column(type="string", length=80)
+    * @ORM\Column(type="text")
     */
     private $images;
+
+    public function setImages($images){
+        $this->images = $images;
+    }
+    
+    public function getImages($images){
+        return $this->images;
+    }   
     
     /**
     * @ORM\Column(type="integer")
