@@ -95,7 +95,14 @@
                                 <a ng-click="uploadImage()" class="uk-button uk-button-default">{% trans %}Загрузить{% endtrans %}</a>
                             </div>
                             <div>
-                                <img src="{{'{{uploaded_image}}'}}">
+                                <ul class="uk-iconnav">
+                                    <li><img src={{'{{uploaded_image}}'}}></li>    
+                                    <li>
+                                        <a ng-click="deleteCurrentImage()" href="javascript::void()" 
+                                        uk-icon="icon: trash" style="color:red">
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                         <div class="uk-margin">
@@ -253,8 +260,8 @@
 </div>
 {% include 'footer.html.twig' %}
 <script>
-    var app = angular.module('agroov', []);
     var uploadUrl = "{{path('_upload_user_image')}}";
+    var deleteImageUrl = "{{path('_delete_user_image')}}";
     var session_id = "{{session_id}}";
     angular.module("agroov").directive("fileInput", function($http){
         return {
@@ -272,6 +279,17 @@
                         scope.uploaded_image = "/uploads/tmp/" + session_id + "/small_" +  d.data;
                     });
                 }
+                scope.deleteCurrentImage = function(){
+                    $http.post(deleteImageUrl,{'iamge':scope.uploaded_image},
+                        {
+                            headers: {'UserImage' : scope.uploaded_image}
+                        }).then(
+                        function(d){
+                            console.log(d);
+                            scope.uploaded_image = '';
+                        });
+                }
+                
             }
         };
     });
