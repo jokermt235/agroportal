@@ -136,4 +136,47 @@ class AdvertController extends Controller
         );
     }
 
+    public function editAction($id=null){
+        $session = $this->get('session');
+        $session->start();
+        $advert = $this->getDoctrine()
+            ->getRepository(Advert::class)
+            ->findAdvertById($id);
+        
+        $previews = [];
+        $images = [] ;
+
+        foreach(unserialize(base64_decode($advert->getImages())) as $image){
+            if(strpos($image,'small') === 0){
+                $previews[] = $image;
+            }else{
+                $images[] = $image;
+            }
+        }
+        return $this->render('@App/Advert/edit.html.twig',
+            array(
+                'advert'=>$advert,
+                'session_id' => $session->getId(),
+                'categories' => $this->getCategories(),
+                'sections' => $this->getSections(),
+                'images' => $images,
+                'previews' => $previews
+            )
+        );
+    }
+
+    public function deleteImageAction(Request $request){
+        $data = json_decode($request->getContent(),true);
+        $params = $data['data'];
+        unlink($this->get('kernel')->getProjectDir().'/web/'.$params['image']);
+        unlink(
+            str_replace(
+                'small_',
+                '',
+                $this->get('kernel')->getProjectDir().'/web/'.$params['image']
+            )
+        );
+        return new Response($request->getContent());
+    }
+
 }

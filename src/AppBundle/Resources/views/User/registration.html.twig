@@ -280,7 +280,7 @@
                     });
                 }
                 scope.deleteCurrentImage = function(){
-                    $http.post(deleteImageUrl,{'iamge':scope.uploaded_image},
+                    $http.post(deleteImageUrl,{'image':scope.uploaded_image},
                         {
                             headers: {'UserImage' : scope.uploaded_image}
                         }).then(
