@@ -104,7 +104,6 @@
 </div>
 {% include 'footer.html.twig' %}
 <script>
-    var app = angular.module('agroov', []);
     var uploadUrl = "{{path('_upload_advert_image')}}";
     var session_id = "{{session_id}}";
     angular.module("agroov").directive("fileInput", function($http){

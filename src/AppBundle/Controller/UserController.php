@@ -59,8 +59,8 @@ class UserController extends Controller
             $em->persist($user);
             $em->flush();
 
-                $this->targetDirectory = $fileUploader->getTargetDirectory();
-                $this->moveUploadedFiles($request->get('session_id'),$user->getId());
+            $this->targetDirectory = $fileUploader->getTargetDirectory();
+            $this->moveUploadedFiles($request->get('session_id'),$user->getId());
             $session->getFlashBag()->add("success", "This is a success message");
 
             return $this->redirect($this->generateUrl('login'));
