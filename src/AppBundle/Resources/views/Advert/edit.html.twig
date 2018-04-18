@@ -1,0 +1,164 @@
+{% extends "base.html.twig" %}
+{% block title %}AppBundle:User:registration{% endblock %}
+{% block body %}
+{% include 'header.html.twig' %}
+{% include 'nav.html.twig' %}
+{% include 'actionbar.html.twig' %}
+<hr>
+<div class="uk-panel uk-margin">
+    <div class="uk-container uk-margin uk-width-xxlarge">
+        <form class="uk-form-horizontal uk-margin-large" action="" method="POST">
+            <input type="hidden" value="{{session_id}}" name="session_id" ng-model="session_id_model" >
+            <div class="uk-margin">
+                <label class="uk-form-label" for="for-horizontal-text">{% trans %}Заголовок{% endtrans %}</label>
+                <div class="uk-form-controls">
+                    <input value="{{advert.title}}" name="id" ng-model="advert_id" type="hidden">    
+                    <input value="{{advert.title}}" name="title" class="uk-input" id="form-horizontal-text" type="text">
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="for-horizontal-text">{% trans %}Раздел{% endtrans %}</label>
+                <div class="uk-form-controls">
+                    <select value="{{advert.sectionId}}" class="uk-select" name="section_id" id="form-horizontal-select">
+                        <option value="0">Пусто</option>
+                        {% for section in  sections %}
+                        {% set selected = ''%}
+                        {% if section.id == advert.sectionId %}
+                        {% set selected = "selected" %}
+                        {% endif%}
+                            <option value="{{ section.id}}" {{selected}}>{{section.name}}</option>
+                        {% endfor%}
+                    </select>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="for-horizontal-text">{% trans %}Категория{% endtrans %}</label>
+                <div class="uk-form-controls">
+                    <select class="uk-select" name="category_id" id="form-horizontal-select">
+                        <option value="0">Пусто</option>
+                        {% for category in  categories %}
+                        {% set selected = ''%}
+                        {% if category.id == advert.categoryId %}
+                        {% set selected = "selected" %}
+                        {% endif%}
+                            <option value="{{ category.id}}" {{selected}}>{{category.name}}</option>
+                        {% endfor%}
+                    </select>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="for-horizontal-text">{% trans %}Цена{% endtrans %}</label>
+                <div class="uk-form-controls">
+                    <input name="price" value="{{advert.price}}" class="uk-input" id="form-horizontal-text" type="text">
+                </div>
+            </div> 
+            <div class="uk-margin">
+                <label class="uk-form-label" for="for-horizontal-text">{% trans %}Описание{% endtrans %}</label>
+                <div class="uk-form-controls">
+                    <textarea name="description" value="{{advert.description}}"class="uk-textarea" rows=5></textarea>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="for-horizontal-text">{% trans %}Страна{% endtrans %}</label>
+                <div class="uk-form-controls">
+                    <select name="country_id" class="uk-select" id="form-horizontal-select">
+                        <option value=0>Пусто</option>
+                    </select>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="for-horizontal-text">{% trans %}Город{% endtrans %}</label>
+                <div class="uk-form-controls">
+                    <select name="city_id" class="uk-select" id="form-horizontal-select">
+                        <option value=0>Пусто</option>
+                    </select>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="for-horizontal-text">{% trans %}Телефон{% endtrans %}</label>
+                <div class="uk-form-controls">
+                    <div class="uk-inline">
+                        <span class="uk-form-icon" uk-icon="icon: receiver"></span>
+                        <input name="phone" value="{{advert.phone}}" class="uk-input" for="form-horizontal-text" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="for-horizontal-text">{% trans %}Фото{% endtrans %}</label>
+                <div class="uk-form-controls">
+                    <div uk-form-custom="target: true">
+                        <input file-input ng-model="image" type="file">
+                        <input class="uk-input uk-form-width-medium" type="text" placeholder="Выбрать файл">
+                    </div>
+                    <a ng-click="uploadImage()" class="uk-button uk-button-default">{% trans %}Загрузить{% endtrans %}</a>
+                </div>
+            </div>
+            <div class="uk-margin" id="image_preview">
+                <ul class="uk-iconnav">
+                    {% for preview in previews %}
+                    <li><img src="/uploads/images/advert/{{advert.id}}/{{preview}}"></li>    
+                    <li>
+                        <a class="delete-image" data-image="/uploads/images/advert/{{advert.id}}/{{preview}}"  ng-click="deleteCurrentImage($event.target)" href="javascript:void(0)" style="color:red">&#x26CC;
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="uk-margin">
+                <button class="uk-button uk-button-primary uk-button-large" type="submit">{% trans %}Подать объявление{% endtrans %}</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="uk-container uk-margin-large">
+    <div class="uk-alert-primary uk-padding" uk-alert>
+        <h3>{% trans %}Подать объявление {% endtrans %}</h3> 
+        <p>{% trans %}– добавлять объявления в течение 24 часа 1 раз бесплатно, остальные добавления за это время платные, 1 объявление стоит 1 долл./ 70 сом/ 350 тенге/ 70 рублей/;{% endtrans %}</p>
+        <p>{% trans %}– поднимать объявления на первую строку среди других объявлений в течение 24 часа 1 раз бесплатно, остальные поднятия за это время платные, 1 поднятие стоит 0.5 долл. (35 сом / 175 тенге / 35 рублей);{% endtrans %}</p>
+        <p>{% trans %}– для добавления вы должны выбрать категорию, страну рекламодателя и язык рекламы;{% endtrans %}</p>
+        <p>{% trans %}– в одном объявлении только один товар, должен быть заголовок, указана цена, валюта, контактный телефон, адрес, изображение товара, подробная информация;{% endtrans %}</p>
+        <p>{% trans %}– все ваши материалы контролируете вы сами и модератор сайта;{% endtrans %}</p>
+    </div>
+</div>
+{% include 'footer.html.twig' %}
+<script>
+    var uploadUrl = "{{path('_upload_advert_image')}}";
+    var session_id = "{{session_id}}";
+    var deleteImageUrl = "{{path('_delete_advert_image')}}";
+    angular.module("agroov").directive("fileInput", function($http){
+        return {
+            link: function(scope, element,attr){
+                scope.uploadImage = function(){
+                    fd = new FormData();
+                    console.log(element[0].files[0]);
+                    fd.append('image', element[0].files[0]);
+                    fd.append('session_id',scope.session_id);
+                    $http.post(uploadUrl,fd,{
+                        transformRequest: angular.identity,
+                        headers: {'Content-Type': undefined,'UserSession' : session_id}
+                    }).then(function(d){
+                        console.log(d);
+
+                        document.getElementById('image_preview').innerHTML += "<img src=" + "/uploads/tmp/" + session_id + "/small_" +  d.data + ">";
+                    });
+                }
+                
+                scope.deleteCurrentImage = function(item){
+                    var data = 
+                        {   
+                            data:{
+                                "image" : angular.element(item)[0].attributes['data-image'].value,
+                                "id" : scope.advert_id
+                            }
+                        };
+                    $http.post(deleteImageUrl,data).then(function(d){
+                        if(d){
+                            item.remove();
+                        }
+                    });
+                }
+            }
+        };
+    });
+</script>
+{% endblock%}
