@@ -36,7 +36,7 @@ class AdvertController extends Controller
             
             if(!empty($fileUploader)){
                 $this->targetDirectory = $fileUploader->getTargetDirectory();
-                $files = $this->moveUploadedFiles($request->get('session_id'),$this->getUser()->getId());
+                $files = $this->moveUploadedFiles($request->get('session_id'),$advert->getId());
 
                 $advert->setImages(base64_encode(serialize($files)));
             }
@@ -85,8 +85,12 @@ class AdvertController extends Controller
             $dirname = str_replace("tmp","images",$tmpDir).'/advert/'.$id;
             $fileSystem->mkdir($dirname);
             $finder = new Finder();
-
-            $finder->files()->in($this->targetDirectory.'/'.$session_id);
+            
+            if($fileSystem->exists($this->targetDirectory.'/'.$session_id)){
+                $finder->files()->in($this->targetDirectory.'/'.$session_id);
+            }else{
+                return [];
+            }
 
             foreach($finder as $file){
                 $files[] = $file->getRelativePathname();
@@ -136,7 +140,7 @@ class AdvertController extends Controller
         );
     }
 
-    public function editAction($id=null){
+    public function editAction($id=null,Request $request ,FileUploader $fileUploader){
         $session = $this->get('session');
         $session->start();
         $advert = $this->getDoctrine()
@@ -153,6 +157,34 @@ class AdvertController extends Controller
                 $images[] = $image;
             }
         }
+        
+        if($request->isMethod('POST')){
+
+            $em = $this->getDoctrine()->getManager();
+            $advert->setTitle($request->get('title'));
+            $advert->setPrice($request->get('price'));
+            $advert->setSectionId($request->get('section_id'));
+            $advert->setCategoryId($request->get('category_id'));    
+            $advert->setCityId($request->get('city_id'));
+            $advert->setCountryId($request->get('country_id'));
+            $advert->setPhone($request->get('phone'));
+            $advert->setDescription($request->get('description'));
+            
+            if(!empty($fileUploader)){
+                $this->targetDirectory = $fileUploader->getTargetDirectory();
+                $files = $this->moveUploadedFiles($request->get('session_id'),$this->getUser()->getId());
+
+                $advert->setImages(base64_encode(serialize($files)));
+            }else{
+                $advert->setImages(base64_encode(serialize('')));
+            }
+            
+            $em->persist($advert);
+            $em->flush();
+            
+            $session->getFlashBag()->add("success", "This is a success message");
+        }
+        
         return $this->render('@App/Advert/edit.html.twig',
             array(
                 'advert'=>$advert,
@@ -167,13 +199,22 @@ class AdvertController extends Controller
 
     public function deleteImageAction(Request $request){
         $data = json_decode($request->getContent(),true);
-        $params = $data['data'];
+        $params = $data;
         unlink($this->get('kernel')->getProjectDir().'/web/'.$params['image']);
         unlink(
             str_replace(
                 'small_',
                 '',
                 $this->get('kernel')->getProjectDir().'/web/'.$params['image']
+            )
+        );
+
+        unlink($this->get('kernel')->getProjectDir().'/web/uploads/tmp/'.$params['session_id'].'/'.basename($params['image']));
+        unlink(
+            str_replace(
+                'small_',
+                '',
+                $this->get('kernel')->getProjectDir().'/web/uploads/tmp/'.$params['session_id'].'/'.basename($params['image'])
             )
         );
         return new Response($request->getContent());

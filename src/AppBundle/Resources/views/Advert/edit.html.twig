@@ -8,11 +8,11 @@
 <div class="uk-panel uk-margin">
     <div class="uk-container uk-margin uk-width-xxlarge">
         <form class="uk-form-horizontal uk-margin-large" action="" method="POST">
-            <input type="hidden" value="{{session_id}}" name="session_id" ng-model="session_id_model" >
+            <input type="hidden" value="{{session_id}}" name="session_id" ng-init="session_id='{{session_id}}'" ng-model="session_id" >
             <div class="uk-margin">
                 <label class="uk-form-label" for="for-horizontal-text">{% trans %}Заголовок{% endtrans %}</label>
                 <div class="uk-form-controls">
-                    <input value="{{advert.title}}" name="id" ng-model="advert_id" type="hidden">    
+                    <input value="{{advert.id}}" name="id" ng-model="id" ng-init="id='{{advert.id}}'" type="hidden">    
                     <input value="{{advert.title}}" name="title" class="uk-input" id="form-horizontal-text" type="text">
                 </div>
             </div>
@@ -55,7 +55,7 @@
             <div class="uk-margin">
                 <label class="uk-form-label" for="for-horizontal-text">{% trans %}Описание{% endtrans %}</label>
                 <div class="uk-form-controls">
-                    <textarea name="description" value="{{advert.description}}"class="uk-textarea" rows=5></textarea>
+                    <textarea name="description" value="{{advert.description}}"class="uk-textarea" rows=5>{{advert.description}}</textarea>
                 </div>
             </div>
             <div class="uk-margin">
@@ -95,10 +95,12 @@
             </div>
             <div class="uk-margin" id="image_preview">
                 <ul class="uk-iconnav">
+                    {% set index = 0 %}
                     {% for preview in previews %}
-                    <li><img src="/uploads/images/advert/{{advert.id}}/{{preview}}"></li>    
+                    {% set index = index + 1 %}
+                    <li id="{{index}}"><img src="/uploads/images/advert/{{advert.id}}/{{preview}}"></li>    
                     <li>
-                        <a class="delete-image" data-image="/uploads/images/advert/{{advert.id}}/{{preview}}"  ng-click="deleteCurrentImage($event.target)" href="javascript:void(0)" style="color:red">&#x26CC;
+                        <a data-id="{{index}}" class="delete-image" data-image="/uploads/images/advert/{{advert.id}}/{{preview}}"  ng-click="deleteCurrentImage($event.target)" href="javascript:void(0)" style="font-size:20px;color:red">&#x26CC;
                         </a>
                     </li>
                     {% endfor %}
@@ -144,16 +146,15 @@
                 }
                 
                 scope.deleteCurrentImage = function(item){
-                    var data = 
-                        {   
-                            data:{
-                                "image" : angular.element(item)[0].attributes['data-image'].value,
-                                "id" : scope.advert_id
-                            }
-                        };
+                    var data = {   
+                        "image" : angular.element(item)[0].attributes['data-image'].value,
+                        "id" : scope.id,
+                        "session_id" : scope.session_id
+                    };
                     $http.post(deleteImageUrl,data).then(function(d){
                         if(d){
-                            item.remove();
+                            angular.element(item).parent().remove();
+                            document.getElementById(angular.element(item)[0].attributes['data-id'].value).remove();
                         }
                     });
                 }

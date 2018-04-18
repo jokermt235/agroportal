@@ -43,12 +43,6 @@ class FileUploader
 
     public function getFilePreview($file, $session_id){
         $this->file = $file;
-        /*$disposition = $response->headers->makeDisposition(
-            ResponseHeaderBag::DISPOSITION_INLINE, 'test'
-        );
-        $response->headers->set('Content-Disposition', $disposition);
-        $response->headers->set('Content-Type', $file->getMimeType());
-        $response->setContent($this->getThumbNail($file->getRealPath()));*/
         return $this->getThumbNail($file->getRealPath(),$session_id);
     }
 
@@ -83,10 +77,6 @@ class FileUploader
 
         $small_file_path  = $small_file_dir.'/small_'.$preview_file_name;
 
-        //$big_filename = basename($big_image);
-
-        //$small_filename = "small_".$big_filename;
-        //$small_image = str_replace($big_filename,$small_filename,$big_image);
         $im->writeImage($small_file_path);
         
         $normalImage->writeImage($small_file_dir.'/'.$preview_file_name);
