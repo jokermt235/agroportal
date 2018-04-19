@@ -43,6 +43,10 @@ class AdvertController extends Controller
             
             $em->persist($advert);
             $em->flush();
+
+            $fileSystem = new Filesystem();
+
+            $fileSystem->remove($this->targetDirectory);
             
             $session->getFlashBag()->add("success", "This is a success message");
         }
@@ -170,9 +174,10 @@ class AdvertController extends Controller
             $advert->setPhone($request->get('phone'));
             $advert->setDescription($request->get('description'));
             
-            if(!empty($fileUploader)){
+            if(!empty($fileUploader))
+            {
                 $this->targetDirectory = $fileUploader->getTargetDirectory();
-                $files = $this->moveUploadedFiles($request->get('session_id'),$this->getUser()->getId());
+                $files = $this->moveUploadedFiles($request->get('session_id'),$advert->getId());
 
                 $advert->setImages(base64_encode(serialize($files)));
             }else{
@@ -181,8 +186,14 @@ class AdvertController extends Controller
             
             $em->persist($advert);
             $em->flush();
+
+            $fileSystem = new Filesystem();
+
+            $fileSystem->remove($this->targetDirectory);
             
             $session->getFlashBag()->add("success", "This is a success message");
+
+            return $this->forward('AppBundle:User:profile');
         }
         
         return $this->render('@App/Advert/edit.html.twig',
