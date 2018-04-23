@@ -75,7 +75,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#" style="color:#0275d8">
+                                                <a href="{{path('_advert_delete',{'id':myadvert.id})}}" style="color:#0275d8">
                                                     <span uk-icon="icon: trash;ratio: 0.9"></span>
                                                     <span>{%trans%}Удалить{%endtrans%}</span>
                                                 </a>
@@ -101,11 +101,41 @@
                                         <span class="uk-margin-left" style="color:#0275d8;font-size:14px;font-weight:bolder;">  {{myadvert.views}} </span>
                                     </td>
                                     <td><a style="color:#1e87f0" href="#"><span uk-icon="icon:mail; ratio: 1.5;"></span></a></td>
-                                    <td><a href="#" class="uk-button uk-button-small" style="color: red;">{% trans %} Удалено {% endtrans %}</a></td>
+                                    <td>
+                                        {% if myadvert.status == 0 %}
+                                        <a href="#" class="uk-button uk-button-small" style="color:red;">
+                                            {% trans %} Восстановить {% endtrans %}
+                                        </a>
+                                        {% elseif myadvert.status == 1 %}
+                                        <a href="#" class="uk-button uk-button-small" style="color:green;">
+                                            {% trans %} Активно {% endtrans %}
+                                        </a>
+                                        {% else %}
+                                        <a href="#" class="uk-button uk-button-small" style="color:gray;">
+                                            {% trans %} Ожедание {% endtrans %}
+                                        </a>            
+                                        {% endif %}
+                                                    
+                                    </td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
+                        <div class="uk-padding-left-large uk-padding-right-large">
+                            <ul class="uk-pagination uk-margin-top uk-margin-bottom">
+                                <li>
+                                    <a href="#">
+                                        <span class="uk-margin-small-right" uk-pagination-previous></span>
+                                        {% trans %}Назад{% endtrans %}
+                                    </a>
+                                </li>
+                                <li class="uk-margin-auto-left">
+                                    <a href="#">{% trans %}Вперед{% endtrans %}
+                                        <span class="uk-margin-small-left" uk-pagination-next></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </li>

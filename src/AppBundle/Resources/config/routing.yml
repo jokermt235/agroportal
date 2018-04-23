@@ -58,6 +58,10 @@ _advert_edit:
     path: /advert/edit/{id}
     defaults: { _controller: AppBundle:Advert:edit }
 
+_advert_delete:
+    path: /advert/delete/{id}
+    defaults: { _controller: AppBundle:Advert:delete }
+
 _delete_advert_image:
     path: /user/delete_image
     defaults: {_controller: AppBundle:Advert:deleteImage}

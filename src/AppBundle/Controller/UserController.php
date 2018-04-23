@@ -19,6 +19,8 @@ class UserController extends Controller
 {
     private $targetDirectory;
 
+    private $max_page = 15;
+
     public function registrationAction(Request $request, UserPasswordEncoderInterface $passwordEncoder,FileUploader $fileUploader)
     {
         if(!empty($this->getUser())){
@@ -81,7 +83,7 @@ class UserController extends Controller
         return new Response($fileUploader->getFilePreview($file,$session_id));
     }
 
-    public function profileAction(){
+    public function profileAction(Request $request){
         $myadverts = $this->getDoctrine()
                     ->getRepository(Advert::class)
                     ->findAdvertByUserId($this->getUser()->getId());
@@ -96,13 +98,18 @@ class UserController extends Controller
                 }
             }
         }
+        $count  = $this->getDoctrine()
+                    ->getRepository(Advert::class)
+                    ->getAdvertCountByUserId($this->getUser()->getId());
+        if(empty($request->get('page'))){
+            $page = 0;
+        }
         return  $this->render('@App/User/profile.html.twig',
             array(
-                'myadvert_count' => 
-                    $this->getDoctrine()
-                    ->getRepository(Advert::class)
-                    ->getAdvertCountByUserId($this->getUser()->getId()),
-                'myadverts' =>$myadverts
+                'myadvert_count' => $count,
+                'myadverts' =>$myadverts,
+                'page_count'=> ceil($count / $this->max_page),
+                'page'=>$page
                     
             )
         );
