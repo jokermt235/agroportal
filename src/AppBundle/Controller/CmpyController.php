@@ -9,4 +9,8 @@ class CmpyController extends Controller
         return $this->render('@App/Cmpy/aboutus.html.twig');
     }
 
+    public function rulesAction(){
+        return $this->render('@App/Cmpy/rules.html.twig');
+    }
+
 }

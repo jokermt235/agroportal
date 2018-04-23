@@ -1,0 +1,94 @@
+{% extends "base.html.twig" %}
+{% block title %}AppBundle:User:registration{% endblock %}
+{% block body %}
+{% include 'header.html.twig' %}
+{% include 'nav.html.twig' %}
+{% include 'actionbar.html.twig' %}
+<div class="uk-panel uk-margin-medium-left uk-margin">
+    <ul class="uk-breadcrumb">
+        <li><a href="/">{% trans %}Главная {% endtrans %}</a></li>
+        <li><a href="{{path('_add_forum')}}">{% trans %}Создать новое сообщество {% endtrans %}</a></li>
+    </ul>
+</div>
+<div class="uk-container uk-margin-large-left uk-margin-large-right uk-margin-large-top">
+    <h3 class="uk-text-bold">{% trans %}Добавить новое сообщество бесплатно{% endtrans %}</h3>
+    <form class="uk-form-horizontal uk-margin-large" action="" method="POST">
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-horizontal-text">
+                {% trans %}Введите заголовок{% endtrans %}
+            </label>
+            <div class="uk-form-controls">
+                <input class="uk-input" type="text" placeholder="">
+            </div>
+        </div>
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-horizontal-text">{% trans %}Описание{% endtrans %}</label>
+            <div class="uk-form-controls">
+                <textarea class="uk-textarea" rows="5" placeholder=""></textarea>
+            </div>
+        </div>
+        <div class="uk-margin">
+            <label class="uk-form-label uk-margin-medium-top" for="form-horizontal-text">{% trans %}Загрузите фото{% endtrans %}</label>
+            <div class="uk-form-controls">
+                <div class="js-upload uk-placeholder uk-text-center">
+                    <span uk-icon="icon: cloud-upload"></span>
+                    <div uk-form-custom>
+                        <input type="file" multiple>
+                        <span class="uk-link">{% trans %}Загрузить или перетащить сюда фотографии{% endtrans %}</span>
+                    </div>
+                </div>
+                <progress id="js-progressbar" class="uk-progress" value="0" max="100" hidden></progress>
+            </div>
+        </div>
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-horizontal-text">{% trans %}Выберите категорию{% endtrans %}</label>
+            <div class="uk-form-controls">
+                <div uk-form-custom="target: > * > span:first-child">
+                    <select>
+                        <option value="0">Пусто</option>
+                        {% for category in  categories %}
+                        <option value="{{ category.id}}">{{category.name}}</option>
+                        {% endfor%}
+                    </select>
+                    <button class="uk-button uk-button-small uk-text-lowercase uk-width-medium uk-button-default" type="button" tabindex="-1">
+                        <span>{% trans %}выбрать страну{% endtrans %}</span>
+                        <span uk-icon="icon: chevron-down"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="uk-margin">
+            <label class="uk-form-label" for="for-horizontal-text">{% trans %}Ваша страна{% endtrans %}</label>
+            <div class="uk-form-controls">
+                <div uk-form-custom="target: > * > span:first-child">
+                    <select>
+                        <option value="1">{% trans %}Кыргызстан{% endtrans %}</option>
+                        <option value="2">{% trans %}Казахстан{% endtrans %}</option>
+                        <option value="3">{% trans %}Россия{% endtrans %}</option>
+                        <option value="4">{% trans %}Узбекистан{% endtrans %}</option>
+                        <option value="5">{% trans %}Таджикистан{% endtrans %}</option>
+                    </select>
+                    <button class="uk-button uk-button-small uk-text-lowercase uk-width-medium uk-button-default" type="button" tabindex="-1">
+                        <span>{% trans %}выбрать страну{% endtrans %}</span>
+                        <span uk-icon="icon: chevron-down"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-horizontal-text"></label>
+            <div class="uk-form-controls">
+                <label><input class="uk-checkbox" type="checkbox" checked></label>
+                <span class="uk-text-meta" style="font-size: 13px">{% trans %}Я согласен с{% endtrans %} <a class="uk-text-muted" href="{{path('_rules')}}">{% trans %}правилами сайта{% endtrans %}</a></span>
+            </div>
+        </div>
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-horizontal-text"></label>
+            <div class="uk-form-controls">
+                <a href="#" class="uk-button uk-button-primary uk-text-center">{% trans %}Готово! Cоздать!{% endtrans %}</a>
+            </div>
+        </div>
+    </form>
+</div>
+{% include 'footer.html.twig' %}
+{% endblock %}

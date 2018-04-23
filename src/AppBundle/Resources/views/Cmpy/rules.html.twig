@@ -1,0 +1,111 @@
+{% extends "base.html.twig" %}
+{% block title %}AppBundle:User:registration{% endblock %}
+{% block body %}
+{% include 'header.html.twig' %}
+{% include 'nav.html.twig' %}
+{% include 'actionbar.html.twig' %}
+<div class="uk-container uk-margin">
+    <ul class="uk-breadcrumb">
+        <li><a href="/"><span>{% trans %}Главная{% endtrans %}</span></a></li>
+        <li><a href="{{path('_about_us')}}"><span>{% trans %}О нас{% endtrans %}</span></a></li>
+    </ul>
+</div>
+<form action="{{path('_add_forum')}}" action="GET">
+    <input type="hidden" name="terms" value="1">
+    <div class="uk-container uk-text-center uk-padding-large uk-background-muted">
+        <div class="uk-text-lead uk-margin">{% trans %}Условия пользования{% endtrans %}</div>
+        {% trans %}Будьте гостем и получите возможность:{% endtrans %}
+        {% trans %}<p> – иметь бесплатный доступ ко всем материалам сайта;</p>{% endtrans %}
+        {% trans %}<p> – быстро находить необходимую информацию;</p>{% endtrans %}
+        {% trans %}<p> – участвовать в благотворительных акциях;</p>{% endtrans %}
+
+        {% trans %}Откройте личный кабинет и получите возможность дополнительно к функциям гостья:{% endtrans %}
+        {% trans %}<p> – добавлять объявления;</p>{% endtrans %}
+        {% trans %}<p> – поднимать объявления на первую строку среди других объявлений;</p>{% endtrans %}
+        {% trans %}<p> – добавлять новости и публикации;</p>{% endtrans %}
+        {% trans %}<p> – создавать рекламные баннеры;</p>{% endtrans %}
+        {% trans %}<p> – общаться с другими пользователями;</p>{% endtrans %}
+        {% trans %}<p> – организовывать анализ рынка;</p>{% endtrans %}
+        {% trans %}<p> – организовывать онлайн обучения;</p>{% endtrans %}
+        {% trans %}<p> – участвовать в обсуждениях разных сообществ;</p>{% endtrans %}
+        {% trans %}<p> – использовать ссылку личного кабинета в рекламных целях;</p>{% endtrans %}
+
+        {% trans %}Откройте личную страницу для своей компании и получите возможность дополнительно к функциям личного кабинета:{% endtrans %}
+        {% trans %}<p> – создавать интернет магазин;</p>{% endtrans %}
+        {% trans %}<p> – организовывать онлайн выставки;</p>{% endtrans %}
+        {% trans %}<p> – организовывать онлайн тренинги;</p>{% endtrans %}
+        {% trans %}<p> – организовывать аукционы;</p>{% endtrans %}
+        {% trans %}<p> – использовать ссылку страницы в рекламных целях;</p>{% endtrans %}
+
+        {% trans %}Станьте модератором одного из тематических сообществ и получите возможность дополнительно к функциям личной страницы:{% endtrans %}
+        {% trans %}<p> – создавать соответствующую тему дня для обсуждений;</p>{% endtrans %}
+        {% trans %}<p> – быстро и эффективно организовать бизнес мероприятия;</p>{% endtrans %}
+        {% trans %}<p> – активно сотрудничать со своей аудиторией;</p>{% endtrans %}
+        {% trans %}<p> – использовать ссылку сообщества в рекламных целях;</p>{% endtrans %}
+
+        {% trans %}Станьте руководителем одного из офисов и получите возможность дополнительно к функциям модератора:{% endtrans%}
+        {% trans %}<p> – создавать свою команду организаторов и партнеров;</p>{% endtrans %}
+        {% trans %}<p> – принимать местные заказы;</p>{% endtrans %}
+        {% trans %}<p> – организовывать бизнес мероприятия;</p>{% endtrans %}
+
+
+        {% trans %}Для вашего удобства работают команда модераторов. Они будут контролировать порядок и чистоту в площадке. {% endtrans %}
+        {% trans %}На сайте приветствуются и имеют тенденцию развития информации:{% endtrans %}
+        {% trans %}<p> – по категории сайта и в рамках действующего закона стран участников;</p>{% endtrans %}
+        {% trans %}<p> – органические продукции;</p>{% endtrans %}
+        {% trans %}<p> – защита окружающей среды;</p>{% endtrans %}
+        {% trans %}<p> – защита животных;</p>{% endtrans %}
+        {% trans %}<p> – здоровый образ жизни;</p>{% endtrans %}
+        {% trans %}<p> – лекарственные травы;</p>{% endtrans %}
+        {% trans %}<p> – правильное питание;</p>{% endtrans %}
+        {% trans %}<p> – воспитание детей к защите окружающей среды;</p>{% endtrans %}
+        {% trans %}<p> – защита лесов;</p>{% endtrans %}
+        {% trans %}<p> – посадка деревьев;</p>{% endtrans %}
+        {% trans %}<p> – чистый воздух;</p>{% endtrans %}
+        {% trans %}<p> – защита рек и водных ресурсов;</p>{% endtrans %}
+        {% trans %}<p> – чистый город;</p>{% endtrans %}
+        {% trans %}<p> – переработка мусора;</p>{% endtrans %}
+        {% trans %}<p> – продукции без ГМО;</p>{% endtrans %}
+        {% trans %}<p> – возобновляемые источники энергии;</p>{% endtrans %}
+        {% trans %}<p> – бумажные пакеты и сокращение полиэтилена;</p>{% endtrans %}
+        {% trans %}<p> – кулинарные рецепты и национальные кухни;</p>{% endtrans %}
+        {% trans %}<p> – новые технологии;</p>{% endtrans %}
+        {% trans %}<p> – наука и образование;</p>{% endtrans %}
+        {% trans %}<p> – народное творчество;</p>{% endtrans %}
+        {% trans %}<p> – эко туризм;</p>{% endtrans %}
+
+        {% trans %}На сайте и в сообществе строго запрещено рекламировать и обсуждать:{% endtrans %}
+        {% trans %}<p> – информации не по категории;</p>{% endtrans %}
+        {% trans %}<p> – информации против действующего закона стран участников сайта;</p>{% endtrans %}
+        {% trans %}<p> – финансовые пирамиды, казино, лотереи;</p>{% endtrans %}
+        {% trans %}<p> – сетевые компании;</p>{% endtrans %}
+        {% trans %}<p> – наркотики и психотропные вещества;</p>{% endtrans %}
+        {% trans %}<p> – все виды спиртных напитков;</p>{% endtrans %}
+        {% trans %}<p> – все виды энергетических напитков;</p>{% endtrans %}
+        {% trans %}<p> – свинину;</p>{% endtrans %}
+        {% trans %}<p> – табачные изделия;</p>{% endtrans %}
+        {% trans %}<p> – политические информации;</p>{% endtrans %}
+        {% trans %}<p> – информации религиозного характера;</p>{% endtrans %}
+        {% trans %}<p> – информацию, разжигающую межнациональную рознь;</p>{% endtrans %}
+        {% trans %}<p> – информацию, связанную с ЛГБТ сообществ;</p>{% endtrans %}
+        {% trans %}<p> – приколов;</p>{% endtrans %}
+        {% trans %}<p> – нецензурную лексику;</p>{% endtrans %}
+        {% trans %}<p> – экстрасенсов;</p>{% endtrans %}
+        {% trans %}<p> – шоу<p> –бизнес;</p>{% endtrans %}
+        {% trans %}<p> – человеческие болезни и лекарства к ним;</p>{% endtrans %}
+        {% trans %}<p> – интим услуги;</p>{% endtrans %}
+        {% trans %}<p> – терроризм, преступность и огнестрельные оружия;</p>{% endtrans %}
+        {% trans %}<p> – детский труд;</p>{% endtrans %}
+        {% trans %}<p> – призыв к общественным беспорядкам;</p>{% endtrans %}
+        {% trans %}<p> – судебные разборки;</p>{% endtrans %}
+        {% trans %}<p> – высмеивание и обвинения;</p>{% endtrans %}
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-horizontal-text"></label>
+            <div class="uk-form-controls">
+                <button type="submit" class="uk-button uk-button-primary uk-text-center">{% trans %}Согласен(a){% endtrans %}</button>
+            </div>
+        </div>
+    </div>
+</form>
+{% include 'footer.html.twig' %}
+{% endblock%}

@@ -10,6 +10,10 @@ _about_us:
     path: /aboutus
     defaults: { _controller: AppBundle:Cmpy:aboutus}
 
+_rules:
+    path: /rules
+    defaults: { _controller: AppBundle:Cmpy:rules}
+
 _save_arecord:
     path: /save
     defaults: { _controller: AppBundle:Arecord:save}
@@ -73,3 +77,14 @@ _get_category_for_user:
 _delete_user_image:
     path: /user/delete_image
     defaults: {_controller: AppBundle:User:deleteImage}
+_add_forum : 
+    path : /forum/add
+    defaults : {_controller: AppBundle:Forum:add}
+
+_forum : 
+    path : /forum/index
+    defaults : {_controller: AppBundle:Forum:index}
+
+_publication : 
+    path : /publication
+    defaults : {_controller: AppBundle:Publication:index}
