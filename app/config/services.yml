@@ -37,3 +37,9 @@ services:
     AppBundle\Service\FileUploader:
         arguments:
             $targetDirectory: '%images_directory%'
+
+    app.twig_runtime:
+        class: AppBundle\Twig\AppRuntime
+        public: false
+        tags:
+        - { name: twig.runtime }

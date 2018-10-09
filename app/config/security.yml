@@ -60,3 +60,6 @@ security:
         - { path: ^/profile, roles: ROLE_USER}
         - { path: ^/advertise, roles: ROLE_USER}   
         - { path: ^/aboutus, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        - { path: ^/publication/add, roles: ROLE_USER}
+        - { path: ^/shop/add, roles: ROLE_USER}
+        - { path: ^/admin, roles: ROLE_ADMIN}

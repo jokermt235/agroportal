@@ -2,12 +2,15 @@
     <div class="uk-navbar-left uk-margin-small-top uk-margin-medium-left">
         <ul class="uk-subnav uk-subnav-divider uk-margin-small-top">
             <li class="uk-active">
-            <a class="uk-text-lowercase" href={{path('_about_us')}}>
-                {% trans %} О нас {% endtrans %}
-                </a></li>
-            <li class="uk-active"><a class="uk-text-lowercase" href="{{path('_forum')}}">{% trans %} сообщества {% endtrans %}</a></li>
-            <li class="uk-active"><a class="uk-text-lowercase" href="{{path('_publication')}}">{% trans %} публикации {% endtrans %}</a></li>
-            <li class="uk-active"><a class="uk-text-lowercase" href="chat.html">{% trans %} благотоворительность {% endtrans %}</a></li>
+                <a class="uk-text-uppercase" href="/">Agroov</a>
+            </li>
+            
+            <li class="uk-active"><a class="uk-text-uppercase" href="{{path('_adverts')}}">{% trans %} объявления {% endtrans %}</a></li>
+            
+            <li class="uk-active"><a class="uk-text-uppercase" href="{{path('_forum')}}">{% trans %} группы {% endtrans %}</a></li>
+            <li class="uk-active"><a class="uk-text-uppercase" href="{{path('_company')}}">{% trans %} магазины {% endtrans %}</a></li>
+
+            <li class="uk-active"><a class="uk-text-uppercase" href="{{path('_publication')}}">{% trans %} новости {% endtrans %}</a></li>
         </ul>
     </div>
     <div class="uk-navbar-right uk-margin-top uk-margin-small-right">
@@ -55,6 +58,14 @@
                                 {%trans%}Мои объявления{%endtrans%}
                             </a>
                         </li>
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <li>
+                            <a href="{{path('_admin')}}">
+                                <span uk-icon="users"></span>
+                                {%trans%}Администрирование{%endtrans%}
+                            </a>    
+                        </li>
+                         {% endif %}
                         <li class="uk-nav-divider"></li>
                         <li>
                             <a href="{{path('logout')}}">

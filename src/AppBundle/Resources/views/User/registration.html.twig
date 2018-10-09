@@ -3,259 +3,93 @@
 {% block body %}
 {% include 'header.html.twig' %}
 {% include 'nav.html.twig' %}
-{% include 'actionbar.html.twig' %}
-<div class="uk-panel">
-    
-    <div class="uk-navbar-container">
-	    <ul class="uk-subnav uk-subnav-pill uk-text-center uk-flex-center" uk-switcher="animation: uk-animation-slide-left-medium, uk-animation-slide-right-medium">
-		    <li><a class="uk-buton uk-button-default uk-margin-top uk-width-medium">{% trans %}Заполнить форму для физического лица{% endtrans %}</a></li>
-		    <li><a class="uk-buton uk-button-default uk-width-medium uk-margin-top">{% trans %}Заполнить форму для юридического лица{% endtrans %}</a></li>	
-		</ul>
-	    <ul class="uk-switcher uk-margin">
-		    <li>
-                <div class="uk-container uk-margin uk-width-xxlarge">
-                    
-                    <form class="uk-form-horizontal uk-margin-large" action="" method="POST">
-                        <input type="hidden" value="{{session_id}}" name="session_id" ng-model="session_id_model" >
-                        <div class="uk-margin">
-                            <label class="uk-form-label" for="for-horizontal-text">{% trans %}ФИО{% endtrans %}</label>
-                            <div class="uk-form-controls">
-                                <input name="fio" class="uk-input" id="form-horizontal-text" type="text" placeholder="">
-                            </div>
-                        </div>
-                        <div class="uk-margin">
-                            <label class="uk-form-label" for="for-horizontal-text">{% trans %}Имя пользователя{% endtrans %}</label>
-                            <div class="uk-form-controls">
-                                <input name="username" class="uk-input" id="form-horizontal-text" type="text" placeholder="">
-                            </div>
-                        </div>
-                        <div class="uk-margin">
-                            <label class="uk-form-label" for="for-horizontal-text">{% trans %}Пароль{% endtrans %}</label>
-                            <div class="uk-form-controls">
-                                <input name="password" class="uk-input" id="form-horizontal-text" type="text" placeholder="">
-                            </div>
-                        </div>
-                        <div class="uk-margin">
-                            <label class="uk-form-label" for="for-horizontal-text">{% trans %}Повтор пароля{% endtrans %}</label>
-                            <div class="uk-form-controls">
-                                <input name="password_retype" class="uk-input" id="form-horizontal-text" type="text" placeholder="">
-                            </div>
-                        </div>
-                        <div class="uk-margin">
-                            <label class="uk-form-label" for="for-horizontal-text">{% trans %}Страна{% endtrans %}</label>
-                            <div class="uk-form-controls">
-                                <select class="uk-select" id="form-horizontal-select">
-                                    <option>{% trans %}Кыргызстан{% endtrans %}</option>
-                                    <option>{% trans %}Казахстан{% endtrans %}</option>
-                                    <option>{% trans %}Россия{% endtrans %}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="uk-margin">
-                            <label class="uk-form-label" for="for-horizontal-text">{% trans %}Город{% endtrans %}</label>
-                            <div class="uk-form-controls">
-                                <select class="uk-select" id="form-horizontal-select">
-                                    <option>{% trans %}Бишкек{% endtrans %}</option>
-                                    <option>{% trans %}Балыкчы{% endtrans %}</option>
-                                    <option>{% trans %}Кант{% endtrans %}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="uk-margin">
-                            <label class="uk-form-label" for="for-horizontal-text">{% trans %}Адрес{% endtrans %}</label>
-                            <div class="uk-form-controls">
-                                <input class="uk-input" for="form-horizontal-text" type="text">
-                            </div>
-                        </div>
-                        <div class="uk-margin">
-                            <label class="uk-form-label" for="for-horizontal-text">{% trans %}Телефон{% endtrans %}</label>
-                            <div class="uk-form-controls">
-                                <div class="uk-inline">
-                                    <span class="uk-form-icon" uk-icon="icon: receiver"></span>
-                                    <input name="phone" class="uk-input" for="form-horizontal-text" type="text">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="uk-margin">
-                            <label class="uk-form-label" for="for-horizontal-text">{% trans %}E-mail{% endtrans %}</label>
-                            <div class="uk-form-controls">
-                                <div class="uk-inline">
-                                    <span class="uk-form-icon" uk-icon="icon: mail"></span>
-                                    <input name="email" class="uk-input" for="form-horizontal-text" type="text">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="uk-margin">
-                            <label class="uk-form-label" for="for-horizontal-text">{% trans %}Фото на аватар{% endtrans %}</label>
-                            <div class="uk-form-controls">
-                                <div uk-form-custom="target: true">
-                                    <input file-input ng-model="image" type="file">
-                                    <input class="uk-input uk-form-width-medium" type="text" placeholder="Выбрать файл">
-                                </div>
-                                <a ng-click="uploadImage()" class="uk-button uk-button-default">{% trans %}Загрузить{% endtrans %}</a>
-                            </div>
-                            <div>
-                                <ul class="uk-iconnav">
-                                    <li><img src={{'{{uploaded_image}}'}}></li>    
-                                    <li>
-                                        <a ng-click="deleteCurrentImage()" href="javascript::void()" 
-                                        uk-icon="icon: trash" style="color:red">
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="uk-margin">
-                            <label class="uk-form-label" for="for-horizontal-text">{% trans %}Язык(заполнения){% endtrans %}</label>
-                            <div class="uk-form-controls">
-                                <div class="uk-inline">
-                                <span class="uk-form-icon" uk-icon="icon: world"></span>
-                                    <div uk-form-custom="target: > * > span:first-child">
-                                        <select>
-                                            <option value="1">ENG</option>
-                                            <option value="2">КЫР</option>
-                                            <option value="3">РУС</option>
-                                            <option value="4">КАЗ</option>
-                                            <option value="5">TR</option>
-                                        </select>
-                                        <button class="uk-button uk-width-large uk-button-default" type="button" tabindex="-1">
-                                            <span>{% trans %}Выбрать язык{% endtrans %}</span>
-                                            <span uk-icon="icon: chevron-down"></span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="uk-margin uk-text-center">
-                            <p class="uk-text-meta" style="font-size: 13px">{% trans %}Нажимая кнопку «Регистрация», вы соглашаетесь с {% endtrans %}<a class="uk-text-primary" href="#">{% trans %}условиями использования{% endtrans %}</a> {% trans %}и обработкой персональных данных.{% endtrans %}</p>
-                        </div>
-                        <button class="uk-button uk-button-primary uk-button-large" type="submit">{% trans %}Зарегистрировать{% endtrans %}</button>
-                    </form>
+<div class="uk-container uk-margin uk-width-xxlarge">
+    {% for message in app.flashes('error') %}
+        <div class="uk-alert-danger" uk-alert>
+            <a class="uk-alert-close" uk-close></a>
+            <p>{{message}}</p>
+        </div>
+    {% endfor %}
+</div>
+<div class="uk-panel uk-margin-bottom">
+    <div class="uk-container uk-margin uk-width-xxlarge">
+        <form class="uk-form-horizontal uk-margin-large" action="" method="POST">
+            <input type="hidden" value="{{session_id}}" name="session_id" ng-model="session_id_model" >
+            <div class="uk-margin">
+                <label class="uk-form-label">{% trans %}Имя,фамилия{% endtrans %}</label>
+                <div class="uk-form-controls">
+                    <input name="fio" class="uk-input" required  type="text" placeholder="">
                 </div>
-            </li>
-            <li>
-                <div class="uk-container uk-margin uk-width-xxlarge">
-                    <form class="uk-form-horizontal uk-margin-large">
-                        <div class="uk-margin">
-                            <label class="uk-form-label" for="for-horizontal-text">{% trans %}Наименования предприятия{% endtrans %}</label>
-                            <div class="uk-form-controls">
-                                <input class="uk-input" id="form-horizontal-text" type="text" placeholder="">
-                            </div>
-                        </div>
-                        <div class="uk-margin">
-                            <label class="uk-form-label" for="for-horizontal-text">{% trans %}Страна{% endtrans %}</label>
-                            <div class="uk-form-controls">
-                                <select class="uk-select" id="form-horizontal-select">
-                                    <option>{% trans %}Кыргызстан{% endtrans %}</option>
-                                    <option>{% trans %}Казахстан{% endtrans %}</option>
-                                    <option>{% trans %}Россия{% endtrans %}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="uk-margin">
-                            <label class="uk-form-label" for="for-horizontal-text">{% trans %}Город{% endtrans %}</label>
-                            <div class="uk-form-controls">
-                                <select class="uk-select" id="form-horizontal-select">
-                                    <option>{% trans %}Бишкек{% endtrans %}</option>
-                                    <option>{% trans %}Балыкчы{% endtrans %}</option>
-                                    <option>{% trans %}Кант{% endtrans %}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="uk-margin">
-                            <label class="uk-form-label" for="for-horizontal-text">{% trans %}Адрес офиса{% endtrans %}</label>
-                            <div class="uk-form-controls">
-                                <input class="uk-input" for="form-horizontal-text" type="text">
-                            </div>
-                        </div>
-                        <div class="uk-margin">
-                            <label class="uk-form-label" for="for-horizontal-text">{% trans %}Адрес производства{% endtrans %}</label>
-                            <div class="uk-form-controls">
-                                <input class="uk-input" for="form-horizontal-text" type="text">
-                            </div>
-                        </div>
-                        <div class="uk-margin">
-                            <label class="uk-form-label" for="for-horizontal-text">{% trans %}Контактное ответственное лицо{% endtrans %}</label>
-                            <div class="uk-form-controls">
-                                <input class="uk-input" for="form-horizontal-text" type="text">
-                            </div>
-                        </div>
-                        <div class="uk-margin">
-                            <label class="uk-form-label" for="for-horizontal-text">{% trans %}Телефон{% endtrans %}</label>
-                            <div class="uk-form-controls">
-                                <div class="uk-inline">
-                                    <span class="uk-form-icon" uk-icon="icon: receiver"></span>
-                                    <input class="uk-input" for="form-horizontal-text" type="text">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="uk-margin">
-                            <label class="uk-form-label" for="for-horizontal-text">{% trans %}E-mail{% endtrans %}</label>
-                            <div class="uk-form-controls">
-                                <div class="uk-inline">
-                                    <span class="uk-form-icon" uk-icon="icon: mail"></span>
-                                    <input class="uk-input" for="form-horizontal-text" type="text">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="uk-margin">
-                            <label class="uk-form-label" for="for-horizontal-text">{% trans %}Сайт{% endtrans %}</label>
-                            <div class="uk-form-controls">
-                                <div class="uk-inline">
-                                    <span class="uk-form-icon" uk-icon="icon: rss"></span>
-                                    <input class="uk-input" for="form-horizontal-text" type="text">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="uk-margin">
-                            <label class="uk-form-label" for="for-horizontal-text">{% trans %}Логотип компании{% endtrans %}</label>
-                            <div class="uk-form-controls">
-                                <div uk-form-custom="target: true">
-                                    <input type="file">
-                                    <input class="uk-input uk-form-width-medium" type="text" placeholder="{% trans %}Выбрать файл{% endtrans %}">
-                                </div>
-                                <button class="uk-button uk-button-default">{% trans %}Выбрать{% endtrans %}</button>
-                            </div>
-                        </div>
-                        <div class="uk-margin">
-                            <label class="uk-form-label" for="for-horizontal-text">{% trans %}Фото продукции{% endtrans %}</label>
-                            <div class="uk-form-controls">
-                                <div uk-form-custom="target: true">
-                                    <input type="file" multiple>
-                                    <input class="uk-input uk-form-width-medium" type="text" placeholder={% trans %}Выбрать файл{% endtrans %}>
-                                </div>
-                                <button class="uk-button uk-button-default">{% trans %}Выбрать{% endtrans %}</button>
-                            </div>
-                        </div>
-                        <div class="uk-margin">
-                            <label class="uk-form-label" for="for-horizontal-text">{% trans %}Язык(заполнения){% endtrans %}</label>
-                            <div class="uk-form-controls">
-                                <div class="uk-inline">
-                                <span class="uk-form-icon" uk-icon="icon: world"></span>
-                                    <div uk-form-custom="target: > * > span:first-child">
-                                        <select>
-                                            <option value="1">ENG</option>
-                                            <option value="2">КЫР</option>
-                                            <option value="3">РУС</option>
-                                            <option value="4">КАЗ</option>
-                                            <option value="5">TR</option>
-                                        </select>
-                                        <button class="uk-button uk-width-large uk-button-default" type="button" tabindex="-1">
-                                            <span>{% trans %}Выбрать язык{% endtrans %}</span>
-                                            <span uk-icon="icon: chevron-down"></span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="uk-margin uk-text-center">
-                            <p class="uk-text-meta" style="font-size: 13px">{% trans %}Нажимая кнопку «Регистрация», вы соглашаетесь с {% endtrans %}<a class="uk-text-primary" href="#">{% trans %}условиями использования{% endtrans %}</a> {% trans %}и обработкой персональных данных.{% endtrans %}</p>
-                        </div>
-                        <button class="uk-button uk-button-primary uk-button-large" type="submit">{% trans %}Зарегистрировать{% endtrans %}</button>
-                    </form>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" >{% trans %}Логин{% endtrans %}</label>
+                <div class="uk-form-controls">
+                    <input name="username" required class="uk-input" type="text" placeholder="">
                 </div>
-            </li>
-        </ul>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label">{% trans %}Пароль{% endtrans %}</label>
+                <div class="uk-form-controls">
+                    <input name="password" class="uk-input" required  type="password" placeholder="">
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label">{% trans %}Повтор пароля{% endtrans %}</label>
+                <div class="uk-form-controls">
+                    <input name="password_retype" required class="uk-input"  type="password" placeholder="">
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label">{% trans %}Страна{% endtrans %}</label>
+                <div class="uk-form-controls">
+                    {{ render(controller('AppBundle:Country:index')) }}
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" >{% trans %}Телефон{% endtrans %}</label>
+                <div class="uk-grid-small" uk-grid>
+                    <div class="uk-width-1-4@s">
+                        <input name="phonecode" required id="phonecode" ng-model="phonecode" class="uk-input" type="text" placeholder={%trans%}Межд.Код{%endtrans%}>
+                    </div>
+                    <div class="uk-width-1-2@s">
+                        <input name="phone_without_code" required class="uk-input" ng-model="_phone" type="text" placeholder={%trans%}Номер телефона{%endtrans%}>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label">{% trans %}E-mail{% endtrans %}</label>
+                <div class="uk-form-controls">
+                    <div class="uk-inline">
+                        <span class="uk-form-icon" uk-icon="icon: mail"></span>
+                        <input name="email" required class="uk-input" for="form-horizontal-text" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="for-horizontal-text">{% trans %}Фото на аватар{% endtrans %}</label>
+                <div class="uk-form-controls">
+                    <div uk-form-custom="target: true">
+                        <input file-input ng-model="image" type="file">
+                        <input class="uk-input uk-form-width-medium" type="text" placeholder="Выбрать файл">
+                    </div>
+                    <a ng-click="uploadImage()" class="uk-button uk-button-default">{% trans %}Загрузить{% endtrans %}</a>
+                </div>
+                <div>
+                    <ul class="uk-iconnav">
+                        <li><img src={{'{{uploaded_image}}'}}></li>    
+                        <li>
+                            <a ng-click="deleteCurrentImage()" href="javascript::void()" 
+                            uk-icon="icon: trash" style="color:red">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="uk-margin uk-text-center">
+                <p class="uk-text-meta" style="font-size: 13px">{% trans %}Нажимая кнопку «Регистрация», вы соглашаетесь с{% endtrans %}&nbsp;<a class="uk-text-primary" href="#">{% trans %}условиями пользования{% endtrans %}</a> {% trans %}и обработкой персональных данных.{% endtrans %}</p>
+            </div>
+            <button class="uk-button uk-button-primary uk-button-large" type="submit">{% trans %}Регистрация{% endtrans %}</button>
+        </form>
     </div>
 </div>
 {% include 'footer.html.twig' %}
@@ -292,6 +126,21 @@
                 
             }
         };
+    });
+
+    $('#country_id').change(function(){
+        var url = "/region/" + $(this).val();
+        var phonecode = $('option:selected', this).attr('data-phonecode');
+        $('#phonecode').val("+"+phonecode);
+        $.get( url, function( data ) {
+            $('#region').html(data);
+            $('#region_id').change(function(){
+                var url = "/city/" + $(this).val();
+                $.get( url, function( data ) {
+                    $('#city').html(data);
+                });
+            });
+        });
     });
 </script>
 {% endblock%}

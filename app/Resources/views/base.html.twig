@@ -1,16 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html prefix="og: http://ogp.me/ns#">
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta name="yandex-verification" content="96b119a9e83a4d88" />
+        <meta property="og:title" content="{% if og_title is defined %} {{ og_title }} {% endif %}">
+        <meta property="og:description" content="МЕЖДУНАРОДНЫЙ АГРОПОРТАЛ" />
+        <meta property="og:image" content="
+            {% if og_image is defined %} 
+                {{ og_image }} 
+            {% else %}
+                {{ asset('/images/favicon.png') }} 
+            {% endif %}" />
+        <meta property="og:type" content="website">
+        <meta name="description" content="Agroov" />
+        <meta property="og:url" content="
+        {% if og_url is defined %} 
+                {{ og_url }} 
+            {% else %}
+                {{ 'argroov.com' }} 
+            {% endif %}">
+        <title>{% if page_title is defined %} {{ page_title }} {% endif %}</title>
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('css/uikit.min.css') }}" type="text/css" media="all" />
+            <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}" type="text/css" media="all" />
             <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css" media="all" />
         {% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="icon" type="image/png" href="{{ asset('/images/favicon32x32.png') }}" /> 
         <script src="{{ asset('js/uikit.min.js') }}"></script>
         <script src="{{ asset('js/uikit-icons.min.js') }}"></script>
         <script src="{{ asset('js/angular.min.js')}}"></script>
+        <script src="{{ asset('js/jquery-3.3.1.min.js')}}"></script>
+        <script src="{{ asset('js/jquery-ui.js')}}"></script>
+        <script>
+            var main = angular.module("agroov",[]);
+        </script>
     </head>
     <body ng-app="agroov">
         {% block body %}
@@ -29,6 +52,8 @@
                 </script>
             {% endfor %}
         {% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+        
+        {% endblock %}
     </body>
 </html>

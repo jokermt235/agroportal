@@ -1,0 +1,98 @@
+{% extends "base.html.twig" %}
+{% block title %}Добавить публикацию{% endblock %}
+{% block body %}
+{% include 'header.html.twig' %}
+{% include 'nav.html.twig' %}
+<link rel="stylesheet" href="{{ asset('css/editor.min.css') }}" type="text/css" media="all" />
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" type="text/css" media="all" />
+<div class="uk-panel uk-margin-medium-left uk-margin">
+    <ul class="uk-breadcrumb">
+        <li><a href="/">{% trans %}Главная {% endtrans %}</a></li>
+    </ul>
+</div>
+<div class="uk-container uk-margin-large-left uk-margin-large-right uk-margin-large-top">
+    <h3 class="uk-text-bold">{% trans %}Добавить{% endtrans %}</h3>
+    <form class="uk-form-horizontal uk-margin-large" action="" method="POST">
+        <input type="hidden" value="{{session_id}}" name="session_id" ng-model="session_id_model" >
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-horizontal-text">
+                {% trans %}Введите заголовок{% endtrans %}
+            </label>
+            <div class="uk-form-controls">
+                <input name="title" class="uk-input" type="text" placeholder="">
+            </div>
+        </div>
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-horizontal-text">{% trans %}Описание{% endtrans %}</label>
+            <div class="uk-form-controls"> 
+                <div ng-controller="editorController" ng-cloak>
+                    <wysiwyg-edit content="content" config="editorConfig"></wysiwyg-edit>
+                </div>
+                <textarea id="description" class="uk-textarea"  name="description" style="display:none"></textarea>
+            </div>
+        </div> 
+        <div class="uk-margin">
+            <div class="js-upload uk-placeholder uk-text-center">
+                <span uk-icon="icon: cloud-upload"></span>
+                <span class="uk-text-middle">{% trans %}Загрузить фото можно нажав{% endtrans %}</span>
+                <div uk-form-custom>
+                    <input type="file" name="image" file-input>
+                    <span class="uk-link">{%trans%}сюда{%endtrans%}</span>
+                </div>
+                <div id="image_preview">
+                </div>
+            </div>
+        </div>
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-horizontal-text"></label>
+            <div class="uk-form-controls">
+                <button  type="submit" class="uk-button uk-button-primary uk-text-center">
+                    {% trans %}Готово!{% endtrans %}</a>
+            </div>
+        </div> 
+    </form>
+</div>
+<script src="{{asset('js/angular-sanitize.min.js')}}"></script>
+<script src="{{asset('js/ngWYSIWYG-master/dist/wysiwyg.min.js')}}"></script>
+<script>
+    main.requires.push('ngWYSIWYG');
+    main.controller('editorController', ['$scope', '$log', function($scope, $log) {
+            $scope.editorConfig = {
+                fontAwesome: true
+            };
+            $scope.api = {
+                scope: $scope
+            };
+            $scope.$watch('content', function(newValue) {
+                $log.info(newValue);
+                $('#description').val(newValue);
+            });
+    }]);
+</script>
+<script>
+    var uploadUrl = "{{path('_upload_publication_image')}}";
+    var session_id = "{{session_id}}";
+    angular.module("agroov").directive("fileInput", function($http){
+        return {
+            link: function(scope, element,attr){
+                element.on('change',function(){
+                    fd = new FormData();
+                    console.log(element[0].files[0]);
+                    fd.append('image', element[0].files[0]);
+                    fd.append('session_id',scope.session_id);
+                    $http.post(uploadUrl,fd,{
+                        transformRequest: angular.identity,
+                        headers: {'Content-Type': undefined,'UserSession' : session_id}
+                    }).then(function(d){
+                        console.log(d);
+
+                        document.getElementById('image_preview').innerHTML += "<img src=" + "/uploads/tmp/" + session_id + "/small_" +  d.data + ">";
+                    });
+                });
+            }
+        };
+    });
+    
+</script>
+{% include 'footer.html.twig' %}
+{% endblock %}

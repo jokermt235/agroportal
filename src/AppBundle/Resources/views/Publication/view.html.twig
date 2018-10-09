@@ -1,0 +1,58 @@
+{% extends "base.html.twig" %}
+{% set page_title = publication.title %}
+{% set og_title = publication.title %}
+{% if images[0] is defined %} 
+{% set og_image = asset('uploads/images/publication/'~publication.id~'/small_'~images[0]) %}
+{% endif %}
+{% set og_url = path(app.request.attributes.get('_route'),
+                       app.request.attributes.get('_route_params'))%}
+{% block body %}
+{% include 'header.html.twig' %}
+{% include 'nav.html.twig' %}
+<div class="uk-container uk-margin">
+    <ul class="uk-breadcrumb">
+        <li><a href="/"><span>{% trans %}Главная{% endtrans %}</span></a></li>
+        <li><a href="{{path('_publication')}}"><span>{% trans %}Новости{% endtrans %}</span></a></li>
+    </ul>
+</div>
+<div class="uk-container uk-margin">
+    <a class="uk-link-text" href="javascript:void(0)"><h4 class="uk-text-bold uk-margin-top">{{publication.title}}</h4></a>
+    <div class="uk-panel uk-margin">
+        <p class="uk-heading-divider uk-heading-bullet">{{publication.created}}</p>
+        <div class="uk-panel">
+            <div class="uk-position-relative" uk-slideshow="animation: fade">
+                <ul class="uk-slideshow-items">
+                    {% for image  in images %}
+                        <li>
+                            <img src="{{asset('uploads/images/publication/'~publication.id~'/'~image)}}" alt="" uk-center>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <div class="uk-position-bottom-center uk-position-small">
+                    <ul class="uk-thumbnav">
+                        {% set index = 0 %}
+                        {% for image  in images %}
+                            <li uk-slideshow-item="{{index}}">
+                                <a href="#">
+                                    <img src="/uploads/images/publication/{{publication.id}}/{{'small_'}}{{image}}" width="100" alt=""></a>
+                            </li>
+                            {% set index = index + 1 %}
+                        {% endfor %}
+                    </ul>
+                </div>
+
+            </div>
+            <div class="uk-padding">
+                <p>{{publication.description|raw}}</p> 
+            </div>
+        </div>
+
+    </div>
+    <ul class="uk-pagination uk-flex-center">
+        <li><a href=""><span class="uk-margin-small-right" uk-pagination-previous></span>{% trans %}Предыдущее{% endtrans %}</a></li>
+        <li class="uk-margin-auto-left"><a href="#">{% trans %}Следующее{% endtrans %}<span class="uk-margin-small-left" uk-pagination-next></span></a></li>
+    </ul>
+</div>     
+{% include 'footer.html.twig' %}
+{% endblock %}

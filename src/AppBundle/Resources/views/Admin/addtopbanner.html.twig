@@ -1,0 +1,75 @@
+{% extends "base.html.twig" %}
+{% block title %}Администратор{% endblock %}
+{% block body %}
+{% include 'nav.html.twig' %}
+<hr>
+<div class="uk-card uk-card-default uk-card-body">
+    <div class="uk-grid" uk-grid>
+        <div class="uk-width-auto@m">
+            <div class="uk-card uk-card-default uk-card-body">
+                <ul class="uk-nav uk-nav-default">
+                    <li><a href="{{path('_admin')}}">Адмнинистрирование</a></li>
+                    <li class="uk-active"><a href="{{path('_admin_topbanner')}}">Верхний баннер</a></li>
+                    <li><a href="{{path('_admin_leftbanner')}}">Боковой левый баннер</a></li>
+                    <li><a href="#">Пользователи</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="uk-width-expand@m">
+            <form enctype="multipart/form-data" action="{{path('_admin_addtopbanner')}}" method="POST">
+                <div class="uk-card uk-card-default uk-card-body">
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-horizontal-text">
+                            {% trans %}Введите название{% endtrans %}
+                        </label>
+                        <div class="uk-form-controls">
+                            <input name="title" class="uk-input" required type="text" placeholder="">
+                        </div>
+                    </div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-horizontal-text">
+                            {% trans %}Ссылка{% endtrans %}
+                        </label>
+                        <div class="uk-form-controls">
+                            <input name="url"  class="uk-input" type="text" placeholder="">
+                        </div>
+                    </div>
+                    <div class="js-upload uk-placeholder uk-text-center">
+                        <span uk-icon="icon: cloud-upload"></span>
+                        <span class="uk-text-middle">Загрузить файл нажать </span>
+                        <div uk-form-custom>
+                            <input name="image" type="file"  onchange="preview(this);">
+                            <span class="uk-link">сюда</span>
+                        </div>
+                        <div id="previewImg" class="uk-card uk-card-default uk-card-body">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-card uk-card-default uk-card-body">
+                    <button type="submit" class="uk-button uk-button-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    window.preview = function (input){
+        if(input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.readAsDataURL(input.files[0]);
+            reader.onload = function(e){
+                var img = "<img src='" + e.target.result + "'>";
+                var imgCont = '<ul class="uk-iconnav">'+
+                    '<li><a href="javascript:void(0)" uk-icon="icon: trash"></a></li>'+
+                    '<li><a href="javascript:void(0)" uk-icon="icon: image"></a></li>'+
+                '</ul>'+
+                '<div>'+
+                    img + 
+                '</div>';
+                $("#previewImg").append(imgCont);
+            }
+        }
+    }
+</script>
+{% endblock %}

@@ -28,6 +28,20 @@ class Advert
     public function getTitle(){
         return $this->title;
     }
+    
+     /**
+    * @ORM\Column(type="string", length=100)
+    */
+    private $url;
+    
+    public function setUrl($url){
+        $this->url = $url;
+    }
+
+    public function getUrl(){
+        return $this->url;
+    }
+
     /**
     * @ORM\Column(type="integer")
     */
@@ -195,5 +209,35 @@ class Advert
         
     public function setStatus($status){
         $this->status = $status;
+    }
+
+    /**
+    * @ORM\Column(type="string")
+    */
+    private $currency;    
+
+    public function getCurrency(){
+        return $this->currency;
+    }
+        
+    public function setCurrency($currency){
+        $this->currency = $currency;
+    }
+
+    /**
+    * @ORM\Column(type="integer")
+    */
+    private $company_id;
+
+    public function setCompanyId($company_id){
+        $this->company_id = $company_id;
+    }
+
+    public function getCompanyId(){
+        return $this->company_id;
+    }
+
+    public function getcompany_id(){
+        return $this->company_id;
     }
 }

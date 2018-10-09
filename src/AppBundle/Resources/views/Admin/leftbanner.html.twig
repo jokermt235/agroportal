@@ -1,0 +1,61 @@
+{% extends "base.html.twig" %}
+{% block title %}Администратор{% endblock %}
+{% block body %}
+{% include 'nav.html.twig' %}
+<hr>
+<div class="uk-card uk-card-default uk-card-body">
+    <div class="uk-text-center" uk-grid>
+        <div class="uk-width-auto@m">
+            <div class="uk-card uk-card-default uk-card-body">
+                <ul class="uk-nav uk-nav-default">
+                    <li><a href="{{path('_admin')}}">Адмнинистрирование</a></li>
+                    <li class="uk-active"><a href="{{path('_admin_topbanner')}}">Верхний баннер</a></li>
+                    <li><a href="{{path('_admin_leftbanner')}}">Боковой левый баннер</a></li>
+                    <li><a href="#">Пользователи</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="uk-width-expand@m">
+            <a class="uk-button uk-button-primary uk-left" href="{{path('_admin_addleftbanner')}}">+Добавить</a> 
+            {% for sidebanner in sidebanners %}
+            <div class="uk-card uk-card-default uk-card-body">
+                <ul class="uk-iconnav">
+                    <li><a href="{{path('_admin_leftbanner_delete',{'image':sidebanner.images,'id':sidebanner.id})}}" uk-icon="icon: trash"></a></li>
+                    <li><a href="#" uk-icon="icon: image"></a></li>   
+                </ul>
+                <div>
+                    <img src="{{asset('images/bok-new/'~sidebanner.images)}}">
+                </div>
+            </div> 
+            {% endfor %}
+            <!--<form enctype="multipart/form-data" action="{{path('_admin_topbanner')}}" method="POST">
+                <div class="uk-card uk-card-default uk-card-body">
+                    <div class="js-upload uk-placeholder uk-text-center">
+                        <span uk-icon="icon: cloud-upload"></span>
+                        <span class="uk-text-middle">Загрузить один файл нажать </span>
+                        <div uk-form-custom>
+                            <input name="image" type="file">
+                            <span class="uk-link">сюда</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-card uk-card-default uk-card-body">
+                    <div class="js-upload uk-placeholder uk-text-center">
+                        <span uk-icon="icon: cloud-upload"></span>
+                        <span class="uk-text-middle">Загрузить несколько файлов нажать </span>
+                        <div uk-form-custom>
+                            <input name="images" type="file" multiple>
+                            <span class="uk-link">сюда</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-card uk-card-default uk-card-body">
+                    <button type="submit" class="uk-button uk-button-primary">Сохранить</button>
+                </div>
+            
+            </form>-->
+        </div>
+    </div>
+</div>
+{% endblock %}

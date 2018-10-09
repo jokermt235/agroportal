@@ -1,5 +1,5 @@
 {% extends "base.html.twig" %}
-{% block title %}AppBundle:User:registration{% endblock %}
+{% block title %}Вход в портал{% endblock %}
 {% block body %}
 {% include 'header.html.twig' %}
 <div class="uk-container uk-width-xlarge uk-margin">
@@ -11,13 +11,13 @@
             <div class="uk-margin">
                 <div class="uk-inline">
                     <span class="uk-form-icon" uk-icon="icon: user"></span>
-                    <input name="_username" class="uk-input uk-width-large" type="text" placeholder="Введите имя пользователя">
+                    <input name="_username" class="uk-input uk-width-large" type="text" placeholder="{%trans%} Введите логин{%endtrans%}">
                 </div>
             </div>
             <div class="uk-margin">
                 <div class="uk-inline">
                     <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                    <input name="password" class="uk-input uk-width-large" type="password" placeholder="Пароль">
+                    <input name="_password" class="uk-input uk-width-large" type="password" placeholder="Пароль">
                 </div>
             </div>
             <div class="uk-marign">
@@ -33,7 +33,7 @@
         <a href="{{path('_user_registration')}}" class="uk-button uk-button-text uk-margin-medium-right">
             {% trans %}Регистрация {% endtrans %}
         </a>|
-        <a href="#" class="uk-button uk-button-text uk-margin-medium-left">{% trans %} Забыли пароль? {% endtrans %}</a>
+        <a href="{{path('login_failure')}}" class="uk-button uk-button-text uk-margin-medium-left">{% trans %} Забыли пароль? {% endtrans %}</a>
     </div>
 </div>
 {% include 'footer.html.twig' %}

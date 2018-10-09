@@ -1,0 +1,29 @@
+<div class="uk-card uk-card-default" style="padding: 6px;background-color: #22b4a9c4">
+    <div class="uk-grid uk-grid-small" uk-grid>
+        <div class="uk-width-auto">
+            <img src="https://getuikit.com/docs/images/light.jpg" width="80" height="80">
+        </div>
+        <div class="uk-width-expand">
+            <div class="uk-panels uk-padding-remove">
+                <div class="uk-text-truncate uk-light uk-text-bold uk-margin-small-top" style="font-family: 'Anonymous Pro', monospace;font-size: 25px">{{forum.title}}</div>
+                <div class="uk-position-right uk-position-small uk-light">
+                    <span uk-icon="info"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% for message in messages %}
+<div class="uk-panel uk-padding">
+    <div class="uk-grid uk-grid-small uk-margin" uk-grid>
+        <div class="uk-width-auto">
+             <span class="uk-text-middle"><b>{{message.userfio}}</b></span>
+        </div>
+        <div class="uk-width-expand">
+            <div class="uk-tile uk-padding-small" style="background-color: #1adda4;border-radius: 10px;">
+                <div class="uk-text-break">{{message.forum_message}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}

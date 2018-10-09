@@ -1,0 +1,114 @@
+{% extends "base.html.twig" %}
+{% block title %}Добавить компанию{% endblock %}
+{% block body %}
+{% include 'header.html.twig' %}
+{% include 'nav.html.twig' %}
+<div class="uk-container uk-margin uk-width-xxlarge">
+    {% for message in app.flashes('error') %}
+        <div class="uk-alert-danger" uk-alert>
+            <a class="uk-alert-close" uk-close></a>
+            <p>{{message}}</p>
+        </div>
+    {% endfor %}
+</div>
+<div class="uk-panel uk-margin-medium-left uk-margin">
+    <ul class="uk-breadcrumb">
+        <li><a href="/">{% trans %}Главная {% endtrans %}</a></li>
+        <li><a href="{{path('_add_company')}}">{% trans %}Добавить новый магазин{% endtrans %}</a></li>
+    </ul>
+</div>
+<div class="uk-container uk-margin-large-left uk-margin-large-right uk-margin-large-top">
+    <h3 class="uk-text-bold">{% trans %}Добавить новый магазин{% endtrans %}</h3>
+    <form class="uk-form-horizontal uk-margin-large" enctype="multipart/form-data" action="" method="POST" >
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-horizontal-text">
+                {% trans %}Введите название{% endtrans %}
+            </label>
+            <div class="uk-form-controls">
+                <input name="name" class="uk-input" required type="text" placeholder="">
+            </div>
+        </div>
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-horizontal-text">
+                {% trans %}Контактное лицо{% endtrans %}
+            </label>
+            <div class="uk-form-controls">
+                <input name="contact_name"  class="uk-input" type="text" placeholder="">
+            </div>
+        </div>
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-horizontal-text">
+                {% trans %}Ссылка на магазин{% endtrans %}
+            </label>
+            <div class="uk-form-controls">
+                <div class="uk-button-group">
+                    <input class="uk-input uk-form-width-medium" type="text" placeholder="http://agroov.com/" disabled>
+                    <input class="uk-input" type="text" name="suburl">
+                </div>
+            </div>
+        </div>
+        <div class="uk-margin">
+            <label class="uk-form-label">{% trans %}Страна{% endtrans %}</label>
+            <div class="uk-form-controls">
+                {{ render(controller('AppBundle:Country:index')) }}
+            </div>
+        </div> 
+        <agro-geofield title="Agroov geofield"></agro-geofield>
+        <div class="uk-margin">
+            <label class="uk-form-label" >{% trans %}Телефон{% endtrans %}</label>
+            <div class="uk-grid-small" uk-grid>
+                <div class="uk-width-1-4@s">
+                    <input name="phonecode" required id="phonecode" ng-model="phonecode" class="uk-input" type="text" placeholder={%trans%}Межд.Код{%endtrans%}>
+                </div>
+                <div class="uk-width-1-2@s">
+                    <input name="phone_without_code" required class="uk-input" ng-model="_phone" type="text" placeholder={%trans%}Номер телефона{%endtrans%}>
+                </div>
+            </div>
+        </div>
+        <div class="uk-margin">
+            <label class="uk-form-label">{% trans %}E-mail{% endtrans %}</label>
+            <div class="uk-form-controls">
+                <div class="uk-inline">
+                    <span class="uk-form-icon" uk-icon="icon: mail"></span>
+                    <input name="email" required class="uk-input" for="form-horizontal-text" type="text">
+                </div>
+            </div>
+        </div>
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-horizontal-text">{% trans %}Описание{% endtrans %}</label>
+            <div class="uk-form-controls">
+                <textarea class="uk-textarea" name="description" rows="5" placeholder=""></textarea>
+            </div>
+        </div> 
+        <div class="uk-margin">
+            <div class="js-upload uk-placeholder uk-text-center">
+                <span uk-icon="icon: cloud-upload"></span>
+                <span class="uk-text-middle">{% trans %}Загрузить лого можно нажав{% endtrans %}</span>
+                <div uk-form-custom>
+                    <input type="file" name="image" file-input>
+                    <span class="uk-link">{%trans%}сюда{%endtrans%}</span>
+                </div>
+            </div>
+        </div>
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-horizontal-text"></label>
+            <div class="uk-form-controls">
+                <button  type="submit" class="uk-button uk-button-primary uk-text-center">
+                    {% trans %}Готово! Cоздать!{% endtrans %}</a>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    $('#country_id').change(function(){
+        var url = "/region/" + $(this).val();
+        var phonecode = $('option:selected', this).attr('data-phonecode');
+        $('#phonecode').val("+"+phonecode);
+    });
+
+    var app = angular.module("agroov",[]);
+    var tmplUrl = "{{path('_map')}}";
+</script>
+<script src="{{asset('js/directives/geofield/geofield.js')}}"></script>
+{% include 'footer.html.twig' %}
+{% endblock %}

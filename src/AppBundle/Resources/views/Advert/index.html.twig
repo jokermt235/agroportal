@@ -1,0 +1,151 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+{% include 'header.html.twig' %}
+{% include 'nav.html.twig' %}
+<br>
+<form method="GET" id="filter_form">
+    <div class="uk-grid uk-margin uk-child-width-expand@s" uk-grid>
+         <div class="uk-grid-small" uk-grid uk-height-match="target: > div > .uk-card">
+             <div class="uk-width-expand@s">
+                <div class="uk-card uk-card-default">
+                    <div class="uk-margin">
+                        <div country-sel class="uk-margin-bottom-large uk-text-center">
+                            <div uk-form-custom="target: > * > span:first-child" class="uk-form-custom">
+                                <select id="country_id" name="country_id">
+                                    <option value="">Выбрать страну</option>
+                                    {% for country in countries %}
+                                    {% set selected = "" %}
+                                    {% if country.id == app.request.query.get('country_id')%}
+                                    {% set selected = "selected"%}
+                                    {% endif %}
+                                    <option {{selected}} value={{country.id}} data-phonecode={{country.phonecode}}>{{country.name}}</option>
+                                    {% endfor %}
+                                </select>
+                                <button class="uk-button uk-button-default" type="button" tabindex="-1">
+                                    <span></span>
+                                    <span uk-icon="icon: chevron-down"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-card uk-card-default uk-card-body">
+                        <ul class="uk-nav-default uk-margin-auto-left uk-nav">
+                            {% for category in categories %}
+                            {% set checked = "" %}
+                            {% if category.id == app.request.query.get('category_id')%}
+                            {% set checked = "checked=true"%}
+                            {% endif %}
+                            <li class="uk-parent uk-active uk-position-relative uk-position-small uk-margin-remove">
+                                <span class="uk-position-center-left" style="color:orange;">{{category.cnt}}</span><a class="uk-margin-left uk-link-muted" href="{{path('_adverts',{'category_id': category.id})}}">
+                                    {{category.name}}
+                                </a>
+
+                            </li>
+                            {% endfor %}
+                            <li class="uk-parent uk-active uk-position-relative uk-position-small uk-margin-remove">
+                                <a class="uk-margin-left uk-link-muted" href="{{path('_adverts')}}">
+                                    {%trans%}все{%endtrans%}
+                                </a>
+                            </li>
+                        </ul>
+                        <div left-banner class="uk-margin-large-top">
+                        </div>
+                    </div>
+                </div>
+             </div>
+             
+             <div class="uk-width-3-4">
+                <div class="uk-card uk-card-default uk-padding" uk-card>
+                    <nav class="uk-navbar" uk-navbar style="height:36px">
+                        <ul class="uk-subnav uk-subnav-divider uk-margin-small-top">
+                            {% for section in sections%}
+                            <li><a  href="http://agroov.com/adverts?section_id={{section.id}}">{{section.name}}</a></li>
+                            {% endfor%}
+                        </ul>
+                    </nav>
+                    <ul uk-accordion="multiple: true" class="uk-margin uk-list">        
+                        {% for advert in adverts%}
+                        <li>
+                            <a class="uk-accordion-title" href="#">
+                                <div style="margin-bottom:5px;padding: 5px" class="uk-card uk-card-default uk-card-small uk-padding-small  uk-card-hover">
+                                    <div class="uk-grid uk-grid-small">
+                                        <div class="uk-width-auto">
+                                            <span uk-icon="check" style="color: green"></span>
+                                        </div>
+                                        <div class="uk-width-expand">
+                                            <div class="uk-text-truncate">{{advert.title}}</div>
+                                        </div>
+                                        <div class="uk-width-auto">
+                                            <span class="uk-text-meta uk-margin-small-right">{{advert.created}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="uk-accordion-content">
+                                <div class="uk-grid uk-child-width-expand@m uk-grid-small uk-text-center" uk-grid>
+                                    <div>
+                                        <img class="uk-border-circle" width="25" height="25" src="images/coins.svg">
+                                        {% if advert.price != 0 %}
+                                        <span class="uk-text-truncate uk-margin-small-left">{{advert.price}} {{advert.currency}}</span>
+                                        {% endif%}
+                                        {% if advert.price == 0 %}
+                                        <span class="uk-text-truncate uk-margin-small-left">
+                                            {%trans%}Договорная{%endtrans%}
+                                        </span>
+                                        {% endif%}
+                                    </div>
+                                    <div>
+                                        <img class="uk-border-circle" width="25" height="25" src="images/phone-call.svg">
+                                        <span class="uk-text-truncate uk-margin-small-left">{{advert.phone}}</span>
+                                    </div>
+                                    <div>
+                                        <a href="{{path('_advert_view',{url : advert.url})}}" class="uk-button uk-button-small uk-button-primary uk-width-1-2">Подробно</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        {%endfor%}
+                    </ul>
+                    <ul class="uk-pagination uk-flex-center" uk-margin-top>
+                        <li><a href="#"><span uk-pagination-previous></span></a></li>
+                        <li><a href="#">1</a></li>
+                        <li class="uk-disabled"><span>...</span></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#">6</a></li>
+                        <li class="uk-active"><span>7</span></li>
+                        <li><a href="#">8</a></li>
+                        <li><a href="#"><span uk-pagination-next></span></a></li>
+                    <ng-model="item"/ul>
+                </div>
+             </div>
+        </div>
+    </div>
+</form>
+<script>
+    var left_banner_url = "{{path('_left_banner')}}";
+    var countryUrl = "{{path('_country')}}";
+    angular.module('agroov').directive('leftBanner',function(){
+        return {
+            templateUrl: left_banner_url
+        };
+    });
+
+    $('.uk-radio').change(function(){
+        $(this).prop("checked",true);
+        $('#page').val(1)
+        $('#filter_form').submit();
+    });
+
+    $('#country_id').change(function(){
+        $('#page').val(1)
+        $('#filter_form').submit();
+    });
+
+    $('#search_button').click(function(){
+        $('#page').val(1)
+        $('#filter_form').submit();    
+    });
+
+</script>
+{% include 'footer.html.twig'%}
+{% endblock %}

@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="large-12 columns">
+        <div class="row collapse">
+            <div class="small-10 columns">
+                <input type="text" placeholder="Choose geo location" ng-model="geodata" value="{{geodata}}">
+            </div>
+            <div class="small-2 columns">
+                <a href="javascript:void(0)" data-reveal-id="geoModal" ng-click="openMapDialog()" class="button postfix">...</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="reveal-modal" data-reveal aria-labelled by="modalTitle" aria-hidden="true" role="dialog">
+   <div id="googleMap"></div> 
+</div>

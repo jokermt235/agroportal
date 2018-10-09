@@ -1,31 +1,23 @@
-<div class="uk-flex uk-flex-center uk-flex-middle uk-text-center uk-margin-medium-top">
-    <div class="uk-margin-large-right">
-        <a  href="/">
-            <img src="{{asset('images/agroov_logo1.png')}}" alt="" > 
-        </a>
+<div  class="uk-flex uk-flex-center uk-flex-middle uk-text-center uk-margin-medium-top"> 
+    <div style="width:256px;">
+        {{ render(controller('AppBundle:Cmpy:logo')) }}
     </div>
     <div class="uk-margin-large-left">
         <div class="uk-grid-collapse" uk-grid>
             <div>
                 <div class="uk-padding-left">
                     <div uk-form-custom="target : true">
-                        <input class="uk-input uk-width-medium " type="text" placeholder="Я ищу.....">
+                        <input name="search_text" class="uk-input uk-width-medium " type="text" placeholder="Я ищу.....">
                     </div>
                 </div>
             </div>
             <div ng-controller="categoryChooseController">
-                <div uk-form-custom="target: > * > span:first-child" class="uk-form-custom">
-                    <select ng-options="item as item.name for item in items track by item.id" ng-model="selected" ng-model="category">
-                        <option value="">{%trans%}Категории{%endtrans%}</option>
-                    </select>
-                    <button class="uk-button uk-button-default" type="button" tabindex="-1">
-                        <span></span>
-                        <span uk-icon="icon: chevron-down"></span>
-                    </button>
-                </div>
+                <select name="search_category_id" class="uk-select" ng-options="item as item.name for item in items track by item.id" ng-model="selected" ng-model="category">
+                    <option value="">{%trans%}Категории{%endtrans%}</option>
+                </select>
             </div>
             <div>
-                <button class="uk-button uk-button-default">
+                <button class="uk-button uk-button-default" id="search_button">
                     <span uk-icon="icon: search"></span>
                 </button>
             </div>
@@ -38,14 +30,33 @@
         </a>
     </div>
 </div>
+<hr></hr>
 <script>
-    var action_app = angular.module('agroov', []);
+    var action_app = angular.module('agroov');
     var _get_category_for_user = "{{path('_get_category_for_user')}}";
+    var logo_path = "{{path('_logo_path')}}";
+    var logos = {};
     action_app.controller('categoryChooseController',function($scope,$http){
         $http.get(_get_category_for_user).then(function(result){
             $scope.items = result.data;
             console.log(result.data);
         });
     });
+
+    /*action_app.controller('logoController',function($scope,$http){
+        $http.get(logo_path).then(function(result){
+            logos = result.data;
+            var i = 0;
+            var logo = logos[i];
+            $('#logoHref').html("<img src={{asset('images/small_rotate_logo/')}}" + logo +">");
+            setInterval(function(){
+                i++;
+                logo = logos[i];
+                $('#logoHref').html("<img src={{asset('images/small_rotate_logo/')}}" + logo +">");
+                if(i == logos.length)  i = 0;
+            }, 10000); 
+        });
+    });*/
+
 </script>
 

@@ -1,9 +1,14 @@
 {% extends "base.html.twig" %}
-{% block title %}AppBundle:User:registration{% endblock %}
+{% set page_title = advert.title %}
+{% set og_title = advert.title %}
+{% if images[0] is defined %} 
+{% set og_image = asset('uploads/images/advert/'~advert.id~'/small_'~images[0]) %}
+{% endif %}
+{% set og_url = path(app.request.attributes.get('_route'),
+                       app.request.attributes.get('_route_params'))%}
 {% block body %}
 {% include 'header.html.twig' %}
 {% include 'nav.html.twig' %}
-{% include 'actionbar.html.twig' %}
 <div class="uk-container uk-margin">
     <ul class="uk-breadcrumb">
         <li><a href="/">{% trans %}Главная{% endtrans %}</a></li>
@@ -27,13 +32,9 @@
                         <p class="uk-text-meta">Опубликовано: {{advert.created}} Просмотры: {{advert.views}}</p>
                     </div>
                     <div class="uk-width-auto">
-                        <h3 class="uk-text-bold">{{advert.price}} сом</h3>
+                        <h3 class="uk-text-bold">{{advert.price}} {{advert.currency}}</h3>
                     </div>
                 </div>
-            </div>
-            <div class="uk-width-expand uk-text-center" style="color:blue;">
-                <span uk-icon="upload"></span>
-                <a href="#" class="uk-button uk-button-text uk-text-bold" style="color:blue;">{% trans %}Поднять объявление{% endtrans %}</a>
             </div>
         </div>
     </div>
@@ -55,11 +56,6 @@
                         </li>
                         {% endfor %}
                     </ul>
-                    <!--<ul class="uk-thumbnav">
-                        <li uk-slideshow-item="0"><a href="#"><img src="https://getuikit.com/docs/images/photo.jpg" width="100" alt=""></a></li>
-                        <li uk-slideshow-item="1"><a href="#"><img src="https://getuikit.com/docs/images/dark.jpg" width="100" alt=""></a></li>
-                        <li uk-slideshow-item="2"><a href="#"><img src="https://getuikit.com/docs/images/light.jpg" width="100" alt=""></a></li>
-                    </ul>-->
                 </div>
             </div>
             <hr>
@@ -73,29 +69,36 @@
             <div class="uk-panel uk-padding-small">
                 <a href="#" class="uk-button uk-button-large uk-width-1-1 uk-button-default uk-margin-small-bottom" style="font-size:17px">{{advert.phone}}</a>
                 <a href="#" class="uk-button uk-button-secondary uk-button-large uk-width-1-1">{% trans %}Написать сообщение{% endtrans %}</a>
-                <p class="uk-text-meta">{% trans %}Продавец :{% endtrans %}<a href="#" class="uk-text-meta">{% trans %}Наталья{% endtrans %}</a></p>
-                <p class="uk-text-meta">{% trans %}Местонахождение :{% endtrans %}<a href="#" class="uk-text-meta">{% trans %}Бишкек{% endtrans %}</a></p>
+                <p class="uk-text-meta">{% trans %}Продавец :{% endtrans %}
+                {% if company == null %}
+                <a href="#" class="uk-text-meta">{{author.fio}}</a></p>
+                {% endif%}
+                {% if company != null %}
+                    <a href="{{path('_company_view',{url:company.url})}}" class="uk-text-meta">
+                        {{company.name}}
+                    </a>
+                </p>
+                {% endif%}
+                <p class="uk-text-meta">{% trans %}Местонахождение :{% endtrans %}<a href="#" class="uk-text-meta">          {% if country != null %}
+                {{country.name}}
+                {% endif %}
+                    </a>
+                </p>
             </div>
             <hr>
-            <div class="uk-panel uk-padding-small">
-                <div class="uk-position-relative uk-position-small uk-position-right-center uk-visible-toggle uk-light" uk-slideshow="ratio: 3.5:6; animation: push;autoplay: true; autoplay-interval:3000;">
-                    <ul class="uk-slideshow-items">
-                        <li>
-                            <img src="images/" alt="" uk-cover>
-                        </li>
-                        <li>
-                            <img src="https://getuikit.com/docs/images/dark.jpg" alt="" uk-cover>
-                        </li>
-                        <li>
-                            <img src="https://getuikit.com/docs/images/light.jpg" alt="" uk-cover>
-                        </li>
-                    </ul>
-                    <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
-                    <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
-                </div>
+            <div left-banner class="uk-panel uk-padding-small">
+                
             </div>
         </div>
     </div>
 </div>
+<script>
+    var left_banner_url = "{{path('_left_banner')}}";
+    angular.module('agroov').directive('leftBanner',function(){
+        return {
+            templateUrl: left_banner_url
+        };
+    });
+</script>
 {% include 'footer.html.twig' %}
 {% endblock%}

@@ -42,9 +42,17 @@ login_failure:
     path : /forgot_password
     defaults: { _controller: AppBundle:Security:forgotpassword }
 
+_send_password:
+    path : /send_password
+    defaults: { _controller: AppBundle:Security:sendpassword }
+
 _profile_index:
     path: /profile
     defaults: {_controller: AppBundle:User:profile }
+
+_adverts:
+    path: /adverts
+    defaults: {_controller: AppBundle:Advert:index }
 
 advertise:
     path: /advertise
@@ -55,7 +63,7 @@ _upload_advert_image:
     defaults: { _controller: AppBundle:Advert:upload }
 
 _advert_view:
-    path: /advert/view/{id}
+    path: /advert/view/{url}
     defaults: { _controller: AppBundle:Advert:view }
 
 _advert_edit:
@@ -82,9 +90,142 @@ _add_forum :
     defaults : {_controller: AppBundle:Forum:add}
 
 _forum : 
-    path : /forum/index
+    path : /forum
     defaults : {_controller: AppBundle:Forum:index}
 
 _publication : 
     path : /publication
     defaults : {_controller: AppBundle:Publication:index}
+
+_publication_view:
+    path: /publication/view/{url}
+    defaults: {_controller: AppBundle:Publication:view}
+
+_new_post:
+    path: /publication/add
+    defaults: {_controller: AppBundle:Publication:add}
+
+_upload_publication_image:
+    path: /publication/upload
+    defaults: {_controller: AppBundle:Publication:upload}
+
+_top_banner : 
+    path : /topbanner
+    defaults : {_controller: AppBundle:Cmpy:topbanner}
+
+_left_banner : 
+    path : /leftbanner
+    defaults : {_controller: AppBundle:Cmpy:leftbanner}
+
+
+_fmessage_history:
+    path : /forum/history/{forum_id}
+    defaults: {_controller: AppBundle:Forum:history}
+
+_logo_path:
+    path : /logo
+    defaults: {_controller: AppBundle:Cmpy:logo}
+
+_country:
+    path : /country
+    defaults: {_controller: AppBundle:Country:index}
+
+_currency:
+    path : /currency
+    defaults: {_controller: AppBundle:Currency:index}
+
+_region:
+    path: /region/{country_id}
+    defaults: {_controller: AppBundle:Region:index}
+
+_city:
+    path: /city/{region_id}
+    defaults: {_controller: AppBundle:City:index}
+
+_sale_category:
+    path: /sale/{category_id}
+    defaults: {_controller: AppBundle:Default:sale}
+
+_buy_category:
+    path: /buy/{category_id}
+    defaults: {_controller: AppBundle:Default:buy}
+
+_service_category:
+    path: /service/{category_id}
+    defaults: {_controller: AppBundle:Default:service}
+
+_vacancy_category:
+    path: /vacancy/{category_id}
+    defaults: {_controller: AppBundle:Default:vacancy}
+
+_rent_category:
+    path: /rent/{category_id}
+    defaults: {_controller: AppBundle:Default:rent}
+
+_charity:
+    path : /charity
+    defaults: {_controller:AppBundle:Charity:index}
+
+_company:
+    path : /shops
+    defaults: {_controller:AppBundle:Company:index}
+
+_company_view:
+    path : /{url}
+    defaults: {_controller:AppBundle:Company:view}
+
+_add_company:
+    path : /shop/add
+    defaults: {_controller:AppBundle:Company:add}
+
+_company_map:
+    path : shop/map
+    defaults: {_controller:AppBundle:Company:map}
+
+_reklam:
+    path: /reklam
+    defaults: {_controller:AppBundle:Reklam:index}
+
+_admin:
+    path: /admin
+    defaults: {_controller:AppBundle:Admin:index}
+
+_admin_topbanner:
+    path: /admin/topbanner
+    defaults: {_controller:AppBundle:Admin:topbanner}
+
+_admin_addtopbanner:
+    path: /admin/addtopbanner
+    defaults: {_controller:AppBundle:Admin:addtopbanner}
+
+_admin_topbanner_delete:
+    path: /admin/topbannerdelete/{image}/{id}
+    defaults: {_controller:AppBundle:Admin:topbannerdelete}
+
+_admin_leftbanner:
+    path: /admin/leftbanner
+    defaults: {_controller:AppBundle:Admin:leftbanner}
+
+_admin_addleftbanner:
+    path: /admin/addleftbanner
+    defaults: {_controller:AppBundle:Admin:addleftbanner}
+
+_admin_leftbanner_delete:
+    path: /admin/leftbannerdelete/{image}/{id}
+    defaults: {_controller:AppBundle:Admin:leftbannerdelete}
+
+_user_company:
+    path: /company/usercompany
+    defaults: {_controller:AppBundle:Company:usercompany}
+
+_recovery:
+    path: /recovery/{token}
+    defaults: {_controller:AppBundle:Security:recovery}
+
+_new_password:
+    path: /newpassword/{token}
+    defaults: {_controller:AppBundle:Security:newpassword}
+
+_map:
+    path: /shops/map
+    defaults: {_controller:AppBundle:Map:index}

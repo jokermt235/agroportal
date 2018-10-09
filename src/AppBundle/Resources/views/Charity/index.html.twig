@@ -1,0 +1,40 @@
+{% extends "base.html.twig" %}
+{% block title %}Благотворительность{% endblock %}
+{% block body %}
+{% include 'header.html.twig' %}
+{% include 'nav.html.twig' %}
+<div class="uk-container uk-margin">
+    <ul class="uk-breadcrumb">
+        <li><a href="/"><span>{% trans %}Главная{% endtrans %}</span></a></li>
+        <li><a href="{{path('_charity')}}"><span>{% trans %}Благотворительность{% endtrans %}</span></a></li>
+    </ul>
+</div>
+<div class="uk-panel uk-margin">
+    <div class="uk-margin uk-container">
+        <div class="uk-heading-primary">{% trans %}Благотворительность{% endtrans %}</div>
+    </div>
+    <div class="uk-text-center uk-card uk-card-default uk-card-body">
+        <p>Eсли вы желаете оказать гуманитарную помощь детским домам, домам престарелых, малоимущим семьям, нуждающимся людям в денежной форме или продуктами питания, вы можете оставить  заявку на нашем сайте с указанием вашего адреса, объема помощи и адреса получателя. Наши волонтеры организуют прямую доставку.
+        В данном разделе вы можете оставлять ваши пожелания, просьбы, рекомендации,  размещать объявления, фото-отчеты, а также вступить в ряды волонтеров, организаторов благотворительных мероприятий.</p>
+    </div>
+    <div class="uk-text-center uk-card uk-card-default uk-card-body">
+        <img src="{{asset('images/charity_image.jpeg')}}" uk-img>
+        <div class="uk-panel uk-background-muted uk-text-center uk-padding-large">
+            <h2>{%trans%}Оставить заявку{%endtrans%}</h2>
+            <div class="uk-margin-small-top">
+                <input type="text" class="uk-input uk-form-width-large" type="text" placeholder="Ваше имя">
+            </div>
+            <div class="uk-margin-small-top">
+                <textarea class="uk-textarea uk-form-width-large" rows="
+                    3
+                " type="text" placeholder="Напишите нам"></textarea>
+            </div>
+            <div class="uk-margin-top">
+                <button class="uk-button uk-button-default uk-width-1-3" style="background-color: #32d296; color:whitesmoke">{%trans%}Отправить{%endtrans%}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'footer.html.twig' %}
+{% endblock %}

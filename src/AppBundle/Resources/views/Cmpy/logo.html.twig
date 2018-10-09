@@ -1,0 +1,9 @@
+<div class="uk-position-relative uk-visible-toggle uk-light" uk-slideshow="ratio: 0.2:0.072;animation: scale;autoplay:true;">
+    <ul class="uk-slideshow-items">
+        {% for image in images%}
+        <li>
+            <img src={{ asset("images/small_rotate_logo/") }}{{image}} alt={{image}} uk-cover>
+        </li>
+        {% endfor %}
+    </ul>
+</div>

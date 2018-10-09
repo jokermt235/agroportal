@@ -1,0 +1,20 @@
+{% extends "base.html.twig" %}
+{% block title %}Как подать рекламу на agroov.com{% endblock %}
+{% block body %}
+{% include 'header.html.twig' %}
+{% include 'nav.html.twig' %}
+<div class="uk-container uk-margin">
+    <ul class="uk-breadcrumb">
+        <li><a href="/"><span>{% trans %}Главная{% endtrans %}</span></a></li>
+        <li><a href="{{path('_reklam')}}"><span>{% trans %}Реклама{% endtrans %}</span></a></li>
+    </ul>
+</div>
+<div class="uk-container uk-margin uk-padding">
+    <div class="uk-heading-primary uk-heading-bullet">{%trans%}Реклама{% endtrans %}</div>
+    <p>{% trans %}Если вы хотите рекламироваться ваш продукт в верхнем или боковом баннере для вас есть готовые шаблоны баннеров. Вам необходимо выбрать верхн    ий или боковой баннер, заполнить шаблон изображением вашего продукта, коротким текстом, указать цену, валюту, телефон и адрес, добавить ссылку вашего кабинета или стр    аницы на сайте{% endtrans %}</p>
+    <p>{% trans %}Баннеры платные. Стоимость одного баннера за 24 часа 10 долл./ 700 сом/ 3500 тенге/ 700 рублей/.{% endtrans %}</p>
+    <p>{% trans %}Ваш баннер покажем в каждый 12 минут по 10 секунд, за 24 часа покажем 120 раз.{% endtrans %}</p>
+</div>
+
+{% include 'footer.html.twig' %}
+{% endblock%}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Геополе</title>
+        <link rel="stylesheet" href="foundation/css/foundation.css" type="text/css" media="all">
+        <script src="angular.min.js"></script>
+        <script src="foundation/js/vendor/jquery.js"></script>
+        <script src="foundation/js/foundation.min.js"></script>
+    </head>
+    <body ng-app="rest">
+        <ak-geofield name="geodata"></ak-geofield>
+    </body>
+    <script>
+         app = angular.module("rest",[]);
+    </script>
+    <script src="geofield.js"></script>
+    <script>
+        
+        $(function() {
+            $(document).foundation();
+        });
+
+    </script>
+</html>

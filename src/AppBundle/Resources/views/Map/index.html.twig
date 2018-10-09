@@ -1,0 +1,16 @@
+<div class="uk-margin" ng-model = "map_button" ui-mask="2" ng-if="map_button"> 
+    <label class="uk-form-label">{% trans %}Маркер на карте{% endtrans %}</label>
+    <div class="uk-form-controls">
+        <a href="javascript:void(0)" class="uk-button uk-button-default uk-text-center" ng-click="openMapDialog()">Открыть карту</a>
+    </div>
+</div>
+<div id="modal-container" class="uk-modal-container" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <button class="uk-modal-close-default" type="button" uk-close></button> 
+        <div>
+            <div id="map"></div>
+        </div>
+    </div>
+</div>
+
+

@@ -3,6 +3,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
 use AppBundle\Entity\Advert;
+use AppBundle\Entity\Company;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,6 +36,7 @@ class UserController extends Controller
                 ->getRepository(User::class)
                 ->findOneByUsername($request->get('username'));
             if($user){
+                $session->getFlashBag()->add("error", "Пользователь с таким логином уже существует");
                 return $this->render('@App/User/registration.html.twig',array('session_id' => $session->getId()));
             }
             
@@ -43,6 +45,7 @@ class UserController extends Controller
                 ->getRepository(User::class)
                 ->findOneByEmail($request->get('email'));
             if($user){
+                $session->getFlashBag()->add("error", "Пользователь с такой почтой уже существует");
                 return $this->render('@App/User/registration.html.twig',array('session_id' => $session->getId()));
             }
 
@@ -50,16 +53,24 @@ class UserController extends Controller
             $user = new User();
             $user->setUsername($request->get('username'));
             if($request->get('password') === $request->get('password_retype')){
-                $password = $passwordEncoder->encodePassword($user, $user->getPassword());
+                $password = $passwordEncoder->encodePassword($user, $request->get('password'));
                 $user->setPassword($password);
             }else{
+                $session->getFlashBag()->add("error", "Ошибка при регистрации пароли не совпадают");
                 return $this->render('@App/User/registration.html.twig', array('session_id' => $session->getId()));
             }
 
-            $user->setPassword($password);
             $user->setFio($request->get('fio'));
             $user->setEmail($request->get('email'));
-            $user->setPhone($request->get('phone'));
+            $user->setRoles('ROLE_USER');
+            $phone = "";
+            if($request->get("phonecode") && $request->get('phone_without_code')){
+                $phone = $request->get("phonecode").$request->get('phone_without_code');
+            }
+            $user->setPhone($phone);
+            $user->setCountryId($request->get('country_id'));
+            $user->setRegionId($request->get('region_id'));
+            $user->setCityId($request->get('city_id'));
             
             $em->persist($user);
             $em->flush();
@@ -104,12 +115,20 @@ class UserController extends Controller
         if(empty($request->get('page'))){
             $page = 0;
         }
+
+        $viewcount  = $this->getDoctrine()
+                    ->getRepository(Advert::class)
+                    ->getAdvertViewCountByUserId($this->getUser()->getId());
         return  $this->render('@App/User/profile.html.twig',
             array(
                 'myadvert_count' => $count,
                 'myadverts' =>$myadverts,
                 'page_count'=> ceil($count / $this->max_page),
-                'page'=>$page
+                'page'=>$page,
+                'viewcount'=> $viewcount,
+                'companies'=> $this->getDoctrine()
+                    ->getRepository(Company::class)
+                    ->findCompanyByUserId($this->getUser()->getId())
                     
             )
         );
@@ -120,16 +139,18 @@ class UserController extends Controller
         $fileSystem = new Filesystem();
         try {
             $tmpDir = $this->targetDirectory;
-            str_replace("tmp","images",$tmpDir);
-            $dirname = str_replace("tmp","images",$tmpDir).'/user/'.$id;
-            $fileSystem->mkdir($dirname);
-            $finder = new Finder();
+            if($fileSystem->exists($this->targetDirectory.'/'.$session_id)){
+                str_replace("tmp","images",$tmpDir);
+                $dirname = str_replace("tmp","images",$tmpDir).'/user/'.$id;
+                $fileSystem->mkdir($dirname);
+                $finder = new Finder();
 
-            $finder->files()->in($this->targetDirectory.'/'.$session_id);
+                $finder->files()->in($this->targetDirectory.'/'.$session_id);
 
-            foreach($finder as $file){
-                $cp_file_name = $dirname.'/'.$file->getRelativePathname(); 
-                $fileSystem->copy($file->getRealPath(),$cp_file_name);
+                foreach($finder as $file){
+                    $cp_file_name = $dirname.'/'.$file->getRelativePathname(); 
+                    $fileSystem->copy($file->getRealPath(),$cp_file_name);
+                }
             }
 
         } catch (IOExceptionInterface $exception) {

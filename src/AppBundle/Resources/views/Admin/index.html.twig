@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+{% block title %}Администратор{% endblock %}
+{% block body %}
+{% include 'nav.html.twig' %}
+<hr>
+<div class="uk-card uk-card-default uk-card-body">
+    <div class="uk-text-center" uk-grid>
+        <div class="uk-width-auto@m">
+            <div class="uk-card uk-card-default uk-card-body">
+                <ul class="uk-nav uk-nav-default">
+                    <li class="uk-active"><a href="{{path('_admin')}}">Адмнинистрирование</a></li>
+                    <li><a href="{{path('_admin_topbanner')}}">Верхний баннер</a></li>
+                    <li><a href="{{path('_admin_leftbanner')}}">Боковой левый баннер</a></li>
+                    <li><a href="#">Пользователи</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="uk-width-expand@m">
+            <div class="uk-card uk-card-default uk-card-body">Expand</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

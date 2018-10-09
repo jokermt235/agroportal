@@ -1,236 +1,115 @@
 {% extends "base.html.twig" %}
-{% block title %}AppBundle:User:registration{% endblock %}
+{% block title %}Выбор сообщества{% endblock %}
 {% block body %}
 {% include 'header.html.twig' %}
 {% include 'nav.html.twig' %}
-{% include 'actionbar.html.twig' %}
-<div class="uk-grid uk-grid-collapse uk-margin-medium-left uk-margin-large-right" uk-grid>
-    <div class="uk-width-1-6">
-        <div class="uk-panel uk-margin-left">
-            <div class="uk-position-relative uk-visible-toggle uk-light" uk-slideshow="ratio: 4:1.8; animation: push;autoplay:true;">
-
-                <ul class="uk-slideshow-items">
-                    <li>
-                        <img src="images/WhatsApp%20Image%202018-02-10%20at%2015.14.14%20(1).jpeg" alt="" uk-cover>
-                    </li>
-                    <li>
-                        <img src="images/WhatsApp%20Image%202018-02-10%20at%2015.14.14.jpeg" alt="" uk-cover>
-                    </li>
-                    <li>
-                        <img src="images/WhatsApp%20Image%202018-02-10%20at%2015.14.15%20(1).jpeg" alt="" uk-cover>
-                    </li>
-                    <li>
-                        <img src="images/%D1%81%D0%B0%D0%BB%D0%B0%D1%82.jpg" alt="" uk-cover>
-                    </li>
-                    <li>
-                        <img src="images/%D0%BF%D1%82%D0%B8%D1%86%D1%8B.jpg" alt="" uk-cover>
-                    </li>
-                    <li>
-                        <img src="images/%D0%B3%D1%80%D1%83%D0%B7%D0%BE%D0%BF%D0%B5%D1%80%D0%B5%D0%B2%D0%BE%D0%B7%D0%BA%D0%B0.jpg" alt="" uk-cover>
-                    </li>
-                    <li>
-                        <img src="images/%D0%BA%D0%BE%D0%BB%D0%B1%D0%B0%D1%81%D0%B0.jpg" alt="" uk-cover>
-                    </li>
-                    <li>
-                        <img src="images/%D0%BA%D0%BE%D1%80%D0%BE%D0%B2%D0%B0.jpg" alt="" uk-cover>
-                    </li>
-                </ul>
-
-                <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
-                <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
-
-            </div>
-        </div>
-    </div>
-</div>
-    <div class="uk-grid uk-margin uk-child-width-expand@s" uk-grid>
-     <div class="uk-grid-small" uk-grid>
-         <div class="uk-width-expand@s">
-            <div class="uk-card uk-card-default uk-card-body uk-margin-small-left">
-                <div class="uk-margin">
-                    <div class="uk-margin">
-                        <div uk-form-custom="target: > * > span:first-child">
-                            <select>
-                                <option value="1">{% trans %} Кыргызстан {% endtrans %}</option>
-                                <option value="2">{% trans %} Казахстан {% endtrans %}</option>
-                                <option value="3">{% trans %} Россия {% endtrans %}</option>
-                                <option value="4">{% trans %} Узбекистан {% endtrans %}</option>
-                                <option value="5">{% trans %} Таджикистан {% endtrans %}</option>
-                            </select>
-                            <button class="uk-button uk-button-small uk-text-lowercase uk-width-xlarge uk-button-default uk-margin-medium-bottom" type="button" tabindex="-1">
-                                <span>выбрать страну</span>
-                                <span uk-icon="icon: chevron-down"></span>
-                            </button>
-                        </div>
+<div class="uk-grid uk-margin uk-child-width-expand@s" uk-grid ng-controller="forumCtrl">
+    <div class="uk-grid-small uk-grid-collapse" uk-grid>
+        <div class="uk-width-expand@s uk-margin-small-right">
+            <div class="uk-card uk-card-default uk-margin-small-left">
+                <div class="uk-margin-bottom-large uk-text-center"> 
+                    <div uk-form-custom="target: > * > span:first-child" class="uk-form-custom">
+                        <select ng-model="category_id">
+                            <option>{%trans%}Пусто{%endtrans%}</option>
+                            {% for category in categories %}
+                            <option value="{{category.id}}">{{category.name}}</option>
+                            {% endfor %}
+                        </select>
+                        <button class="uk-button uk-button-default" type="button" tabindex="-1">
+                            <span>{%trans%}Выбрать{%endtrans%}</span>
+                            <span uk-icon="icon: chevron-down"></span>
+                        </button>
+                        
                     </div>
                 </div>
-                <ul class="uk-nav-default uk-position-relative uk-margin-auto-left" uk-nav>
-                    <li class="uk-parent uk-active uk-position-relative uk-position-small uk-margin-remove">
-                        <span class="uk-position-center-left" style="color:orange;">12</span><a class="uk-margin-small-left" href="#">{% trans %} Растениводство {% endtrans %}</a>
-                    </li>
-                    <li class="uk-parent uk-active uk-position-relative uk-position-small uk-margin-remove">
-                        <span class="uk-position-center-left" style="color:orange;">56</span><a class="uk-margin-small-left" href="#">{% trans %} Животновоство {% endtrans %}</a>
-                    </li>
-                    <li class="uk-parent uk-active uk-position-relative uk-position-small uk-margin-remove">
-                        <span class="uk-position-center-left" style="color:orange;">65</span><a class="uk-margin-small-left" href="#">{% trans %} Пчеловодство {% endtrans %}</a>
-                    </li>
-                    <li class="uk-parent uk-active uk-position-relative uk-position-small uk-margin-remove">
-                        <span class="uk-position-center-left" style="color:orange;">12</span><a class="uk-margin-small-left" href="#">{% trans %} Птицеводство {% endtrans %}</a>
-                    </li>
-                    <li class="uk-parent uk-active uk-position-relative uk-position-small uk-margin-remove">
-                        <span class="uk-position-center-left" style="color:orange;">65</span><a class="uk-margin-small-left" href="#">{% trans %} Продукты питания {% endtrans %}</a>
-                    </li>
-                    <li class="uk-parent uk-active uk-position-relative uk-position-small uk-margin-remove">
-                        <span class="uk-position-center-left" style="color:orange;">12</span><a class="uk-margin-small-left" href="#">{% trans %} Техника {% endtrans %}</a>
-                    </li>
-                    <li class="uk-parent uk-active uk-position-relative uk-position-small uk-margin-remove">
-                        <span class="uk-position-center-left" style="color:orange;">12</span><a class="uk-margin-small-left" href="#">{% trans %} Грузоперевозка {% endtrans %}</a>
-                    </li>
-                    <li class="uk-parent uk-active uk-position-relative uk-position-small uk-margin-remove">
-                        <span class="uk-position-center-left" style="color:orange;">65</span><a class="uk-margin-small-left" href="#">{% trans %} Недвижимость {% endtrans %}</a>
-                    </li>
-                    <li class="uk-parent uk-active uk-position-relative uk-position-small uk-margin-remove">
-                        <span class="uk-position-center-left" style="color:orange;">12</span><a class="uk-margin-small-left" href="#">{% trans %} Строительство {% endtrans %}</a>
-                    </li>
-                </ul>
-            </div>
-             <div class="uk-margin-small-left uk-position-relative uk-visible-toggle" uk-slideshow="ratio: 9:11; animation: push">
-
-                <ul class="uk-slideshow-items">
-                    <li>
-                        <img src="images/bok/06.jpg" alt="" uk-cover>
-                    </li>
-                    <li>
-                        <img src="images/bok/10475-vesna-cvetyi-tyulpanyi-1024x768.jpg" alt="" uk-cover>
-                    </li>
-                    <li>
-                        <img src="images/bok/11d85d0171f74101e6a88ce7dffdfcd1.jpg" alt="" uk-cover>
-                    </li>
-                </ul>
-
-                <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
-                <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
-
+                <div class="uk-card uk-card-default uk-card-body uk-margin-small-left">
+                    <ul class="uk-nav-default uk-position-relative" uk-nav>
+                        {% for forum in forums %}
+                        <li class="uk-card uk-card-default uk-card-hover" style="padding:6px;background-color:#1adda4;">
+                            <a href="javascript:void(0)">
+                                <div class="uk-grid uk-grid-small" uk-grid>
+                                    <div class="uk-width-auto">
+                                        <img class="uk-border-circle" src="https://getuikit.com/docs/images/avatar.jpg" width="40" height="40">
+                                    </div>
+                                    <div class="uk-width-expand">
+                                        <div class="uk-panel uk-padding-remove">
+                                            <div ng-click="itemClicked($event)"  url="{{path('_fmessage_history',{'forum_id':forum.id})}}" class="uk-text-truncate uk-light uk-text-bold uk-margin-small-top">{{forum.title}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="uk-nav-divider"></li>
+                        {% endfor %}
+                    </ul> 
+                </div>
             </div>
          </div>
          
-         <div class="uk-width-3-4">
-            <div class="uk-card uk-card-default uk-padding-remove">
-                <div class="uk-card uk-card-default" style="padding: 6px;background-color: #22b4a9c4">
-                    <div class="uk-grid uk-grid-small" uk-grid>
-                        <div class="uk-width-auto">
-                            <img src="https://getuikit.com/docs/images/light.jpg" width="80" height="80">
-                        </div>
-                        <div class="uk-width-expand">
-                            <div class="uk-panels uk-padding-remove">
-                                <div class="uk-text-truncate uk-light uk-text-bold uk-margin-small-top" style="font-family: 'Anonymous Pro', monospace;font-size: 25px">{% trans %} Тепличники {% endtrans %}</div>
-                                <div class="uk-position-right uk-position-small uk-light">
-                                    <span uk-icon="info"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+         <div  class="uk-width-3-4" ng-model="forumItem" forum-item>
+            <div class="uk-card uk-card-default uk-padding-remove"> 
                 <ul class="uk-subnav uk-subnav-divider uk-margin-remove" style="padding: 6px;">
-                        <li class="uk-active"><a href="publication.html">{% trans %} Новости {% endtrans %}</a></li>
+                        <li class="uk-active"><a href="{{path('_publication')}}">{% trans %} Новости {% endtrans %}</a></li>
                         <li class="uk-active"><a href="#">{% trans %} Мероприятия {% endtrans %}</a></li>
-                        <li class="uk-active"><a href="publication.html">{% trans %} Публикации {% endtrans %}</a></li>
+                        <li class="uk-active"><a href="{{path('_publication')}}">{% trans %} Публикации {% endtrans %}</a></li>
                         <li class="uk-active"><a href="company.html">{% trans %} Магазины {% endtrans %}</a></li>
                         <li class="uk-active"><a href="#">{% trans %} Участники {% endtrans %}</a></li>
                         <li class="uk-active"><a href="#">{% trans %} Благотворительность {% endtrans %}</a></li>
-                        <li class="uk-active"><a href="rules.html">{% trans %} Правила {% endtrans %}</a></li>
                     </ul>
-                <div class="uk-panel uk-panel-scrollable uk-padding-remove" uk-height-viewport="offset-bottom: 32">
-                    
-                    <div class="uk-panel uk-padding">
-                        <div class="uk-grid uk-grid-small uk-margin" uk-grid>
-                            <div class="uk-width-auto">
-                                <img class="uk-border-circle" src="https://getuikit.com/docs/images/avatar.jpg" width="60" height="60">
-                            </div>
-                            <div class="uk-width-expand">
-                                <div class="uk-tile uk-padding-small" style="background-color: #1adda4;border-radius: 10px;">
-                                    <div class="uk-text-break">Hi</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="uk-grid uk-grid-small uk-margin" uk-grid>
-                            <div class="uk-width-expand">
-                                <div class="uk-tile uk-padding-small" style="background-color: #1ddced;border-radius: 10px;">
-                                    <div class="uk-text-break">Loremipsumdolorsitamet,consecteturadipiscingelit,seddoeiusmodtemporincididuntutlaboreetdoloremagnaaliqua.</div>
-                                </div>
-                            </div>
-                            <div class="uk-width-auto">
-                                <img class="uk-border-circle" src="https://getuikit.com/docs/images/avatar.jpg" width="60" height="60">
-                            </div>
-                        </div>
-                        <div class="uk-grid uk-grid-small uk-margin" uk-grid>
-                            <div class="uk-width-auto">
-                                <img class="uk-border-circle" src="https://getuikit.com/docs/images/avatar.jpg" width="60" height="60">
-                            </div>
-                            <div class="uk-width-expand">
-                                <div class="uk-tile uk-padding-small" style="background-color: #1adda4;border-radius: 10px;">
-                                    <div class="uk-text-break">Хочу у Вас купить зерно 1000 тон.</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="uk-grid uk-grid-small uk-margin" uk-grid>
-                            <div class="uk-width-expand">
-                                <div class="uk-tile uk-padding-small" style="background-color: #1ddced;border-radius: 10px;">
-                                    <div class="uk-text-break">Loremipsumdolorsitamet,consecteturadipiscingelit,seddoeiusmodtemporincididuntutlaboreetdoloremagnaaliqua.seddoeiusmodtemporincididuntutlaboreetdoloremagnaaliquaюseddoeiusmodtemporincididuntutlaboreetdoloremagnaaliqua.seddoeiusmodtemporincididuntutlaboreetdoloremagnaaliqua.seddoeiusmodtemporincididuntutlaboreetdoloremagnaaliqua</div>
-                                </div>
-                            </div>
-                            <div class="uk-width-auto">
-                                <img class="uk-border-circle" src="https://getuikit.com/docs/images/avatar.jpg" width="60" height="60">
-                            </div>
-                        </div>
-                        <div class="uk-grid uk-grid-small uk-margin" uk-grid>
-                            <div class="uk-width-auto">
-                                <img class="uk-border-circle" src="https://getuikit.com/docs/images/avatar.jpg" width="60" height="60">
-                            </div>
-                            <div class="uk-width-expand">
-                                <div class="uk-tile uk-padding-small" style="background-color: #1adda4;border-radius: 10px;">
-                                    <div class="uk-text-break">Loremipsumdolorsitamet,consecteturadipiscingelit,seddoeiusmodtemporincididuntutlaboreetdoloremagnaaliqua.seddoeiusmodtemporincididuntutlaboreetdoloremagnaaliquaюseddoeiusmodtemporincididuntutlaboreetdoloremagnaaliqua.seddoeiuLoremipsumdolorsitamet,consecteturadipiscingelit,seddoeiusmodtemporincididuntutlaboreetdoloremagnaaliqua.seddoeiusmodtemporincididuntutlaboreetdoloremagnaaliquaюseddoeiusmodtemporincididuntutlaboreetdoloremagnaaliqua.seddoeiuLoremipsumdolorsitamet,consecteturadipiscingelit,seddoeiusmodtemporincididuntutlaboreetdoloremagnaaliqua.seddoeiusmodtemporincididuntutlaboreetdoloremagnaaliquaюseddoeiusmodtemporincididuntutlaboreetdoloremagnaaliqua.seddoeiu</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div id="chathistory" class="uk-panel uk-panel-scrollable uk-padding-remove" 
+                uk-height-viewport="offset-bottom: 32"> 
                 </div>
                 <div class="uk-panel uk-padding-small uk-background-muted">
                     <div class="uk-grid uk-grid-small">
                         <div class="uk-width-expand">
-                            <input class="uk-input" type="text">
+                            <input ng-model="message" class="uk-input" type="text" ng-keydown="$event.keyCode === 13 && sendMessage()">
                         </div>
                         <div class="uk-width-auto">
-                            <button class="uk-button uk-button-primary">{% trans %} Отправить {% endtrans %}</button>
+                            <button ng-click="sendMessage()" class="uk-button uk-button-primary">
+                                {% trans %} Отправить {% endtrans %}
+                            </button>
                         </div>
                     </div>
                 </div>
              </div>
          </div>
+         
+
     </div>
 </div>
-<div class="uk-container uk-margin-large">
-    <div class="uk-alert-primary uk-padding" uk-alert>
-        <h3>{% trans %}Правила раздела "Сообщества" {% endtrans %}</h3> 
-        <p>{% trans %}- владельцем всех сообществ является Agroov;{% endtrans %} </p> 
-        <p>{% trans %}- участники и компании могут арендовать сообщество, стоимость аренды 1 месяц 100 долл./ 7000 сом/ 35000 тенге/ 7000 рублей/;{% endtrans %} </p> 
-        <p>{% trans %}- кто зашел, кто вышел, кого добавили, кого временно заблокировали не видно;{% endtrans %} </p> 
-        <p>{% trans %}- при создании личного кабинета участник должен выбрать минимально 5 сообществ;{% endtrans %} </p> 
-        <p>{% trans %}- при создании личной страницы компания должна выбрать минимально 10 сообществ;{% endtrans %} </p> 
-        <p>{% trans %}- участник и компания могут перейти на другие сообщества, но всегда будут в 5–10 сообществах;{% endtrans %} </p> 
-        <p>{% trans %}- общие правила сайта также распространяется ко всем сообществам;{% endtrans %} </p> 
-        <p>{% trans %}- модератор сообщества может внести дополнительные правила.{% endtrans %} </p> 
-        <h3>{% trans %}На странице сообщества вы можете: {% endtrans %}</h3> 
-        <p>{% trans %}- добавлять новости и публикации;{% endtrans %} </p> 
-        <p>{% trans %}- организовывать анализ рынка;{% endtrans %} </p> 
-        <p>{% trans %}- участвовать в благотворительных акциях;{% endtrans %} </p> 
-        <p>{% trans %}- оставить отзыв;{% endtrans %} </p> 
-        <p>{% trans %}- организовывать онлайн выставки;{% endtrans %} </p> 
-        <p>{% trans %}- организовывать онлайн тренинги;{% endtrans %} </p> 
-        <p>{% trans %}- быстро и эффективно организовать бизнес мероприятия;{% endtrans %} </p> 
-        <p>{% trans %}- активно сотрудничать со своей аудиторией.{% endtrans %} </p> 
-    </div>
-</div>
+<script>
+    var currnet_chat;
+    angular.module("agroov").controller('forumCtrl', function($scope,$http) {
+        $scope.itemClicked = function($element){
+            $scope.url = $($element.target).attr('url');   
+            
+        };
+
+        $scope.sendMessage = function(){
+            $http.post($scope.url,{'message':$scope.message,'category_id':$scope.category_id},{headers: {'Content-Type': 'application/json'}}).then(function(response){
+                $scope.message = "";
+            });
+        }
+
+        $scope.loadHistroy = function(url){
+            $http.get(url).then(function(response) {
+                $('#chathistory').html(response.data);
+                var objDiv = document.getElementById("chathistory");
+                objDiv.scrollTop = objDiv.scrollHeight;
+            });
+        };
+
+        setInterval(
+            function(){ 
+                if($scope.url){
+                    $scope.loadHistroy($scope.url);
+                }
+            }, 
+        3000);
+    });
+
+
+</script>
 {% include 'footer.html.twig' %}
 {% endblock %}
 

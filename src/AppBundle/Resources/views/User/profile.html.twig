@@ -1,9 +1,8 @@
 {% extends "base.html.twig" %}
-{% block title %}AppBundle:User:registration{% endblock %}
+{% block title %}Профиль пользователя{% endblock %}
 {% block body %}
 {% include 'header.html.twig' %}
 {% include 'nav.html.twig' %}
-{% include 'actionbar.html.twig' %}
 <div class="uk-panel">
     <div class="uk-container uk-background-muted uk-margin">
         <div class="uk-grid-small" uk-grid>
@@ -14,15 +13,15 @@
                             <div class="uk-text-lead">{{myadvert_count}}</div>
                             <div class="uk-text-meta">{% trans %}Всего объявлений{% endtrans %}</div>
                         </div>
-                        <div class="uk-margin-right">
+                        <!--<div class="uk-margin-right">
                             <div>
                                 <div class="uk-text-lead">2</div>
                                 <div class="uk-text-meta">{% trans %}Всего сообществ{% endtrans %}</div>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="uk-margin-right">
                             <div>
-                                <div class="uk-text-lead">125</div>
+                                <div class="uk-text-lead">{{viewcount}}</div>
                                 <div class="uk-text-meta">{% trans %}Просмотры{% endtrans %}</div>
                             </div>
                         </div>
@@ -30,17 +29,21 @@
                 </div>
             </div>
             <div class="uk-width-auto">
-                <a href="{{path('_add_forum')}}" class="uk-button uk-button-width-medium  uk-height-1-2 uk-button-secondary uk-button-large">{% trans %} Добавить новое сообщество {% endtrans %}</a>
+                <a href="{{path('_add_forum')}}" class="uk-button  uk-button-secondary">{% trans %}Добавить группу{% endtrans %}</a>
             </div>
             <div class="uk-width-auto">
-                <a href="{{path('advertise')}}" class="uk-button uk-button-width-medium  uk-height-1-2 uk-button-primary uk-button-large">{% trans %} Добавить новое обьявление {% endtrans %}</a>
+                <a href="{{path('advertise')}}" class="uk-button uk-button-primary">{% trans %}Добавить объявление{% endtrans %}</a>
+            </div>
+            <div>
+                <a href="{{path('_add_company')}}" class="uk-button uk-button-danger">{% trans %}Добавить магазин{% endtrans %}</a>
             </div>
         </div>	
     </div>
     <div class="uk-container  uk-margin-large-top">
         <ul class="uk-child-width-expand uk-tab-bottom uk-text-center" uk-tab>
             <li class="uk-active"><a href="#"></a>{% trans %} Мои объявления {% endtrans %}</li>
-            <li class="uk-active"><a href="#"></a>{% trans %} Мои сообщества {% endtrans %}</li>
+            <li class="uk-active"><a href="#"></a>{% trans %} Мои группы {% endtrans %}</li>
+            <li class="uk-active"><a href="#"></a>{% trans %} Мои магазины {% endtrans %}</li>
             <li class="uk-active"><a href="#"></a>{% trans %} Настройки {% endtrans %}</li>
         </ul>
         <ul class="uk-switcher uk-margin">
@@ -70,7 +73,7 @@
                                         <ul class="uk-nav uk-nav-default  uk-margin-medium-left uk-margin-small-bottom uk-margin-small-top">
                                             <li>
                                                 <a style="color:#0275d8" 
-                                                href="{{path('_advert_view',{'id':myadvert.id})}}">
+                                                href="{{path('_advert_view',{'url':myadvert.url})}}">
                                                     <b>{{myadvert.title}}</b>
                                                 </a>
                                             </li>
@@ -112,7 +115,7 @@
                                         </a>
                                         {% else %}
                                         <a href="#" class="uk-button uk-button-small" style="color:gray;">
-                                            {% trans %} Ожедание {% endtrans %}
+                                            {% trans %} Ожидание {% endtrans %}
                                         </a>            
                                         {% endif %}
                                                     
@@ -153,7 +156,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><img class="uk-preserve-width uk-border-rounded" src="http://4.bp.blogspot.com/-yHqgwCT6Iws/VeU15kFXNVI/AAAAAAAAAow/F_khg1FkuoU/s320/%25D1%2584%25D0%25B0%25D1%2581%25D0%25BE%25D0%25BB%25D1%258C%252C%2B%25D0%25B1%25D0%25B5%25D0%25BB%25D0%25B0%25D1%258F%252C%2B%25D0%25BA%25D1%2580%25D0%25B0%25D1%2581%25D0%25BD%25D0%25B0%25D1%258F%252C%2B%25D0%25B7%25D0%25B5%25D0%25BB%25D0%25B5%25D0%25BD%25D0%25B0%25D1%258F.jpg" width="80" height="80" alt=""></td>
+                                    <td><img class="uk-preserve-width uk-border-rounded" src="#" width="80" height="80" alt=""></td>
                                     <td class="uk-text-truncate uk-table-link">
                                     <a class="uk-link-reset" href="ad.html"> {% trans %} Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.{% endtrans %}</a></td>
                                     <td><span><img src="images/multiple-users-silhouette.png"></span>123</td>
@@ -164,6 +167,59 @@
                     </div>
                 </div>
             </li>
+            <li>
+                <div class="uk-panel">
+                    <div class="uk-overflow-auto">
+                        <table class="uk-table uk-table-hover uk-table-middle  uk-table-divider">
+                            <thead>
+                                <tr>
+                                    <th class="uk-table-shrink uk-text-center">{% trans %} Дата {% endtrans %}</th>
+                                    <th class="uk-table-shrink uk-text-center">{% trans %} Фото {% endtrans %}</th>
+                                    <th class="uk-table-expand">{% trans %}Название{% endtrans %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for company in companies %}
+                                <tr>
+                                    <td width="100" >{{company.created}}</td>
+                                    <td>
+                                        <img class="uk-preserve-width uk-border-rounded uk-margin-small-top" 
+                                        src="{{asset('uploads/images/company/'~company.avatar)}}"  width="90" height="90" alt="">
+                                    </td>
+                                    <td class="uk-table-link">
+                                        <ul class="uk-nav uk-nav-default  uk-margin-medium-left uk-margin-small-bottom uk-margin-small-top">
+                                            <li>
+                                                <a style="color:#0275d8" 
+                                                href="{{path('_company_view',{'url':company.url})}}">
+                                                    <b>{{company.name}}</b>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="uk-padding-left-large uk-padding-right-large">
+                            <ul class="uk-pagination uk-margin-top uk-margin-bottom">
+                                <li>
+                                    <a href="#">
+                                        <span class="uk-margin-small-right" uk-pagination-previous></span>
+                                        {% trans %}Назад{% endtrans %}
+                                    </a>
+                                </li>
+                                <li class="uk-margin-auto-left">
+                                    <a href="#">{% trans %}Вперед{% endtrans %}
+                                        <span class="uk-margin-small-left" uk-pagination-next></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+
             <li class="uk-margin uk-margin-large-bottom uk-margin-left-large">
                 <div class="uk-width-1-2@s uk-width-2-5@m">
                     <ul class="uk-nav-default uk-nav-parent-icon" uk-nav="multiple: true">

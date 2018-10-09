@@ -1,0 +1,16 @@
+<div class="uk-margin-bottom uk-position-relative uk-visible-toggle uk-light" uk-slideshow="ratio: 3.5:6; animation: push;autoplay:true;">
+
+    <ul class="uk-slideshow-items">
+        {% for leftbanner in leftbanners%}
+        <li>
+            <a class="uk-position-cover" href="{{leftbanner.url}}">
+                <img src="/images/bok-new/{{leftbanner.images}}" alt="" uk-cover>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
+    <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+
+</div>

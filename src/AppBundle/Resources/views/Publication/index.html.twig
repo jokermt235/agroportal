@@ -1,8 +1,44 @@
 {% extends "base.html.twig" %}
-{% block title %}AppBundle:User:registration{% endblock %}
+{% block title %}Новости и публикации сельского хозяйства{% endblock %}
 {% block body %}
 {% include 'header.html.twig' %}
 {% include 'nav.html.twig' %}
-{% include 'actionbar.html.twig' %}
+<div class="uk-container uk-margin">
+    <div class="uk-text-lead">{% trans %} Новости и публикации сельского хозяйства {% endtrans %}</div>
+    {% for publication in publications%}
+    <div class="uk-panel uk-margin">
+        <p class="uk-heading-bullet">{{publication.created}}</p>
+        <div class="uk-grid uk-margin">
+            <div class="uk-width-auto"> 
+                <a href="javascript::void(0)">
+                    <img src="{{asset('uploads/images/publication/'~publication.id~'/'~publication.images|avatar)}}" width=100>
+                </a>
+            </div>
+            <div class="uk-width-expand">
+                <a class="uk-link-text" href={{path('_publication_view',{url:publication.url})}}><span class="uk-text-middle uk-text-bold uk-margin-top">{{publication.title}}</span></a>
+            </div> 
+        </div>
+    </div>
+    {% endfor %} 
+    <ul class="uk-pagination uk-flex-center">
+        <li><a href=""><span uk-pagination-previous></span></a></li>
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#">6</a></li>
+        <li><a href="#">7</a></li>
+        <li><a href=""><span uk-pagination-next></span></a></li>
+    </ul>
+</div>
+<div class="uk-container uk-margin-large">
+    <div class="uk-text-center">
+        <a href="{{path('_new_post')}}" class="uk-button uk-button-primary uk-icon">
+            <span class="uk-icon" uk-icon="plus"></span>
+            {%trans%}Добавить публикацию{%endtrans%}
+        </a>
+    </div>
+</div> 
 {% include 'footer.html.twig' %}
 {% endblock %}

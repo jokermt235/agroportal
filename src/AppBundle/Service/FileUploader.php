@@ -27,11 +27,14 @@ class FileUploader
         $this->targetDirectory = $targetDirectory;
     }
 
-    public function upload(UploadedFile $file)
+    public function upload(UploadedFile $file, $targetDirectory=null)
     {
         $fileName = md5(uniqid()).'.'.$file->guessExtension();
-
-        $file->move($this->getTargetDirectory(), $fileName);
+        if(empty($targetDirectory)){
+            $file->move($this->getTargetDirectory(), $fileName);
+        }else{
+            $file->move($targetDirectory, $fileName);
+        }
 
         return $fileName;
     }
