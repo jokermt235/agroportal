@@ -135,4 +135,13 @@ class AdminController extends Controller
         unlink($path);
         return $this->forward('AppBundle:Admin:leftbanner');
     }
+
+    public function layerAction(){
+        return $this->render('@App/Admin/layer.html.twig'
+            //['layers'=>$this->getDoctrine()
+            //            ->getRepository(Layer::class)
+            //            ->findAll()
+            //]
+        );
+    }
 }

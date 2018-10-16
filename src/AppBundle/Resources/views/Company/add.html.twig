@@ -53,6 +53,7 @@
                 {{ render(controller('AppBundle:Country:index')) }}
             </div>
         </div> 
+        <agro-layer title="Agroov layer"></agro-layer>
         <agro-geofield title="Agroov geofield"></agro-geofield>
         <div class="uk-margin">
             <label class="uk-form-label" >{% trans %}Телефон{% endtrans %}</label>
@@ -108,7 +109,9 @@
 
     var app = angular.module("agroov",[]);
     var tmplUrl = "{{path('_map')}}";
+    var layerUrl = "{{path('_layer')}}";
 </script>
 <script src="{{asset('js/directives/geofield/geofield.js')}}"></script>
+<script src="{{asset('js/directives/layerfield/layerfield.js')}}"></script>
 {% include 'footer.html.twig' %}
 {% endblock %}

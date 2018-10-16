@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+{% block title %}Администратор{% endblock %}
+{% block body %}
+{% include 'nav.html.twig' %}
+<hr>
+<div class="uk-card uk-card-default uk-card-body">
+    <div class="uk-text-center" uk-grid>
+        <div class="uk-width-auto@m">
+            <div class="uk-card uk-card-default uk-card-body">
+                {% include 'leftbar.html.twig' %} 
+            </div>
+        </div>
+        <div class="uk-width-expand@m">
+            <a class="uk-button uk-button-primary uk-left" href="{{path('_admin_addlayer')}}">+Добавить</a>
+            {% for layer in layers %}
+            <div class="uk-card uk-card-default uk-card-body">
+                <ul class="uk-iconnav">
+                    <li><a href="{{path('_admin_layer_delete',{'image':layer.icon,'id':layer.id})}}" uk-icon="icon: trash"></a></li>
+                    <li><a href="#" uk-icon="icon: image"></a></li>   
+                </ul>
+                <div>
+                    <img src="{{asset('images/layer/'~layer.icon)}}">
+                </div>
+            </div> 
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -7,12 +7,7 @@
     <div class="uk-text-center" uk-grid>
         <div class="uk-width-auto@m">
             <div class="uk-card uk-card-default uk-card-body">
-                <ul class="uk-nav uk-nav-default">
-                    <li><a href="{{path('_admin')}}">Адмнинистрирование</a></li>
-                    <li class="uk-active"><a href="{{path('_admin_topbanner')}}">Верхний баннер</a></li>
-                    <li><a href="{{path('_admin_leftbanner')}}">Боковой левый баннер</a></li>
-                    <li><a href="#">Пользователи</a></li>
-                </ul>
+                {% include 'leftbar.html.twig' %}
             </div>
         </div>
         

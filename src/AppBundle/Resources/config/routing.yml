@@ -214,6 +214,18 @@ _admin_leftbanner_delete:
     path: /admin/leftbannerdelete/{image}/{id}
     defaults: {_controller:AppBundle:Admin:leftbannerdelete}
 
+_admin_layer:
+    path: /admin/layer
+    defaults: {_controller:AppBundle:Layer:index}
+
+_admin_layer_delete:
+    path: /admin/layerdelete/{image}/{id}
+    defaults: {_controller:AppBundle:Layer:delete}
+
+_admin_addlayer:
+    path: /admin/addlayer
+    defaults: {_controller:AppBundle:Layer:add}
+
 _user_company:
     path: /company/usercompany
     defaults: {_controller:AppBundle:Company:usercompany}
@@ -229,3 +241,8 @@ _new_password:
 _map:
     path: /shops/map
     defaults: {_controller:AppBundle:Map:index}
+_layer:
+    path : /layer/layers
+    defaults: {_controller:AppBundle:Layer:layers}
+
+
