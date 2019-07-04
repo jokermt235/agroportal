@@ -45,7 +45,10 @@ class LayerController extends Controller
         return $this->render('@App/Layer/index.html.twig',
             ['layers'=>$this->getDoctrine()
                         ->getRepository(Layer::class)
-                        ->findAll()
+                        ->findAll(),
+            'json_layers' => json_encode($this->getDoctrine()
+                        ->getRepository(Layer::class)
+                        ->findAllJson(), true)
             ]
         );
     }

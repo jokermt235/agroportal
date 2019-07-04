@@ -7,62 +7,36 @@
 {% block body %}
 {% include 'header.html.twig' %}
 {% include 'nav.html.twig' %}
-<div class="uk-panel uk-margin-medium-left uk-margin">
-    <ul class="uk-breadcrumb">
-        <li><a href="/">{% trans %}Главная {% endtrans %}</a></li>
-    </ul>
-</div>
-<div class="uk-container uk-margin">
-    <div class="uk-grid uk-grid-small" uk-grid uk-height-match="target: > div > .uk-card">
-        <div class="uk-width-auto">
-            <div class="uk-card uk-card-default">
-                <div class="uk-card-top-media">
-                    <img class="uk-border-rounded" src="{{asset('uploads/images/company/'~company.avatar)}}" width="260" height="10" alt="Border rounded">
-                </div>
-            </div>
-        </div>
-        <div class="uk-width-expand uk-light">
-            <div class="uk-inline">
-                <div class="uk-cover-container">
-                    <canvas width="1000px" height="190px"></canvas>
-                    <img src="{{asset('uploads/images/company/'~company.avatar)}}" uk-cover>
-                </div>                                                                            
-                <div class="uk-overlay-primary uk-position-cover">
-                    <div class="uk-position-center-left uk-margin-left">
-                        <p class="uk-text-bold uk-text-lead" style="color: white;">{{company.name}}</p>
-                    </div>
-                </div>
-                <div class="uk-overlay uk-overlay-primary uk-position-right">
-                    <div class="uk-margin-bottom"><span uk-icon="receiver"></span>{{company.phone}}</div>
-                    <div><button class="uk-button uk-button-small uk-button-danger"><span uk-icon="comment" class="uk-margin-small-right"></span>{% trans %}Написать сообщение{% endtrans %}</button></div>
-                    <p style="font-size: 12px"><span uk-icon="comments" class=" uk-margin-small-right"></span>{% trans %}Активно отвечает на сообщения{% endtrans %}</p>
-                </div>
-            </div>  
-        </div>
-    </div>
-</div>
 <div class="uk-container uk-margin">
     <div class="uk-grid uk-grid-small">
-        <div class="uk-width-auto">
+        <div class="uk-width-auto@s">
+            <div class="uk-card uk-card-default">
+                <div class="uk-card-top-media">
+                    <img class="uk-border-rounded uk-width-medium@s" src="{{asset('uploads/images/company/'~company.avatar)}}" height="10" alt="Border rounded">
+                </div>
+            </div>
             <div class="uk-card uk-card-default uk-padding">
-                <p class="uk-text-bold">{{company.name}}</p>
+                <p class="uk-text-bold uk-width-small@s">{{company.name}}</p>
                 <div><span uk-icon="location"></span><a class="uk-margin-left uk-text-small" href="#">{{country.name}}</a></div>
                 <div><span uk-icon="receiver"></span><a href="#" class="uk-text-small uk-margin-small-left">{{company.phone}}</a></div>
+                
                 <div class="uk-margin-small"><span uk-icon="commenting"></span><a href="#" class="uk-text-small uk-margin-small-left">{% trans %} Чат с продавцом{% endtrans %}</a></div>
-                <div><a href="#" class="uk-text-small">{% trans %}Все предложения продавца{% endtrans %}</a></div>
-                <div><a href="#" class="uk-text-small">{% trans %}100% положительных{% endtrans %}</a></div>
-                <p class="uk-text-bold uk-margin-large-top">{% trans %}Достижения продавца{% endtrans %}</p>
-                <img src="{{asset('images/medal.png')}}" width="50" height="50" style="color: gold">
-                {% trans %}1 год на портале{% endtrans %}
+                <p class="uk-text-bold uk-margin-large-top">
+                    {% trans %}Статус{% endtrans %}:
+                </p>
+                {% if is_granted('ROLE_USER') %}
+                    <span>{{marker.status}}</span>
+                {% else %}
+                    {{marker.status}}
+                {% endif %}
+                <div>
+                </div>
             </div>
         </div>
-        <div class="uk-width-expand">
+        <div class="uk-width-expand@s">
             <div class="uk-card uk-card-default uk-padding">
-                <div class="uk-card uk-card-default uk-padding">
-                    <div class="uk-card-body">
-                            <p>{{company.description}}</p>
-                        </div>
-                    </div>
+                <div class="uk-card-body">
+                    <p>{{company.description}}</p>
                 </div>
 				<div class="uk-grid uk-child-width-1-3@s uk-child-width-1-3@m" uk-grid>
                     {% for advert in adverts %} 

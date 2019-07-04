@@ -13,6 +13,13 @@ class LayerRepository extends EntityRepository{
             ->createQuery("SELECT u FROM AppBundle:Layer u ORDER BY u.id DESC")
             ->getResult();
     } 
+
+    public function findAllJson(){
+        return 
+            $this->getEntityManager()
+            ->createQuery("SELECT u FROM AppBundle:Layer u ORDER BY u.id DESC")
+            ->getArrayResult();
+    }
     
     public function findOneById($id){
         return 

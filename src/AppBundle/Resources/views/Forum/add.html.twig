@@ -3,12 +3,6 @@
 {% block body %}
 {% include 'header.html.twig' %}
 {% include 'nav.html.twig' %}
-<div class="uk-panel uk-margin-medium-left uk-margin">
-    <ul class="uk-breadcrumb">
-        <li><a href="/">{% trans %}Главная {% endtrans %}</a></li>
-        <li><a href="{{path('_add_forum')}}">{% trans %}Создать новое сообщество {% endtrans %}</a></li>
-    </ul>
-</div>
 <div class="uk-container uk-margin-large-left uk-margin-large-right uk-margin-large-top">
     <h3 class="uk-text-bold">{% trans %}Добавить новое сообщество{% endtrans %}</h3>
     <form class="uk-form-horizontal uk-margin-large" action="" method="POST">

@@ -7,15 +7,21 @@
     <div class="uk-text-lead">{% trans %} Новости и публикации сельского хозяйства {% endtrans %}</div>
     {% for publication in publications%}
     <div class="uk-panel uk-margin">
-        <p class="uk-heading-bullet">{{publication.created}}</p>
         <div class="uk-grid uk-margin">
             <div class="uk-width-auto"> 
                 <a href="javascript::void(0)">
                     <img src="{{asset('uploads/images/publication/'~publication.id~'/'~publication.images|avatar)}}" width=100>
-                </a>
+                </a> 
             </div>
             <div class="uk-width-expand">
                 <a class="uk-link-text" href={{path('_publication_view',{url:publication.url})}}><span class="uk-text-middle uk-text-bold uk-margin-top">{{publication.title}}</span></a>
+                <div>
+                    <a class="uk-text-link">
+                        <span>{% trans %}Автор {% endtrans %} : {{publication.author}} </span> 
+                        <span>{% trans %}Просмотры{% endtrans %} : {{publication.views}} </span>
+                    </a>
+                    <div>{% trans %}Дата{% endtrans %} : {{publication.created | date("m/d/y  H:m")}} </div>
+                </div>
             </div> 
         </div>
     </div>

@@ -1,0 +1,76 @@
+{% extends "base.html.twig" %}
+{% block title %}Добавить компанию{% endblock %}
+{% block body %}
+{% include 'header.html.twig' %}
+{% include 'nav.html.twig' %}
+<div class="uk-container uk-margin uk-width-xxlarge">
+    {% for message in app.flashes('error') %}
+        <div class="uk-alert-danger" uk-alert>
+            <a class="uk-alert-close" uk-close></a>
+            <p>{{message}}</p>
+        </div>
+    {% endfor %}
+</div>
+<div class="uk-container uk-margin-large-left uk-margin-large-right uk-margin-large-top">
+    <h3 class="uk-text-bold">{% trans %}Добавить маркер{% endtrans %}</h3>
+    <form class="uk-form-horizontal uk-margin-large" action="" method="POST" >
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-horizontal-text">
+                {% trans %}Статус{% endtrans %}
+            </label>
+            <div class="uk-form-controls">
+                <input type="hidden" name="id" value={{marker.id}}>
+                <input name="status" class="uk-input" required type="text" placeholder="Максимум 20 символов" maxlength="20" value="{{marker.status}}">
+            </div>
+        </div>
+        <agro-layer title="Agroov layer"></agro-layer>
+        <agro-geofield title="Agroov geofield"></agro-geofield>
+        <div class="uk-margin" ng-controller="markerRemoveCtrl">
+            <label class="uk-form-label" for="form-horizontal-text"></label>
+            <div class="uk-form-controls">
+                <a class="uk-button uk-button-default" href="javascript:" ng-click="removeMarker()">
+                    {% trans %}Удалить маркер{% endtrans %}    
+                    <span uk-icon="icon: close"></span>
+                </a>
+            </div>
+        </div>
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-horizontal-text"></label>
+            <div class="uk-form-controls">
+                <button  type="submit" class="uk-button uk-button-primary uk-text-center">
+                    {% trans %}Сохранить{% endtrans %}</a>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    var app = angular.module("agroov",[]);
+    var tmplUrl = "{{path('_map')}}";
+    var layerUrl = "{{path('_layer')}}";
+    var checkMarkerUrl = "{{path('_marker_check')}}";
+    var marker_remove_url = "{{path('_marker_delete', {id : marker.id})}}";
+    var geoip_lat = "{{geoip.lat}}";
+    var geoip_lng = "{{geoip.lng}}";
+    app.controller('markerRemoveCtrl', function($scope, $http){
+        $scope.removeMarker = function(){
+            var remove = confirm("Вы действительно хотите удалить маркер?");
+            if(remove){
+                $http({
+                    method : "POST",
+                    url :  marker_remove_url
+                }).then(
+                    function(response){
+                        document.location.href="/";
+                    },
+                    function(response){
+                        document.location.href= "/";
+                    }
+                );
+            }
+        }
+    });
+</script>
+<script src="{{asset('js/directives/geofield/geofield.js')}}"></script>
+<script src="{{asset('js/directives/layerfield/layerfield.js')}}"></script>
+{% include 'footer.html.twig' %}
+{% endblock %}

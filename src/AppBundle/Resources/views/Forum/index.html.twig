@@ -5,7 +5,7 @@
 {% include 'nav.html.twig' %}
 <div class="uk-grid uk-margin uk-child-width-expand@s" uk-grid ng-controller="forumCtrl">
     <div class="uk-grid-small uk-grid-collapse" uk-grid>
-        <div class="uk-width-expand@s uk-margin-small-right">
+        <div class="uk-width-1-4@s uk-margin-small-right">
             <div class="uk-card uk-card-default uk-margin-small-left">
                 <div class="uk-margin-bottom-large uk-text-center"> 
                     <div uk-form-custom="target: > * > span:first-child" class="uk-form-custom">
@@ -29,7 +29,7 @@
                             <a href="javascript:void(0)">
                                 <div class="uk-grid uk-grid-small" uk-grid>
                                     <div class="uk-width-auto">
-                                        <img class="uk-border-circle" src="https://getuikit.com/docs/images/avatar.jpg" width="40" height="40">
+                                        <img class="uk-border-circle" src="{{asset('images/blue-user-icon-md.png')}}" width="40" height="40">
                                     </div>
                                     <div class="uk-width-expand">
                                         <div class="uk-panel uk-padding-remove">
@@ -46,16 +46,8 @@
             </div>
          </div>
          
-         <div  class="uk-width-3-4" ng-model="forumItem" forum-item>
+         <div  class="uk-width-3-4@s uk-width-expand@m" ng-model="forumItem" forum-item>
             <div class="uk-card uk-card-default uk-padding-remove"> 
-                <ul class="uk-subnav uk-subnav-divider uk-margin-remove" style="padding: 6px;">
-                        <li class="uk-active"><a href="{{path('_publication')}}">{% trans %} Новости {% endtrans %}</a></li>
-                        <li class="uk-active"><a href="#">{% trans %} Мероприятия {% endtrans %}</a></li>
-                        <li class="uk-active"><a href="{{path('_publication')}}">{% trans %} Публикации {% endtrans %}</a></li>
-                        <li class="uk-active"><a href="company.html">{% trans %} Магазины {% endtrans %}</a></li>
-                        <li class="uk-active"><a href="#">{% trans %} Участники {% endtrans %}</a></li>
-                        <li class="uk-active"><a href="#">{% trans %} Благотворительность {% endtrans %}</a></li>
-                    </ul>
                 <div id="chathistory" class="uk-panel uk-panel-scrollable uk-padding-remove" 
                 uk-height-viewport="offset-bottom: 32"> 
                 </div>

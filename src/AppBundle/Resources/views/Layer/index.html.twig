@@ -1,14 +1,36 @@
 <div class="uk-margin">
-    <label class="uk-form-label" for="form-horizontal-text">Выбрать слой : </label>
+    <label class="uk-form-label" for="form-horizontal-text">Выбор слоя : </label>
     <div class="uk-form-controls">
-        <button class="uk-button uk-button-default" type="button" tabindex="-1">
-            <span>выбрать слой</span>
+        <button class="uk-button uk-button-default" type="button" tabindex="-1" ng-click="openLayerDialog()">
+            <span ng-init = "choose_layer = 'Выбрать слой'">{{'{{choose_layer}}'}}</span>
             <span uk-icon="icon: chevron-down"></span>
         </button>
-        <div uk-dropdown="mode:click">
-            <ul class="uk-nav uk-dropdown-nav">
-                <li><a href="#">Пусто</a></li>
-            </ul>
+    </div>
+</div>
+<div id="layer-modal" class="uk-modal-container" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <div class="uk-grid-small uk-child-width-1-4@s uk-text-center" uk-grid>
+            {% for layer in layers %}
+            <div>
+                <div class="uk-card uk-card-small uk-card-body">
+                    <label>
+                        <input class="uk-radio" type="radio" name="layer_id" ng-checked="checked_layer" ng-model="checked_layer"  value="{{layer.id}}">
+                        <img src="{{asset('images/layer/'~layer.icon)}}" class="uk-image-small">
+                        <span ng-model="choose_layer"> {{layer.name}} </span>
+                    </label>
+                </div>
+            </div>
+            {% endfor %}
+            <input type="hidden" ng-model="js_layer" ng-init="js_layer = {{json_layers}}">
+        </div>
+        <div class="uk-grid-small" uk-grid>
+            <div class="uk-flex-first">  
+                <button class="uk-button uk-button-primary" ng-click="ngOkClicked()" type="button">OK</button>
+            </div>
+            <div class="uk-flex-first">  
+                <button class="uk-button uk-button-danger" ng-click = "ngCancelClicked()" type="button">Отмена</button>
+            </div>
         </div>
     </div>
 </div>

@@ -19,3 +19,63 @@
 .uk-accordion>:nth-child(n+2) {
     margin-top: 0px;
 }
+
+.ag-map-icon
+{
+    text-overflow: ellipsis;
+    display: inline-flex;
+    width: 128px;
+    height: 48px;
+    max-width:128px;
+    max-height:48px;
+    overflow:hidden;
+}
+.ag-map-icon-own
+{
+    border:solid 1px green;
+    background:#fff;
+}
+.ag-map-icon-color
+{
+    color:green;
+    font-weight:600;
+}
+.ag-map-icon-image-border-right
+{
+    border-right:solid 1px green;
+}
+.ag-text-white
+{
+    color:#fff;
+}
+.ag-square94
+{
+    width:94px;
+    height:94px;
+}
+.ag-square176
+{
+    width:176px;
+    height:176px;
+}
+.ag-square261
+{
+    width:261px;
+    height:261px;
+}
+
+.ag-square96
+{
+    width:96px;
+    height:96px;
+    min-height:96px;
+    min-width:96px;
+}
+
+.ag-square208
+{
+    width:208px;
+    height:208px;
+    min-height:208px;
+    min-width:208px;
+}

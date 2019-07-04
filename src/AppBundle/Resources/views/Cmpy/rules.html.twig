@@ -3,12 +3,6 @@
 {% block body %}
 {% include 'header.html.twig' %}
 {% include 'nav.html.twig' %}
-<div class="uk-container uk-margin">
-    <ul class="uk-breadcrumb">
-        <li><a href="/"><span>{% trans %}Главная{% endtrans %}</span></a></li>
-        <li><a href="{{path('_about_us')}}"><span>{% trans %}О нас{% endtrans %}</span></a></li>
-    </ul>
-</div>
 <form action="{{path('_add_forum')}}" action="GET">
     <input type="hidden" name="terms" value="1">
     <div class="uk-container uk-text-center uk-padding-large uk-background-muted">

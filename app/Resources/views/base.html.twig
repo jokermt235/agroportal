@@ -2,7 +2,8 @@
 <html prefix="og: http://ogp.me/ns#">
     <head>
         <meta charset="UTF-8" />
-        <meta name="yandex-verification" content="96b119a9e83a4d88" />
+        <meta name="yandex-verification" content="b239afc0b3f6b2b5" />
+        <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta property="og:title" content="{% if og_title is defined %} {{ og_title }} {% endif %}">
         <meta property="og:description" content="МЕЖДУНАРОДНЫЙ АГРОПОРТАЛ" />
         <meta property="og:image" content="
@@ -36,14 +37,17 @@
         </script>
     </head>
     <body ng-app="agroov">
-        {% block body %}
+        {% block body %} 
             {% for message in app.flashes('success') %}
                 <div id="success" uk-modal>
                     <div class="uk-modal-dialog uk-modal-body">
                         <h2 class="uk-modal-title">{% trans %}Успех{% endtrans%}</h2>
                         <p>{{ message }}</p>
                         <p class="uk-text-right">
-                            <button class="uk-button uk-button-default uk-modal-close" type="button">{% trans %}Закрыть{% endtrans%}</button>
+                            <button class="uk-button uk-button-default uk-modal-close" type="button">
+                                <span uk-icon="icon: close;"></span>
+                                {% trans %}Закрыть{% endtrans%}
+                            </button>
                         </p>
                     </div>
                 </div>

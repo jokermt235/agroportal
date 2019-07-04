@@ -1,41 +1,25 @@
-<div class="uk-panel uk-padding-large uk-background-secondary uk-light">
+<div class="uk-panel uk-padding uk-light" style="background-color:#4CAF50">
     <div class="uk-grid uk-child-width-expand@s" uk-grid>
         <div class="uk-width-2-5">
-            <li class="uk-text-muted" style="font-size: 40px">{% trans %} Agroov.com{% endtrans %}</li>
-            <li class="uk-text-muted">{% trans %} Международный агропортал {% endtrans %}</li>
+            <li class="uk-text-muted" style="font-size: 20px">{% trans %} Agroov.com{% endtrans %}</li>
             <p class="uk-margin-bottom"></p>
             <ul class="uk-nav">
-                <li class="uk-text-muted">{% trans %} info@mail.agroov.com {% endtrans %}</li>
-            </ul>
-            <a href="https://www.instagram.com/interagroportal" class="uk-icon-button uk-margin-top uk-margin-small-right" uk-icon="instagram"></a>
-            <a href="" class="uk-icon-button uk-margin-top uk-margin-small-right" uk-icon="facebook"></a>
-            <a href="" class="uk-icon-button uk-margin-top" uk-icon="google-plus"></a>
+                <li class="uk-text-muted">{% trans %} info@agroov.com {% endtrans %}</li>
+            </ul> 
         </div>
-        <div class="uk-width-expand uk-margin-large-top">
+        <div class="uk-width-expand uk-margin-top">
             <div class="uk-grid uk-child-width-expand@s">
                 <div>
-                    <ul class="uk-nav uk-nav-default">
-                        <li><a href="{{path('_about_us')}}">{% trans %} О нас {% endtrans %}</a></li>
-                        <li><a href="{{path('_about_us')}}">{% trans %} Контакты {% endtrans %}</a></li>
-                        <li><a href="#">{% trans %} Банковские реквизиты {% endtrans %}</a></li>
-                        <li><a href="#">{% trans %} СМИ о нас {% endtrans %}</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="uk-nav uk-nav-default">
-                        <li><a href="{{path('_publication')}}">{% trans %} Блог {% endtrans %}</a></li>
-                        <li><a href="{{path('_reklam')}}">{% trans %} Реклама {% endtrans %}</a></li>
-                        <li><a href="#">{% trans %} Услуги компании {% endtrans %}</a></li>
-                        <li><a href="{{path('_rules')}}">{% trans %} Условия пользования {% endtrans %}</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="uk-nav uk-nav-default">
-                        <li><a href="#">{% trans %} Отзывы {% endtrans %}</a></li>
-                        <li><a href="#">{% trans %} Вакансии {% endtrans %}</a></li>
-                        <li><a href="{{path('_about_us')}}">{% trans %} Наша команда {% endtrans %}</a></li>
-                        <li><a href="#">{% trans %} Наши партнеры {% endtrans %}</a></li>
-                    </ul>
+                    <div uk-grid>
+                        <div><a href="{{path('_about_us')}}">{% trans %} О нас {% endtrans %}</a></div>
+                        <div><a href="{{path('_termsofuse')}}">{% trans %} Условия использования {% endtrans %}</a></div>
+                        <div><a href="{{path('_reklam')}}">{% trans %} Реклама {% endtrans %}</a></div>
+                        <div><a href="#">{% trans %} Отзывы {% endtrans %}</a></div>
+                        <div><a href="#">{% trans %} Наши партнеры {% endtrans %}</a></div>
+                        <div><a href="https://www.instagram.com/interagroportal" uk-icon="instagram"></a></div>
+                        <div><a href="" uk-icon="facebook"></a></div>
+                        <div><a href="" uk-icon="google-plus"></a></div>
+                    </div>
                 </div>
             </div>
         </div>

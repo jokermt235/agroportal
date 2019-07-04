@@ -21,6 +21,10 @@ class AdvertController extends Controller
 {
     
     public function indexAction(Request $request){
+        $page = 1;
+        if(!empty($request->get('page'))){
+            $page = $request->get('page');
+        }
         if(!empty($request->get('search_text'))){
             $adverts = $this->getAdvertsBySearchText($request->get('search_text'));
             if(!empty($request->get('search_category_id'))){
@@ -43,13 +47,13 @@ class AdvertController extends Controller
                     if(!empty($request->get('country_id'))){
                         $adverts = $this->getAdvertsByCountryId($request->get('country_id'));
                     }else{
-                        $adverts = $this->getAdverts();
+                        $adverts = $this->getAdverts($page - 1);
                     }
                     if(!empty($request->get('section_id'))){
                         $adverts = $this->getAdvertsBySectionId($request->get('section_id'));
                     }else{
                         if(empty($request->get('country_id'))){
-                            $adverts = $this->getAdverts();
+                            $adverts = $this->getAdverts($page - 1);
                         }
                     }
                 }
@@ -57,11 +61,17 @@ class AdvertController extends Controller
                 $adverts = $this->getAdvertsByCategoryId($request->get('search_category_id'));
             }
         }
+
+        $page_count = ceil(count($adverts)/25);
+ 
         return $this->render('@App/Advert/index.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
             'categories'=>$this->getCategories(),
             'sections'=> $this->getSections(),
             'adverts' => $adverts,
+            'count'=>count($adverts),
+            'page'=> $page,
+            'page_count'=> $page_count,
             'countries' => $this->getDoctrine()
                 ->getRepository(Country::class)
                 ->findAll()
@@ -72,6 +82,7 @@ class AdvertController extends Controller
     {
         $session = $this->get('session');
         $session->start();
+        $token = md5(time());
         if($request->isMethod('POST')){
 
             $em = $this->getDoctrine()->getManager();
@@ -115,7 +126,7 @@ class AdvertController extends Controller
             if(!empty($fileUploader))
             {
                 $this->targetDirectory = $fileUploader->getTargetDirectory();
-                $files = $this->moveUploadedFiles($request->get('session_id'),$advert->getId());
+                $files = $this->moveUploadedFiles($request->get('token'),$advert->getId());
 
                 $advert->setImages(base64_encode(serialize($files)));
             
@@ -142,7 +153,8 @@ class AdvertController extends Controller
             array(
                 'session_id' => $session->getId(),
                 'categories' => $this->getCategories(),
-                'sections' => $this->getSections()
+                'sections' => $this->getSections(),
+                'token' => $token
             )
         );
     }
@@ -150,9 +162,9 @@ class AdvertController extends Controller
 
     public function uploadAction(Request $request, FileUploader $fileUploader)
     {
-        $file = $request->files->get('image');
-        $session_id = $request->headers->get('UserSession');
-        return new Response($fileUploader->getFilePreview($file,$session_id));
+        $file  = $request->files->get('files')[0];
+        $token = $request->headers->get('Token');
+        return new Response($fileUploader->getFilePreview($file,$token));
     }
     
     private function moveUploadedFiles($session_id,$id)
@@ -338,7 +350,7 @@ class AdvertController extends Controller
             ->findAdvertById($id);
         $em->remove($advert);
         $em->flush();
-        $path = $this->get('kernel')->getProjectDir().'/web/uploads/images/advert/'.$advert->getId();
+        $path = $this->get('kernel')->getProjectDir().'/web/uploads/images/advert/'.$id;
         $fileSystem = new Filesystem();
         $fileSystem->remove($path);
         return $this->forward('AppBundle:User:profile');
@@ -356,10 +368,10 @@ class AdvertController extends Controller
                 ->findAll();
     }
 
-    private function getAdverts(){
+    private function getAdverts($page = 0){
         return $this->getDoctrine()
                 ->getRepository(Advert::class)
-                ->findAll();
+                ->findAll($page);
     }
 
     private function getAdvertsByCategoryId($category_id){

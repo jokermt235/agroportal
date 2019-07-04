@@ -1,0 +1,45 @@
+{% extends "base.html.twig" %}
+{% block title %}Администратор{% endblock %}
+{% block body %}
+{% include 'nav.html.twig' %}
+<hr>
+<div class="uk-card uk-card-default uk-card-body">
+    <div class="uk-text-center" uk-grid>
+        <div class="uk-width-auto@m">
+            <div class="uk-card uk-card-default uk-card-body">
+                {% include 'leftbar.html.twig' %}
+            </div>
+        </div>
+        <div class="uk-width-expand@m">
+            {% for publication in publications%}
+            <div class="uk-panel uk-margin uk-position-relative">
+                <div class="uk-grid uk-margin">
+                    <div class="uk-width-auto"> 
+                        <a href="javascript::void(0)">
+                            <img src="{{asset('uploads/images/publication/'~publication.id~'/'~publication.images|avatar)}}" width=100>
+                        </a> 
+                    </div>
+                    <div class="uk-width-expand">
+                        <a class="uk-link-text" href={{path('_publication_view',{url:publication.url})}}><span class="uk-text-middle uk-text-bold uk-margin-top">{{publication.title}}</span></a>
+                        <div>
+                            <a class="uk-text-link">
+                                <span>{% trans %}Автор {% endtrans %} : {{publication.author}} </span> 
+                                <span>{% trans %}Просмотры{% endtrans %} : {{publication.views}} </span>
+                            </a>
+                            <div>{% trans %}Дата{% endtrans %} : {{publication.created | date("m/d/y  H:m")}} </div>
+                        </div>
+                    </div> 
+                </div>
+                <div class="uk-position-top-right">
+                    <a href="{{path('_admin_publication_delete',{id:publication.id})}}" class="uk-icon-link" uk-icon="trash">
+                    </a>
+                </div>
+            </div>
+            <div class="uk-width-auto@m">
+                
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

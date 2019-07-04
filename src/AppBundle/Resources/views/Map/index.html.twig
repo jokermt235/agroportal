@@ -8,7 +8,19 @@
     <div class="uk-modal-dialog uk-modal-body">
         <button class="uk-modal-close-default" type="button" uk-close></button> 
         <div>
-            <div id="map"></div>
+             <div id="map"></div>
+        </div>
+        <div style="display:none">
+            <input type="text" ng-model="lat" name="lat">
+            <input type="text" ng-model="lng" name="lng">
+        </div>
+        <div class="uk-grid-small uk-margin-small-top" uk-grid>
+            <div class="uk-flex-first">  
+                <button class="uk-button uk-button-primary" ng-click="ngOkClicked()" type="button">OK</button>
+            </div>
+            <div class="uk-flex-first">  
+                <button class="uk-button uk-button-danger" ng-click = "ngCancelClicked()" type="button">Отмена</button>
+            </div>
         </div>
     </div>
 </div>

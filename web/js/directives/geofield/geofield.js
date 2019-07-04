@@ -1,21 +1,19 @@
-app.directive('agroGeofield', function() {
+app.directive('agroGeofield',['$http', function($http) {
     return {        
         restrict: 'EA',
         scope: {
-            //geodata : '=',
             model: '=ngModel'
         },
 
         mapUrl : 'https://maps.api.2gis.ru/2.0/loader.js?pkg=full',
 
-        //'https://maps.googleapis.com/maps/api/js?key=AIzaSyAdc4D22iXnYoIbDE7lpXos0RFWpVA7WXY',
     
         templateUrl: tmplUrl,
 
         centerMap : {
-            lat : 42.869460,
-            lng : 74.611213,
-            zoom : 12
+            lat : geoip_lat,
+            lng : geoip_lng,
+            zoom : 8
         },
         
         link: function(scope, element, attrs, geofieldCtrl) {
@@ -27,9 +25,6 @@ app.directive('agroGeofield', function() {
             s.onload = function() {
 
                 var _map = document.getElementById('map');
-                //var height = document.documentElement.clientHeight;
-                //_map.style.width = $('#modal-container').width() - 15 + "px";
-                //_map.style.height = height - 25 + "px";
                 var map;
                 DG.then(function () {
                     map = DG.map('map', {
@@ -39,20 +34,10 @@ app.directive('agroGeofield', function() {
                         ],
                         minZoom : 2
                     });
-                    //var marker = DG.marker([42.869465, 74.611210]).addTo(map).bindPopup('Вы кликнули по мне!');
-                    var latlngs = [
-                        [42.869480, 74.611213],
-                        [42.869500, 74.611213],
-                        [42.869520, 74.611213],
-                        [42.869540, 74.611213],
-                        [42.869560, 74.611213],
-                        [42.869580, 74.611113]
-                    ];
-                    //var polyline = DG.polyline(latlngs, {color: 'red'}).addTo(map);
-                    //map.fitBounds(polyline.getBounds());
+                    map.on('click', function(evt){
+                        geofieldCtrl.setMarkerOnMap(DG, map, evt);
+                    });
                 });
-                
-                //$( "#modal-container" ).dialog({autoOpen: false});
                 
                 geofieldCtrl.showMapButton();
             };
@@ -62,9 +47,8 @@ app.directive('agroGeofield', function() {
             document.body.appendChild(s); 
             
             scope.openMapDialog = function(){
-                //$( "#modal-container" ).dialog("open");
                 $('#modal-container').height(document.documentElement.clientHeight-100);
-                UIkit.modal($('#modal-container')).show();
+                UIkit.modal('#modal-container',{container: false}).show();
                 var resizeEvent = new Event('resize');
                 window.dispatchEvent(resizeEvent);
             }; 
@@ -73,12 +57,25 @@ app.directive('agroGeofield', function() {
                 var r = confirm("Вы выбрали точку с координатами : " + data);
                 if (r == true) {
                     geofieldCtrl.setGeoValue(data);
-                    $(element.children()[1]).foundation('reveal','close');
                 } 
             }
         },
 
-        controller: ['$scope', function($scope) {
+        controller: ['$scope', function($scope) {        
+            this.marker;
+            $scope.ngOkClicked = function(){
+                UIkit.modal('#modal-container').hide();
+
+            },
+            $scope.ngCancelClicked = function(){
+                $scope.lat  = null;
+                $scope.lng  = null;
+                if(this.marker){
+                    this.marker.remove();
+                }
+                this.marker = null;
+                UIkit.modal('#modal-container').hide();
+            }
             this.setGeoValue = function(data) {
                 $scope.$apply(function() {
                     $scope.geodata = data;
@@ -88,12 +85,42 @@ app.directive('agroGeofield', function() {
             this.showMapButton = function(){
                 $scope.$apply(function() {
                     $scope.map_button = true;
-                    $('#map').height(document.documentElement.clientHeight-100);
+                    $('#map').height(document.documentElement.clientHeight-150);
                     
                 });
-            }
+            };
+            this.setMarkerOnMap = function(DG, map, evt){
+                var data = {
+                    lat: evt.latlng.lat,
+                    lng: evt.latlng.lng
+                }
+                $http.post(checkMarkerUrl,data).then(function(response) {
+                    if(response.data.status){
+                        var layer = $( "input[type=radio][name=layer_id]:checked" ).val();
+                        if(layer){
+                            if(this.marker){
+                                this.marker.remove();
+                                this.marker = null;
+                                $scope.lat = null;
+                                $scope.lng = null;
+                            }
+                            this.marker = DG.marker([evt.latlng.lat, evt.latlng.lng]).addTo(map);
+                            $scope.lat = evt.latlng.lat;
+                            $scope.lng = evt.latlng.lng;
+                        }else{
+                            if(this.marker){
+                                this.marker.remove();
+                                this.marker = null;
+                                $scope.lat = null;
+                                $scope.lng = null;
+                            }   
+                            alert("Сначала выберерите слой, а потом можно установить маркер!");
+                        }
+                    }
+                });
+            };
         }],
 
         bindToController: true 
     }
-});
+}]);

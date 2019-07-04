@@ -28,6 +28,7 @@ class Company
     public function getName(){
         return $this->name;
     }
+
     /**
     * @ORM\Column(type="integer")
     */
@@ -39,6 +40,19 @@ class Company
 
     public function getUserId(){
         return $this->user_id;
+    }
+
+    /**
+    * @ORM\Column(type="integer")
+    */
+    private $views;
+
+    public function setViews(){
+        $this->views += 1;
+    }
+
+    public function getViews(){
+        return $this->views;
     }
 
     
@@ -133,5 +147,83 @@ class Company
     public function getId(){
         return $this->id;
     }
-   
+    
+
+    /**
+    * @ORM\Column(type="string", length=50)
+    */
+    private $phone_code;
+
+    public function setPhoneCode($phone_code){
+        $this->phone_code = $phone_code;
+    }
+    
+    public function getPhoneCode(){
+        return $this->phone_code;
+    }
+
+    /**
+    * @ORM\Column(type="string", length=50)
+    */
+    private $phone_without_code;
+
+    public function setPhoneWithoutCode($phone_without_code){
+        $this->phone_without_code = $phone_without_code;
+    }
+    
+    public function getPhoneWithoutCode(){
+        return $this->phone_without_code;
+    }
+
+    /**
+    * @ORM\Column(type="string", length=255)
+    */
+    private $contact_name;
+
+    public function setContactName($contact_name){
+        $this->contact_name = $contact_name;
+    }
+    
+    public function getContactName(){
+        return $this->contact_name;
+    }
+
+    /**
+    * @ORM\Column(type="string", length=255)
+    */
+    private $lat;
+
+    public function getLat(){
+        return $this->lat;
+    }
+        
+    public function setLat($lat){
+        $this->lat = $lat;
+    }
+
+    /**
+    * @ORM\Column(type="string", length=255)
+    */
+    private $lng;
+
+    public function getLng(){
+        return $this->lng;
+    }
+        
+    public function setLng($lng){
+        $this->lng = $lng;
+    }
+
+    /**
+    * @ORM\Column(type="integer")
+    */
+    private $layer_id;
+
+    public function getLayerId(){
+        return $this->layer_id;
+    }
+        
+    public function setLayerId($layer_id){
+        $this->layer_id = $layer_id;
+    }
 }

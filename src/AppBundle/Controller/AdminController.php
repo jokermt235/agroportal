@@ -2,12 +2,14 @@
 namespace AppBundle\Controller;
 use AppBundle\Entity\Topbanner;
 use AppBundle\Entity\Sidebanner;
+use AppBundle\Entity\Publication;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Finder\Finder;
 use AppBundle\Service\FileUploader;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Filesystem\Filesystem;
 
 class AdminController extends Controller
 {
@@ -24,6 +26,29 @@ class AdminController extends Controller
                         ->findAll()
             ]
         );
+    }
+
+    #publication
+
+    public function publicationAction(){
+        return $this->render('@App/Admin/publication.html.twig',
+        [
+            'publications'=>$this->getDoctrine()->getRepository(Publication::class)->findAll()
+        ]);
+    }
+
+    public function publicationDeleteAction($id=null){
+        $em = $this->getDoctrine()->getManager();
+        $publication = $em->getRepository(Publication::class)->findOneById($id);
+        if(!empty($publication)){
+            $path = $this->get('kernel')->getProjectDir().'/web/uploads/images/publication/'.$id;
+            $fileSystem = new Filesystem();
+            $fileSystem->remove($path);
+            $em->remove($publication);
+            $em->flush();
+            
+        }
+        return $this->forward('AppBundle:Admin:index');
     }
 
     public function addtopbannerAction(Request $request, FileUploader $fileUploader){
@@ -98,7 +123,6 @@ class AdminController extends Controller
         $files = [];
         
         $finder->files()->in($this->get('kernel')->getProjectDir().'/web/images/bok-new');
-        foreach($finder as $file){
             $files[] = $file->getRelativePathname();
         }
 

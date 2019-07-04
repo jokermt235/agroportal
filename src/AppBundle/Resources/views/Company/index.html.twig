@@ -5,7 +5,7 @@
 {% include 'nav.html.twig' %}
 <div class="uk-grid uk-margin uk-child-width-expand@s uk-grid-stack" uk-grid>
     <div class="uk-grid-small uk-grid uk-first-column" uk-grid="" uk-height-match="target: > div > .uk-card">
-        <div class="uk-width-expand@s uk-first-column">
+        <div class="uk-width-1-4@m uk-first-column">
             <div class="uk-card uk-card-default">
                 <div class="uk-margin">
                     <div country-sel class="uk-margin-bottom-large uk-text-center">
@@ -35,36 +35,42 @@
                         {% set checked = "checked=true"%}
                         {% endif %}
                         <li class="uk-parent uk-active uk-position-relative uk-position-small uk-margin-remove">
-                            <span class="uk-position-center-left" style="color:orange;">{{category.cnt}}</span><a class="uk-margin-left uk-link-muted" href="javascript::void(0)">
+                            <span class="uk-position-center-left" style="color:orange;">{{category.cnt}}</span><a class="uk-margin-left uk-link-muted" href="{{path('_adverts',{'category_id': category.id})}}">
                                 {{category.name}}
-                                <span class="uk-position-center-right uk-margin-small-right">
-                                    <input class="uk-radio" {{checked}} type="radio" name="category_id" value="{{category.id}}">
-                                </span>
                             </a>
 
                         </li>
                         {% endfor %}
-                        
+                        <li class="uk-parent uk-active uk-position-relative uk-position-small uk-margin-remove">
+                            <a class="uk-margin-left uk-link-muted uk-text-capitalize" href="{{path('_adverts')}}">
+                                {%trans%}все{%endtrans%}
+                            </a>
+                        </li>
                     </ul>
                     <div left-banner class="uk-margin-large-top">
                     </div>
                 </div>
             </div>
         </div>
-        <div class="uk-width-3-4">
+        <div class="uk-width-3-4@s uk-width-expand@m">
             <div class="uk-card uk-card-default uk-padding" uk-card>
                 {% for company in companies %}
                 <div class="uk-grid" uk-grid>
-                    <div class="uk-width-auto uk-flex uk-flex-middle">
+                    <div class="uk-width-auto@m uk-flex uk-flex-middle uk-flex-center">
                         <div class="uk-cover-container">
                             <img class="uk-border-rounded" 
                             src="/uploads/images/company/{{company.avatar}}" width="180" height="10" alt="Border rounded">
                         </div>
                     </div>
-                    <div class="uk-width-expand uk-padding-small">
+                    <div class="uk-width-expand uk-padding-small uk-text-center">
                         <a class="uk-h3 uk-margin-remove-bottom uk-text-primary" href="{{path('_company_view',{url:company.url})}}">{{company.name}}</a>
                         <p class="uk-text-break">{{company.description}}</p>
-                        <p class="uk-text-meta"></p>
+                        <p class="uk-text-meta">
+                            <div class="uk-text-left">
+                                {{company.views}} Просмотры
+                                <a href="javascript:" class="uk-icon-link uk-margin-small-left uk-margin-small-right" uk-icon="copy"></a>Копировать
+                            </div>
+                        </p>
                     </div>
                 </div>
                 <hr/>

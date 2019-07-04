@@ -6,7 +6,7 @@
 <div class="uk-panel">
     <div class="uk-container uk-background-muted uk-margin">
         <div class="uk-grid-small" uk-grid>
-            <div class="uk-width-expand@s">
+            <div class="uk-width-expand@s uk-width-auto@m">
                 <div class="uk-panel uk-panel-default uk-panel-small uk-padding-remove">
                     <div class="uk-grid-small uk-margin-large-left" uk-grid>
                         <div class="uk-margin-right">
@@ -28,25 +28,108 @@
                     </div>
                 </div>
             </div>
-            <div class="uk-width-auto">
+            <div class="uk-width-auto@m">
+                <a href="{{path('_add_company')}}" class="uk-button uk-button-danger">{% trans %}Добавить магазин{% endtrans %}</a>
+            </div>   
+            <div class="uk-width-auto@m">
                 <a href="{{path('_add_forum')}}" class="uk-button  uk-button-secondary">{% trans %}Добавить группу{% endtrans %}</a>
             </div>
-            <div class="uk-width-auto">
+            <div class="uk-width-auto@m">
                 <a href="{{path('advertise')}}" class="uk-button uk-button-primary">{% trans %}Добавить объявление{% endtrans %}</a>
-            </div>
-            <div>
-                <a href="{{path('_add_company')}}" class="uk-button uk-button-danger">{% trans %}Добавить магазин{% endtrans %}</a>
             </div>
         </div>	
     </div>
     <div class="uk-container  uk-margin-large-top">
         <ul class="uk-child-width-expand uk-tab-bottom uk-text-center" uk-tab>
+            <li class="uk-active"><a href="#"></a>{% trans %} Мои магазины {% endtrans %}</li>
             <li class="uk-active"><a href="#"></a>{% trans %} Мои объявления {% endtrans %}</li>
             <li class="uk-active"><a href="#"></a>{% trans %} Мои группы {% endtrans %}</li>
-            <li class="uk-active"><a href="#"></a>{% trans %} Мои магазины {% endtrans %}</li>
             <li class="uk-active"><a href="#"></a>{% trans %} Настройки {% endtrans %}</li>
         </ul>
         <ul class="uk-switcher uk-margin">
+            <li>
+                <div class="uk-panel">
+                    <div class="uk-overflow-auto">
+                        <table class="uk-table uk-table-hover uk-table-middle  uk-table-divider">
+                            <thead>
+                                <tr>
+                                    <th class="uk-table-shrink uk-text-center">{% trans %} Дата {% endtrans %}</th>
+                                    <th class="uk-table-shrink uk-text-center">{% trans %} Фото {% endtrans %}</th>
+                                    <th class="uk-table-expand">{% trans %}Название{% endtrans %}</th>
+                                    <th class="uk-table-shrink">{% trans %}Статус нак карте{% endtrans %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for company in companies %}
+                                <tr>
+                                    <td width="100" >{{company.created}}</td>
+                                    <td>
+                                        <img class="uk-preserve-width uk-border-rounded uk-margin-small-top" 
+                                        src="{{asset('uploads/images/company/'~company.company_avatar)}}"  width="90" height="90" alt="">
+                                    </td>
+                                    <td class="uk-table-link">
+                                        <ul class="uk-nav uk-nav-default  uk-margin-medium-left uk-margin-small-bottom uk-margin-small-top">
+                                            <li>
+                                                <a style="color:#0275d8" 
+                                                href="{{path('_company_view',{'url':company.url})}}">
+                                                    <b>{{company.name}}</b>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" style="color:#0275d8" onclick=deleteCompany("{{path('_company_delete',{'id':company.id})}}")>
+                                                    <span uk-icon="icon: trash;ratio: 0.9"></span>
+                                                    <span>{%trans%}Удалить{%endtrans%}</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{path('_company_edit',{'url':company.url})}}" style="color:#0275d8">
+                                                    <span uk-icon="icon: file-edit;ratio: 0.91"></span>
+                                                    <span>{%trans%}Редактировать{%endtrans%}</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td width="200">
+                                        {% if company.marker_id is empty %}
+                                        <ul class="uk-nav uk-nav-default  uk-margin-medium-left uk-margin-small-bottom uk-margin-small-top">
+                                            <li>
+                                                <a style="color:#0275d8" href="{{path('_marker_add',{'company_id':company._id})}}">
+                                                    <span uk-icon="icon: comment;ratio: 0.9"></span>
+                                                    <span>{%trans%}Добавить статус{%endtrans%}</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        {% else %}
+                                            <div class="uk-margin">
+                                                <div class="uk-inline">
+                                                    <a class="uk-form-icon" href="javascript:" uk-icon="icon: check" onclick="updateStatus({{company.marker_id}}, this)"></a>
+                                                    <input class="uk-input" type="text" value="{{company.marker_status}}">
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="uk-padding-left-large uk-padding-right-large">
+                            <ul class="uk-pagination uk-margin-top uk-margin-bottom">
+                                <li>
+                                    <a href="#">
+                                        <span class="uk-margin-small-right" uk-pagination-previous></span>
+                                        {% trans %}Назад{% endtrans %}
+                                    </a>
+                                </li>
+                                <li class="uk-margin-auto-left">
+                                    <a href="#">{% trans %}Вперед{% endtrans %}
+                                        <span class="uk-margin-small-left" uk-pagination-next></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
             <li>
                 <div class="uk-panel">
                     <div class="uk-overflow-auto">
@@ -155,71 +238,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                               <!-- <tr>
                                     <td><img class="uk-preserve-width uk-border-rounded" src="#" width="80" height="80" alt=""></td>
                                     <td class="uk-text-truncate uk-table-link">
-                                    <a class="uk-link-reset" href="ad.html"> {% trans %} Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.{% endtrans %}</a></td>
+                                    <a class="uk-link-reset" href="#"> {% trans %} Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.{% endtrans %}</a></td>
                                     <td><span><img src="images/multiple-users-silhouette.png"></span>123</td>
                                     <td><a href="#" class="uk-button uk-button-small uk-button-danger">{% trans %} Выйти {% endtrans %}</a></td>
-                                </tr>
+                                </tr>-->
                             </tbody>
                         </table>
                     </div>
                 </div>
             </li>
-            <li>
-                <div class="uk-panel">
-                    <div class="uk-overflow-auto">
-                        <table class="uk-table uk-table-hover uk-table-middle  uk-table-divider">
-                            <thead>
-                                <tr>
-                                    <th class="uk-table-shrink uk-text-center">{% trans %} Дата {% endtrans %}</th>
-                                    <th class="uk-table-shrink uk-text-center">{% trans %} Фото {% endtrans %}</th>
-                                    <th class="uk-table-expand">{% trans %}Название{% endtrans %}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for company in companies %}
-                                <tr>
-                                    <td width="100" >{{company.created}}</td>
-                                    <td>
-                                        <img class="uk-preserve-width uk-border-rounded uk-margin-small-top" 
-                                        src="{{asset('uploads/images/company/'~company.avatar)}}"  width="90" height="90" alt="">
-                                    </td>
-                                    <td class="uk-table-link">
-                                        <ul class="uk-nav uk-nav-default  uk-margin-medium-left uk-margin-small-bottom uk-margin-small-top">
-                                            <li>
-                                                <a style="color:#0275d8" 
-                                                href="{{path('_company_view',{'url':company.url})}}">
-                                                    <b>{{company.name}}</b>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                        <div class="uk-padding-left-large uk-padding-right-large">
-                            <ul class="uk-pagination uk-margin-top uk-margin-bottom">
-                                <li>
-                                    <a href="#">
-                                        <span class="uk-margin-small-right" uk-pagination-previous></span>
-                                        {% trans %}Назад{% endtrans %}
-                                    </a>
-                                </li>
-                                <li class="uk-margin-auto-left">
-                                    <a href="#">{% trans %}Вперед{% endtrans %}
-                                        <span class="uk-margin-small-left" uk-pagination-next></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </li>
-
-
             <li class="uk-margin uk-margin-large-bottom uk-margin-left-large">
                 <div class="uk-width-1-2@s uk-width-2-5@m">
                     <ul class="uk-nav-default uk-nav-parent-icon" uk-nav="multiple: true">
@@ -317,5 +347,26 @@
         </ul>
     </div>
 </div>
+<script>
+    var update_status_url = "{{path('status_update')}}";
+    function deleteCompany(url)
+    {
+        if(confirm("Вы действительно хотите удалить эту запись?")){
+            $.post(url, function( data ) {
+                window.location.reload();
+            });
+        }
+    }
+
+    function updateStatus(marker_id, element)
+    {
+        var data = {
+            "id" : marker_id,
+            "status" : $($(element).siblings('input')[0]).val()
+        };
+        $.post(update_status_url, data).done(function(data){
+        });
+    }
+</script>
 {% include 'footer.html.twig' %}
 {% endblock%}

@@ -12,6 +12,7 @@ use Symfony\Component\Finder\Finder;
 use AppBundle\Service\FileUploader;
 use AppBundle\Service\Translit;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Cookie;
 
 class PublicationController extends Controller
 {
@@ -73,16 +74,42 @@ class PublicationController extends Controller
         );
     }
 
-    public function viewAction($url=null){
+    public function viewAction($url=null, Request $request){
         $pattern = "/id-[0-9]+$/"; 
         preg_match($pattern,$url,$matches);
         if(!empty($matches)){
             $mat = explode("-",$matches[0]);
             $id = $mat[1];
         }
+
+        $response = new Response();
+
+        
+
         $publication = $this->getDoctrine()
                 ->getRepository(Publication::class)
                 ->findOneById($id);
+
+        if(empty($request->cookies->get('UserSession'))){
+            $session = $this->get('session');
+            $session->start();
+            $session_id = $session->getId();
+            $response->headers->setCookie(new Cookie('UserSession', $session_id));
+            $publication->setViews();
+        }else{
+            if(!empty($request->cookies->get('VisitedPublication'))){
+                if(!$this->isInCookie($publication->getId(), $request)){
+                    $publication->setViews();
+                    $this->writeCookie($publication->getId(),$response, $request);
+                }
+            }else{
+                $this->writeCookie($publication->getId(), $response, $request);
+            }
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($publication);
+        $em->flush();
 
         $images = $publication->getImages();
 
@@ -90,15 +117,45 @@ class PublicationController extends Controller
 
         if(!empty($images)){
             $files = unserialize(base64_decode($images));
-        }
+        } 
+        
         return $this->render('@App/Publication/view.html.twig',
             ['publication' =>
                 $this->getDoctrine()
                 ->getRepository(Publication::class)
                 ->findOneById($id) ,
-            'images'=> $files]
+            'images'=> $files],
+            $response
         );
     }
+
+    private function isInCookie($id=null, $request)
+    {
+        $visitedPublications = unserialize(base64_decode($request->cookies->get('VisitedPublication')));
+        foreach($visitedPublications as $visitedPublication){
+            if($visitedPublication == $id){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function writeCookie($id=null, &$response, $request)
+    {
+        $cookieBase64 = $request->cookies->get('VisitedPublication');
+        $visitedPublications = [];
+        if(!empty($cookieBase64)){
+            $visitedPublications = unserialize(base64_decode($cookieBase64));
+        }
+        
+        $visitedPublications[] = $id;
+
+        $visitedBase64 = base64_encode(serialize($visitedPublications));
+        $response->headers->setCookie(new Cookie('VisitedPublication',$visitedBase64));
+    }
+
+    #Publication End
 
     public function uploadAction(Request $request, FileUploader $fileUploader)
     {

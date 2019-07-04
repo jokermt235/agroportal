@@ -44,27 +44,28 @@ class FileUploader
         return $this->targetDirectory;
     }
 
-    public function getFilePreview($file, $session_id){
+    public function getFilePreview($file, $session_id, $res=213){
         $this->file = $file;
-        return $this->getThumbNail($file->getRealPath(),$session_id);
+        return $this->getThumbNail($file->getRealPath(),$session_id, $res);
     }
 
-    private function getThumbNail($image, $session_id){
+    private function getThumbNail($image, $session_id, $res){
         $im = new \Imagick($image);
         $normalImage = $im->clone();
         $imageprops = $im->getImageGeometry();
         $width = $imageprops['width'];
         $height = $imageprops['height'];
-        if($width > $height){
+        /*if($width > $height){
             $newHeight = 172;
             $newWidth = (172 / $height) * $width;
         }else{
             $newWidth = 172;
             $newHeight = (172 / $width) * $height;
-        }
+        }*/
         
-        $im->resizeImage($newWidth,$newHeight, $im::FILTER_LANCZOS, 0.9, true);
-        $im->cropImage (172,172,0,0);
+        //$im->resizeImage(213,$newHeight, $im::FILTER_LANCZOS, 0.9, true);
+        //$im->cropImage (172,172,0,0);
+        $im->scaleImage($res, 0);
        
 
         $fileSystem = new Filesystem();

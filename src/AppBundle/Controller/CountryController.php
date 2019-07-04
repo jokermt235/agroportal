@@ -10,7 +10,7 @@ class CountryController extends Controller
     public function indexAction(Request $request){
         return $this->render('@App/Country/index.html.twig',[
             'countries'=>$this->getCountry(),
-            'selected'=> $request->get('id')
+            'selected'=> $request->get('selected')
             ]
         );
     }

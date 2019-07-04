@@ -10,16 +10,13 @@
 {% include 'header.html.twig' %}
 {% include 'nav.html.twig' %}
 <div class="uk-container uk-margin">
-    <ul class="uk-breadcrumb">
-        <li><a href="/">{% trans %}Главная{% endtrans %}</a></li>
-    </ul>
     <div class="uk-panel uk-position-relative uk-margin-medium">
         <div class="uk-position-left">
             <span uk-icon="arrow-left"></span>
-            <span class="uk-text-meta uk-margin-small-left"><a href="#">{% trans %} Предыдущее объявление{% endtrans %}</a></span>
+            <span class="uk-text-meta uk-margin-small-left"><a href="javascript:" onclick="window.history.back()">{% trans %}Предыдущее{% endtrans %}</a></span>
         </div>
         <div class="uk-position-right">
-            <span class="uk-text-meta uk-margin-small-right"><a href="#">{% trans %} Следующее объявление{% endtrans %}</a></span>
+            <span class="uk-text-meta uk-margin-small-right"><a href="javascript:">{% trans %}Следующее{% endtrans %}</a></span>
             <span uk-icon="arrow-right"></span>
         </div>
     </div>
@@ -32,7 +29,12 @@
                         <p class="uk-text-meta">Опубликовано: {{advert.created}} Просмотры: {{advert.views}}</p>
                     </div>
                     <div class="uk-width-auto">
+                        {% if advert.price != 0 %}
                         <h3 class="uk-text-bold">{{advert.price}} {{advert.currency}}</h3>
+                        {% else %}
+                        <h3 class="uk-text-bold">Договорная</h3>
+                        {% endif %}
+                            
                     </div>
                 </div>
             </div>
@@ -42,11 +44,18 @@
         <div class="uk-width-2-3@m">
             <div class="uk-position-relative" uk-slideshow="animation: fade">
                 <ul class="uk-slideshow-items">
-                    {% for image in images %}
-                    <li>
-                        <img src="/uploads/images/advert/{{advert.id}}/{{image}}" alt="" uk-cover>
-                    </li>
-                    {% endfor %}
+                    {% if images is empty %}
+                        <li>
+                            <img src="{{asset('images/logo05022018.jpg')}}" alt="" uk-cover>
+                        </li>
+                    {% else %}
+
+                        {% for image in images %}
+                        <li>
+                            <img src="/uploads/images/advert/{{advert.id}}/{{image}}" alt="" uk-cover>
+                        </li>
+                        {% endfor %}
+                    {% endif %}
                 </ul>
                 <div class="uk-position-bottom-center uk-position-small">
                     <ul class="uk-thumbnav">
@@ -71,7 +80,7 @@
                 <a href="#" class="uk-button uk-button-secondary uk-button-large uk-width-1-1">{% trans %}Написать сообщение{% endtrans %}</a>
                 <p class="uk-text-meta">{% trans %}Продавец :{% endtrans %}
                 {% if company == null %}
-                <a href="#" class="uk-text-meta">{{author.fio}}</a></p>
+                <a href="javascript:" class="uk-text-meta">{{author.fio}}</a></p>
                 {% endif%}
                 {% if company != null %}
                     <a href="{{path('_company_view',{url:company.url})}}" class="uk-text-meta">

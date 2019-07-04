@@ -56,6 +56,19 @@ class Publication
     }
 
     /**
+    * @ORM\Column(type="integer")
+    */
+    private $views;
+
+    public function setViews(){
+        $this->views += 1;
+    }
+
+    public function getViews(){
+        return $this->views;
+    }
+
+    /**
     * @ORM\Column(type="text")
     */
     private $images;

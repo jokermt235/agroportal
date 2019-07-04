@@ -17,6 +17,10 @@ class CmpyController extends Controller
         return $this->render('@App/Cmpy/rules.html.twig');
     }
 
+    public function termsofuseAction(){
+        return $this->render('@App/Cmpy/termsofuse.html.twig');
+    }
+
     public function topbannerAction($step=0){
         $finder = new Finder();
         

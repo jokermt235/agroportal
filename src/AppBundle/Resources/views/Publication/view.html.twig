@@ -10,12 +10,6 @@
 {% include 'header.html.twig' %}
 {% include 'nav.html.twig' %}
 <div class="uk-container uk-margin">
-    <ul class="uk-breadcrumb">
-        <li><a href="/"><span>{% trans %}Главная{% endtrans %}</span></a></li>
-        <li><a href="{{path('_publication')}}"><span>{% trans %}Новости{% endtrans %}</span></a></li>
-    </ul>
-</div>
-<div class="uk-container uk-margin">
     <a class="uk-link-text" href="javascript:void(0)"><h4 class="uk-text-bold uk-margin-top">{{publication.title}}</h4></a>
     <div class="uk-panel uk-margin">
         <p class="uk-heading-divider uk-heading-bullet">{{publication.created}}</p>

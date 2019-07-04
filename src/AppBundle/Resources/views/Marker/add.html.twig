@@ -1,0 +1,153 @@
+{% extends "base.html.twig" %}
+{% block title %}Добавить компанию{% endblock %}
+{% block body %}
+{% include 'header.html.twig' %}
+{% include 'nav.html.twig' %}
+<div class="uk-container uk-margin uk-width-xxlarge">
+    {% for message in app.flashes('error') %}
+        <div class="uk-alert-danger" uk-alert>
+            <a class="uk-alert-close" uk-close></a>
+            <p>{{message}}</p>
+        </div>
+    {% endfor %}
+</div>
+<div class="uk-container uk-margin-large-left uk-margin-large-right uk-margin-large-top">
+    <h3 class="uk-text-bold">{% trans %}Добавить статус{% endtrans %}</h3>
+    <form class="uk-form-horizontal uk-margin-large" action="" method="POST" >
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-horizontal-text">
+                {% trans %}Статус{% endtrans %}
+            </label>
+            <div class="uk-form-controls">
+                <input name="status" class="uk-input" required type="text" placeholder="Максимум 20 символов" maxlength="20">
+                <input type="hidden" name="avatar" value="" id="avatar">
+            </div>
+        </div>
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-horizontal-text">
+                {% trans %}Информация{% endtrans %}
+            </label>
+            <div class="uk-form-controls">
+                <textarea name="description" class="uk-textarea" rows="5"></textarea>
+            </div>
+        </div>    
+        <div class="uk-margin">
+            <div class="uk-grid-small uk-text-center" uk-grid>
+                <div class="ag-uploaded">
+                </div>
+                <div class="ag-upload">
+                    <div class="uk-inline">
+                        <img src="{{asset('images/Pictures-icon.png')}}">
+                        <div class="uk-overlay uk-overlay-default uk-position-center" style="padding: 10px 10px;">
+                            <div uk-form-custom>
+                                <input type="file">
+                                <span class="uk-link-reset">{% trans %}Загрузить{% endtrans %}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div>                                                                        
+        </div>
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-horizontal-text"></label>
+            <div class="uk-form-controls">
+                <button  type="submit" class="uk-button uk-button-primary uk-text-center">
+                    {% trans %}Сохранить{% endtrans %}</a>
+            </div>
+        </div> 
+    </form>
+</div>
+<script>
+    var app = angular.module("agroov",[]);
+    var tmplUrl = "{{path('_map')}}";
+    var layerUrl = "{{path('_layer')}}";
+    var checkMarkerUrl = "{{path('_marker_check')}}";
+    var geoip_lat = "{{geoip.lat}}";
+    var geoip_lng = "{{geoip.lng}}";
+    var uploadUrl = "{{path('_marker_avatar_upload')}}";
+    var token = "{{token}}";
+    var tmp_root = "{{asset('uploads/tmp/')}}" + token + '/';
+    var file_remove_url  = "{{path('_marker_avatar_delete')}}";
+</script>
+<script src="{{asset('js/directives/geofield/geofield.js')}}"></script>
+<script src="{{asset('js/directives/layerfield/layerfield.js')}}"></script>
+<script>
+
+    UIkit.upload('.ag-upload', {
+
+        url: uploadUrl,
+        multiple: false,
+
+        beforeSend: function (environment) {
+            console.log('beforeSend', arguments);
+            // The environment object can still be modified here. 
+            // var {data, method, headers, xhr, responseType} = environment;
+            environment.headers = {
+                'Token' : token
+            }
+        },
+        beforeAll: function () {
+            console.log('beforeAll', arguments);
+        },
+        load: function () {
+            console.log('load', arguments);
+        },
+        error: function () {
+            console.log('error', arguments);
+        },
+        complete: function () {
+            console.log('complete', arguments);
+        },
+
+        loadStart: function (e) {
+            console.log('loadStart', arguments);
+        },
+
+        progress: function (e) {
+            console.log('progress', arguments);
+        },
+
+        loadEnd: function (e) {
+            console.log('loadEnd', arguments);
+        },
+
+        completeAll: function () {
+            console.log('completeAll', arguments);
+			var file = arguments[0].response;
+            console.log('completeAll', arguments[0].response);
+            /*setTimeout(function () {
+                bar.setAttribute('hidden', 'hidden');
+            }, 1000);*/
+            var html = 
+            '<div class="uk-card uk-card-default uk-card-body" id=' + file +'>'+
+                "<img src='" + tmp_root + "small_" +file +"'>"+
+                '<div class="uk-overlay uk-overlay-default uk-position-center" style="padding: 10px 20px;">'+
+                    '<a href="javascript:" class="uk-link-reset uk-text-bold uk-text-large" style="color:red !important" onclick=deleteImage(this) image='+ file + '>x</a>'+
+                '</div>'+
+            '</div>';
+            //$('#image').val(file);
+            $('#avatar').val(file);
+            $('.ag-uploaded').html(html);
+        }
+    });
+
+    function deleteImage(element)
+    {
+		console.log(element.attr('image'));
+        var image  = $(element).attr('image');
+		$.ajax({
+            type: "POST",
+            beforeSend: function(request) {
+                request.setRequestHeader("Token", token);
+                request.setRequestHeader("Image",image);
+            },
+            url: file_remove_url,
+            processData: false,
+            success: function(msg) {
+                $('#'+image).remove();
+            }
+        });
+    }
+</script>
+{% include 'footer.html.twig' %}
+{% endblock %}

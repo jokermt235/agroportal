@@ -11,12 +11,6 @@
         </div>
     {% endfor %}
 </div>
-<div class="uk-panel uk-margin-medium-left uk-margin">
-    <ul class="uk-breadcrumb">
-        <li><a href="/">{% trans %}Главная {% endtrans %}</a></li>
-        <li><a href="{{path('_add_company')}}">{% trans %}Добавить новый магазин{% endtrans %}</a></li>
-    </ul>
-</div>
 <div class="uk-container uk-margin-large-left uk-margin-large-right uk-margin-large-top">
     <h3 class="uk-text-bold">{% trans %}Добавить новый магазин{% endtrans %}</h3>
     <form class="uk-form-horizontal uk-margin-large" enctype="multipart/form-data" action="" method="POST" >
@@ -59,7 +53,7 @@
             <label class="uk-form-label" >{% trans %}Телефон{% endtrans %}</label>
             <div class="uk-grid-small" uk-grid>
                 <div class="uk-width-1-4@s">
-                    <input name="phonecode" required id="phonecode" ng-model="phonecode" class="uk-input" type="text" placeholder={%trans%}Межд.Код{%endtrans%}>
+                    <input name="phonecode" required id="phonecode" ng-model="phonecode" class="uk-input" type="text" placeholder={%trans%}Межд.Код{%endtrans%} maxlength="4">
                 </div>
                 <div class="uk-width-1-2@s">
                     <input name="phone_without_code" required class="uk-input" ng-model="_phone" type="text" placeholder={%trans%}Номер телефона{%endtrans%}>
@@ -89,7 +83,7 @@
                     <input type="file" name="image" file-input>
                     <span class="uk-link">{%trans%}сюда{%endtrans%}</span>
                 </div>
-            </div>
+            </div>        
         </div>
         <div class="uk-margin">
             <label class="uk-form-label" for="form-horizontal-text"></label>
@@ -110,6 +104,10 @@
     var app = angular.module("agroov",[]);
     var tmplUrl = "{{path('_map')}}";
     var layerUrl = "{{path('_layer')}}";
+    var setMarkerUrl = "{{path('_map_add_marker')}}";
+    var checkMarkerUrl = "{{path('_marker_check')}}";
+    var geoip_lat = "{{geoip.lat}}";
+    var geoip_lng = "{{geoip.lng}}";
 </script>
 <script src="{{asset('js/directives/geofield/geofield.js')}}"></script>
 <script src="{{asset('js/directives/layerfield/layerfield.js')}}"></script>

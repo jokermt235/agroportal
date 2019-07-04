@@ -3,12 +3,6 @@
 {% block body %}
 {% include 'header.html.twig' %}
 {% include 'nav.html.twig' %}
-<div class="uk-container uk-margin">
-    <ul class="uk-breadcrumb">
-        <li><a href="/"><span>{% trans %}Главная{% endtrans %}</span></a></li>
-        <li><a href="{{path('_reklam')}}"><span>{% trans %}Реклама{% endtrans %}</span></a></li>
-    </ul>
-</div>
 <div class="uk-container uk-margin uk-padding">
     <div class="uk-heading-primary uk-heading-bullet">{%trans%}Реклама{% endtrans %}</div>
     <p>{% trans %}Если вы хотите рекламироваться ваш продукт в верхнем или боковом баннере для вас есть готовые шаблоны баннеров. Вам необходимо выбрать верхн    ий или боковой баннер, заполнить шаблон изображением вашего продукта, коротким текстом, указать цену, валюту, телефон и адрес, добавить ссылку вашего кабинета или стр    аницы на сайте{% endtrans %}</p>

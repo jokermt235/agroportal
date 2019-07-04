@@ -6,7 +6,7 @@
 <form method="GET" id="filter_form">
     <div class="uk-grid uk-margin uk-child-width-expand@s" uk-grid>
          <div class="uk-grid-small" uk-grid uk-height-match="target: > div > .uk-card">
-             <div class="uk-width-expand@s">
+             <div class="uk-width-1-4@s">
                 <div class="uk-card uk-card-default">
                     <div class="uk-margin">
                         <div country-sel class="uk-margin-bottom-large uk-text-center">
@@ -43,7 +43,7 @@
                             </li>
                             {% endfor %}
                             <li class="uk-parent uk-active uk-position-relative uk-position-small uk-margin-remove">
-                                <a class="uk-margin-left uk-link-muted" href="{{path('_adverts')}}">
+                                <a class="uk-margin-left uk-link-muted uk-text-capitalize" href="{{path('_adverts')}}">
                                     {%trans%}все{%endtrans%}
                                 </a>
                             </li>
@@ -54,9 +54,9 @@
                 </div>
              </div>
              
-             <div class="uk-width-3-4">
+             <div class="uk-width-3-4@s uk-width-expand@m">
                 <div class="uk-card uk-card-default uk-padding" uk-card>
-                    <nav class="uk-navbar" uk-navbar style="height:36px">
+                    <nav class="uk-navbar uk-visible@s" uk-navbar style="height:36px">
                         <ul class="uk-subnav uk-subnav-divider uk-margin-small-top">
                             {% for section in sections%}
                             <li><a  href="http://agroov.com/adverts?section_id={{section.id}}">{{section.name}}</a></li>
@@ -72,7 +72,7 @@
                                         <div class="uk-width-auto">
                                             <span uk-icon="check" style="color: green"></span>
                                         </div>
-                                        <div class="uk-width-expand">
+                                        <div class="uk-width-auto@m uk-width-expand@s">
                                             <div class="uk-text-truncate">{{advert.title}}</div>
                                         </div>
                                         <div class="uk-width-auto">
@@ -107,14 +107,22 @@
                         {%endfor%}
                     </ul>
                     <ul class="uk-pagination uk-flex-center" uk-margin-top>
-                        <li><a href="#"><span uk-pagination-previous></span></a></li>
+                        {% for i in 0..page_count %}
+                        {% set pg = i + 1 %}
+                        {% if page == pg %}
+                            <li><a class="uk-active uk-text-emphasis" href="{{path('_adverts',{'page':pg})}}">{{pg}}</a></li>
+                        {% else %}
+                            <li><a href="{{path('_adverts',{'page': pg})}}">{{pg}}</a></li>   
+                        {% endif %}
+                        {% endfor %}
+                        <!--<li><a href="#"><span uk-pagination-previous></span></a></li>
                         <li><a href="#">1</a></li>
                         <li class="uk-disabled"><span>...</span></li>
                         <li><a href="#">5</a></li>
                         <li><a href="#">6</a></li>
                         <li class="uk-active"><span>7</span></li>
                         <li><a href="#">8</a></li>
-                        <li><a href="#"><span uk-pagination-next></span></a></li>
+                        <li><a href="#"><span uk-pagination-next></span></a></li>-->
                     <ng-model="item"/ul>
                 </div>
              </div>

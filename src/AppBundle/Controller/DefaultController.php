@@ -19,10 +19,6 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        // replace this example code with whatever you need 
-        
-      // print_r(apache_note("GEOIP_COUNTRY_CODE")); 
-
         if(!empty($request->get('search_text'))){
             $adverts = $this->getAdvertsBySearchText($request->get('search_text'));
             if(!empty($request->get('search_category_id'))){
@@ -64,7 +60,7 @@ class DefaultController extends Controller
             'categories'=>$this->getCategories(),
             'sections'=> $this->getSections(),
             'adverts' => $adverts,
-            'geoip'=> $this->getLocation(),
+            'geoip'=> $this->getLocation($request),
             'countries' => $this->getDoctrine()
                 ->getRepository(Country::class)
                 ->findAll()
@@ -126,31 +122,9 @@ class DefaultController extends Controller
             ->findAllBySearchTextAndCategoryId($search_text, $search_category_id);
     }
 
-    private function getLocation(){
-		 // Declare the path to the GeoLite2-City.mmdb file (database)
-        //$GeoLiteDatabasePath = $this->get('kernel')->getRootDir() . '/../private/geolite2-city/GeoLite2-City.mmdb';
-
-        $GeoLiteDatabasePath = $this->get('kernel')->getProjectDir().'/private/GeoLite2-City.mmdb';
-        
-        // Create an instance of the Reader of GeoIp2 and provide as first argument
-        // the path to the database file
-        $reader = new Reader($GeoLiteDatabasePath);
-        
-        try{
-            // if you are in the production environment you can retrieve the
-            // user's IP with $request->getClientIp()
-            // Note that in a development environment 127.0.0.1 will
-            // throw the AddressNotFoundException
-      
-
-            // In this example, use a fixed IP address in Minnesota
-            $record = $reader->city($_SERVER['REMOTE_ADDR']);
-            
-        } catch (AddressNotFoundException $ex) {
-            // Couldn't retrieve geo information from the given IP
-            return new Response("It wasn't possible to retrieve information about the providen IP");
-        }
-
-        return $record;
+    private function getLocation($request){
+        $record = $this->get('geoip2.reader')->city($request->getClientIp());
+        //print_r($record->city->name);
+        return array('lat'=>$record->location->latitude,'lng'=>$record->location->longitude);
     }
 }

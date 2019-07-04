@@ -10,7 +10,7 @@ class PublicationRepository extends EntityRepository{
     public function findAll(){
         return 
             $this->getEntityManager()
-            ->createQuery("SELECT u FROM AppBundle:Publication u ORDER BY u.created DESC")
+            ->createQuery("SELECT u.id,u.url,u.title,u.created,u.images,u.views,c.fio author FROM AppBundle:Publication u JOIN AppBundle:User c WITH u.user_id=c.id ORDER BY u.created DESC")
             ->getResult();
     }
 

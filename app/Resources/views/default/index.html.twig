@@ -4,10 +4,13 @@
 {% block body %}
 {% include 'header.html.twig' %}
 {% include 'nav.html.twig' %}
+
 <form method="GET" id="filter_form">
     <div id="map"></div>
 </form>
 <script>
+    var geoip_lat = "{{geoip.lat}}";
+    var geoip_lng = "{{geoip.lng}}";
     var left_banner_url = "{{path('_left_banner')}}";
     var countryUrl = "{{path('_country')}}";
     angular.module('agroov').directive('leftBanner',function(){
@@ -35,49 +38,69 @@
 </script>
 <script src="https://maps.api.2gis.ru/2.0/loader.js?pkg=full"></script>
 <script type="text/javascript">
+    var markers_url = "{{path('_map_markers')}}";
+    var webroot = "http://agroov.com/";
     document.addEventListener("DOMContentLoaded", function(event){
         var _map = document.getElementById('map');
         var width = document.documentElement.clientWidth;
         var height = document.documentElement.clientHeight;
-        _map.style.width = width - 15 + "px";
+        //_map.style.width = width - 15 + "px";
         _map.style.height = height + "px";
         var map;
         DG.then(function () {
             map = DG.map('map', {
-                center: [42.869460, 74.611213],
-                zoom: 13,
+                center: [geoip_lat,geoip_lng],
+                zoom: 8,
                 maxBounds: [
                 ],
                 minZoom : 2
+            }); 
+            $.getJSON(markers_url, function( data ) {
+                console.log(data);
+                if(data)
+                {
+                    for(var i=0;i<data.length;i++)
+                    {
+                        var companyIcon = DG.icon({
+                            iconSize: [48, 48],
+                            iconUrl: '/images/layer/' + data[i].icon,
+                        });
+                        var iconHtml = 
+                        '<div class="ag-map-icon">'+
+                            '<img class="ag-map-icon-image-border-right" src="/images/layer/' + data[i].icon + '">' +
+                            '<span class="uk-text-middle uk-text-center ag-map-icon-color">' + data[i].status + '</span>'+
+                        '</div>';
+                        var divIcon = DG.divIcon({
+                            iconSize: [128, 48],
+                            className: 'ag-map-icon-own',
+                            iconUrl: '/images/layer/' + data[i].icon,
+                            html : iconHtml
+                        });
+
+                        var marker_url = webroot + data[i].url;
+
+                        var poup_html = 
+                        '<div>'+
+                            '<div>' + 
+                                '<a style="color:white" href="' + marker_url + '">'+
+                                    data[i].company_name + 
+                                '</a>'+        
+                                " тел.:  " + data[i].phone +
+                            '</div>'+
+                        '</div>';
+                        var marker = DG.marker([data[i].lat, data[i].lng],
+                            {
+                                icon: divIcon
+                            }
+                        ).addTo(map);
+
+                        marker.bindPopup(poup_html);
+
+                    }
+                }
             });
-            var marker = DG.marker([42.869465, 74.611210]).addTo(map).bindPopup('Вы кликнули по мне!');
-            var latlngs = [
-                [42.869480, 74.611213],
-                [42.869500, 74.611213],
-                [42.869520, 74.611213],
-                [42.869540, 74.611213],
-                [42.869560, 74.611213],
-                [42.869580, 74.611113]
-            ];
-            //var polyline = DG.polyline(latlngs, {color: 'red'}).addTo(map);
-            //map.fitBounds(polyline.getBounds());
         });
     });
-    window.addEventListener("load", function(event) {
-        
-        
-        
-        // создает ломаную красного цвета из массива точек LatLng
-        /*var latlngs = [
-            [45.52, 74.22],
-            [45.62, 74.32],
-            [45.72, 74.42]
-        ];*/
-        //var polyline = DG.polyline(latlngs, {color: 'blue'}).addTo(map);
-        // увеличиваем масштаб так, чтобы было видно всю ломаную
-        //map.fitBounds(polyline.getBounds());
-    });
-    
 </script>
 {% include 'footer.html.twig'%}
 {% endblock %}

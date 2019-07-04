@@ -3,14 +3,22 @@
 namespace AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class AdvertRepository extends EntityRepository{   
 
-    public function findAll(){
-        return 
-            $this->getEntityManager()
+    public function findAll($page =  0, $limit = 25){
+        $paginator = new Paginator($this->getEntityManager()
             ->createQuery("SELECT u FROM AppBundle:Advert u ORDER BY u.created DESC")
-            ->getResult();
+            ->setFirstResult($page*$limit)
+            ->setMaxResults($limit));
+        return 
+            $paginator;
+            /*$this->getEntityManager()
+            ->createQuery("SELECT u FROM AppBundle:Advert u ORDER BY u.created DESC")
+            ->setFirstResult($page*$limit)
+            ->setMaxResults($limit)
+            ->getResult();*/
     }
 
     public function findAdvertByUserId($user_id){

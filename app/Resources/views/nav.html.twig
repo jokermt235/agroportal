@@ -1,9 +1,13 @@
-<nav class="uk-navbar-container" uk-navbar style="height:36px">
-    <div class="uk-navbar-left uk-margin-small-top uk-margin-medium-left">
+<nav class="uk-navbar-container" uk-navbar style="height:36px;">
+    <div class="uk-navbar-left uk-margin-small-top uk-margin-medium-left" style="flex-wrap: unset;">
         <ul class="uk-subnav uk-subnav-divider uk-margin-small-top">
             <li class="uk-active">
-                <a class="uk-text-uppercase" href="/">Agroov</a>
+                <a class="uk-text-uppercase uk-text-bold" href="/">Agroov</a>
             </li>
+        </ul>
+    </div>
+    <div class="uk-navbar-left uk-margin-small-top uk-margin-medium-left" style="flex-wrap: unset;">
+        <ul class="uk-subnav uk-subnav-divider uk-margin-small-top uk-visible@m">
             
             <li class="uk-active"><a class="uk-text-uppercase" href="{{path('_adverts')}}">{% trans %} объявления {% endtrans %}</a></li>
             
@@ -13,16 +17,16 @@
             <li class="uk-active"><a class="uk-text-uppercase" href="{{path('_publication')}}">{% trans %} новости {% endtrans %}</a></li>
         </ul>
     </div>
-    <div class="uk-navbar-right uk-margin-top uk-margin-small-right">
+    <div class="uk-navbar-right uk-margin-top uk-margin-small-right" style="flex-wrap: unset;">
         <ul class="uk-subnav uk-subnav-divider">
-            <li class="uk-active">
+            <li class="uk-active uk-visible@m">
                 <div uk-form-custom="target: > * > span:first-child">
                     <select>
-                        <option value="1">ENG</option>
+                        <option value="1">РУС</option>
                         <option value="2">КЫР</option>
-                        <option value="3">РУС</option>
-                        <option value="4">КАЗ</option>
-                        <option value="5">TR</option>
+                        <option value="3">КАЗ</option>
+                        <option value="4">TR</option>
+                        <option value="5">ENG</option>
                     </select>
                     <button class="uk-button uk-button-small uk-text-lowercase uk-width-1-1 uk-button-text" type="button" tabindex="-1">
                         <span class="uk-icon uk-margin-small-right" uk-icon="world"></span>
@@ -32,7 +36,7 @@
                 </div>
             </li>
             {% if is_granted('ROLE_USER') %}
-            <li class="uk-active uk-margin-large-right" >
+            <li class="uk-active uk-margin-large-right uk-visible@m" >
                 <a class="uk-text-lowercase" href="javascript::void()">
                     <span uk-icon="user"></span>
                     {{ app.user.username }}
@@ -77,8 +81,86 @@
                 </div>
             </li>
             {%else %}
-            <li class="uk-active"><span uk-icon="sign-in"></span><a class="uk-button uk-button-text uk-text-lowercase uk-margin-small-left" href="{{path('login')}}">{% trans %} Вход /{% endtrans %}<a class="uk-button uk-button-text uk-text-lowercase uk-margin-small-left" href="{{path('_user_registration')}}">{% trans %} регистрация{% endtrans %}</a></li>
+            <li class="uk-active uk-visible@m"><span uk-icon="sign-in"></span><a class="uk-button uk-button-text uk-text-lowercase uk-margin-small-left" href="{{path('login')}}">{% trans %} Вход /{% endtrans %}<a class="uk-button uk-button-text uk-text-lowercase uk-margin-small-left" href="{{path('_user_registration')}}">{% trans %} регистрация{% endtrans %}</a></li>
+            {% endif %}
+            <li class="uk-active uk-hidden@m">
+                <a class="uk-text-bold" href="#offcanvas-push" uk-toggle>
+                    <span uk-icon="table"><span>
+                </a>
+            </li>
+        </ul>
+    </div> 
+</nav>
+<div id="offcanvas-push" uk-offcanvas="container:true">
+    <div class="uk-offcanvas-bar">
+        <button class="uk-offcanvas-close" type="button" uk-close></button>
+        <ul class="uk-nav uk-nav-default">
+            <li>
+                <a class="uk-text-uppercase" href="{{path('_adverts')}}">{% trans %} объявления {% endtrans %}</a>
+            </li>
+            <li>
+                <a class="uk-text-uppercase" href="{{path('_forum')}}">{% trans %} группы {% endtrans %}</a>
+            </li>
+            <li>
+                <a class="uk-text-uppercase" href="{{path('_company')}}">{% trans %} магазины {% endtrans %}</a>
+            </li>
+            <li>
+                <a class="uk-text-uppercase" href="{{path('_publication')}}">{% trans %} новости {% endtrans %}</a>
+            </li>
+            {% if is_granted('ROLE_USER') %}
+            <li class="uk-active uk-margin-large-right uk-parent" >
+                <a class="uk-text-lowercase" href="javascript::void()">
+                    <span uk-icon="user"></span>
+                    {{ app.user.username }}
+                    <span uk-icon="chevron-down"></span>
+                </a>
+                <ul class="uk-nav-sub">
+                    <li class="uk-active">
+                        <a href="{{path('_profile_index')}}">
+                            <span uk-icon="cog"></span>
+                            {%trans%}Профиль{%endtrans%}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span uk-icon="mail"></span>
+                            {%trans%}Сообщения{%endtrans%}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{path('_profile_index')}}">
+                            <span uk-icon="list"></span>
+                            {%trans%}Мои объявления{%endtrans%}
+                        </a>
+                    </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <li>
+                        <a href="{{path('_admin')}}">
+                            <span uk-icon="users"></span>
+                            {%trans%}Администрирование{%endtrans%}
+                        </a>    
+                    </li>
+                     {% endif %}
+                    <li class="uk-nav-divider"></li>
+                    <li>
+                        <a href="{{path('logout')}}">
+                            <span uk-icon="sign-out"></span>
+                            {%trans%}Выйти{%endtrans%}
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            {%else %}
+            <li class="uk-nav-divider"></li>
+            <li>
+                <a class="uk-text-uppercase" href="{{path('login')}}">{% trans %} Вход {% endtrans %}
+            </li>
+            <li>
+                <a class="uk-text-uppercase" href="{{path('_user_registration')}}">{% trans %} регистрация{% endtrans %}</a>
+            </li>
+
             {% endif %}
         </ul>
     </div>
-</nav>
+</div>
+

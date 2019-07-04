@@ -13,6 +13,9 @@ _about_us:
 _rules:
     path: /rules
     defaults: { _controller: AppBundle:Cmpy:rules}
+_termsofuse:
+    path: /termsofuse
+    defaults: { _controller: AppBundle:Cmpy:termsofuse}
 
 _save_arecord:
     path: /save
@@ -174,6 +177,14 @@ _company_view:
     path : /{url}
     defaults: {_controller:AppBundle:Company:view}
 
+_company_edit:
+    path : /company/edit/{url}
+    defaults: {_controller:AppBundle:Company:edit}
+
+_company_delete:
+    path : /company/delete/{id}
+    defaults: {_controller:AppBundle:Company:delete}
+
 _add_company:
     path : /shop/add
     defaults: {_controller:AppBundle:Company:add}
@@ -226,9 +237,18 @@ _admin_addlayer:
     path: /admin/addlayer
     defaults: {_controller:AppBundle:Layer:add}
 
+_admin_publication:
+    path: /admin/publication
+    defaults: {_controller:AppBundle:Admin:publication}
+
+_admin_publication_delete:
+    path : /admin/publicationDelete/{id}
+    defaults: {_controller:AppBundle:Admin:publicationDelete}
+
 _user_company:
     path: /company/usercompany
     defaults: {_controller:AppBundle:Company:usercompany}
+
 
 _recovery:
     path: /recovery/{token}
@@ -241,8 +261,45 @@ _new_password:
 _map:
     path: /shops/map
     defaults: {_controller:AppBundle:Map:index}
+
+_map_add_marker:
+    path: /map/add_marker
+    defaults: {_controller:AppBundle:Map:addmarker}
+
+_marker_avatar_upload:
+    path: /marker/upload
+    defaults: {_controller:AppBundle:Marker:upload}
+
+_marker_avatar_delete:
+    path: /marker/avatar_delete
+    defaults: {_controller:AppBundle:Marker:avatarDelete}
+
+_map_markers:
+    path: /map/markers
+    defaults: {_controller:AppBundle:Marker:index}
+
+_marker_add:
+    path: /marker/add/{company_id}
+    defaults: {_controller:AppBundle:Marker:add}
+
+_marker_edit:
+    path: /marker/edit/{company_id}
+    defaults: {_controller:AppBundle:Marker:edit}
+
+_marker_delete:
+    path: /marker/delete/{id}
+    defaults: {_controller:AppBundle:Marker:delete}
+
+_marker_check:
+    path: /marker/check
+    defaults: {_controller:AppBundle:Marker:check}
+
 _layer:
     path : /layer/layers
     defaults: {_controller:AppBundle:Layer:layers}
 
+#Status
 
+status_update:
+    path: /marker/update
+    defaults: {_controller:AppBundle:Marker:update}
