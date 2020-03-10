@@ -1,11 +1,4 @@
-<nav class="uk-navbar-container" uk-navbar style="height:36px;">
-    <div class="uk-navbar-left uk-margin-small-top uk-margin-medium-left" style="flex-wrap: unset;">
-        <ul class="uk-subnav uk-subnav-divider uk-margin-small-top">
-            <li class="uk-active">
-                <a class="uk-text-uppercase uk-text-bold" href="/">Agroov</a>
-            </li>
-        </ul>
-    </div>
+<nav class="uk-navbar-container" uk-navbar style="height:36px;"> 
     <div class="uk-navbar-left uk-margin-small-top uk-margin-medium-left" style="flex-wrap: unset;">
         <ul class="uk-subnav uk-subnav-divider uk-margin-small-top uk-visible@m">
             
@@ -15,6 +8,13 @@
             <li class="uk-active"><a class="uk-text-uppercase" href="{{path('_company')}}">{% trans %} магазины {% endtrans %}</a></li>
 
             <li class="uk-active"><a class="uk-text-uppercase" href="{{path('_publication')}}">{% trans %} новости {% endtrans %}</a></li>
+        </ul>
+    </div>
+    <div class="uk-navbar-left uk-margin-small-top uk-margin-medium-left" style="flex-wrap: unset;">
+        <ul class="uk-subnav uk-subnav-divider uk-margin-small-top">
+            <li class="uk-active">
+                <a class="uk-text-uppercase uk-text-bold" href="{{path('_agroov')}}">Agroov</a>
+            </li>
         </ul>
     </div>
     <div class="uk-navbar-right uk-margin-top uk-margin-small-right" style="flex-wrap: unset;">

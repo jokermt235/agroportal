@@ -1,6 +1,10 @@
-_dashboard:
+_agroov:
     path: /agroov
     defaults: { _controller: AppBundle:Agroov:index}
+
+_adverts2:
+    path: /
+    defaults: {_controller: AppBundle:Advert:index }
 
 _upload_arecord_image:
     path: /upload
